@@ -16,13 +16,13 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', 'alliedfa_afs');
+define('DB_NAME', 'alliance_wp');
 
 /** MySQL database username */
-define('DB_USER', 'alliedfa_afs');
+define('DB_USER', 'alliance_wp');
 
 /** MySQL database password */
-define('DB_PASSWORD', '+oJ.#)=N,$S&');
+define('DB_PASSWORD', '%^ggfR#E454');
 
 /** MySQL hostname */
 define('DB_HOST', 'localhost');
@@ -59,7 +59,7 @@ define('NONCE_SALT',       '+H74 PgsWYv)GJ<^ -p<]pE[xr}zS^g](fxO|a-*F;se+1t`_7d9
  * You can have multiple installations in one database if you give each a unique
  * prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = 'aFS694_';
+$table_prefix  = 'aFS790_';
 
 /**
  * WordPress Localized Language, defaults to English.
