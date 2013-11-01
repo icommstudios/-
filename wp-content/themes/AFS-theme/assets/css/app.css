@@ -5914,16 +5914,27 @@ td.visible-print {
    ========================================================================== */
 body {
   background: #ffffff url('../img/main-back.jpg');
+  color: #535353;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 /* ==========================================================================
    Header
    ========================================================================== */
 .top-nav-bar {
   background: #f2f2f2;
+  min-height: 32px;
+}
+.top-nav-bar nav {
+  float: left;
 }
 .top-nav-bar ul.top-nav {
   margin-bottom: 0px;
   padding-left: 0px;
+  min-height: 32px;
 }
 .top-nav-bar ul.top-nav li {
   display: inline-block;
@@ -5932,17 +5943,18 @@ body {
   display: block;
   font-size: 1em;
   padding: 4px 6px;
+  height: 100%;
 }
 ul.social-nav {
   margin-bottom: 0px;
-  padding-left: 15px;
+  padding-left: 12px;
 }
 ul.social-nav li {
   display: inline-block;
 }
 ul.social-nav li a {
   display: block;
-  padding: 4px;
+  padding: 4px 6px;
 }
 ul.social-nav li a i {
   color: #888;
@@ -5950,14 +5962,52 @@ ul.social-nav li a i {
 ul.social-nav li a i:hover {
   color: #555;
 }
+/* Responsive Navigation */
+.tinynav {
+  display: none;
+}
+/* styles for mobile */
+@media screen and (max-width: 767px) {
+  .tinynav {
+    display: block;
+    margin-top: 3px;
+    padding: 2px 0;
+    width: 100%;
+  }
+  .top-nav {
+    display: none;
+  }
+}
 a.logo {
   display: block;
-  margin-top: -14px;
-  width: 200px;
+  margin: 0px auto;
+  float: left;
+  width: 120px;
 }
 .second-nav {
-  margin-top: 20px;
-  font-size: 1.4em;
+  margin-top: 14px;
+  font-size: 1em;
+  color: #e53203;
+}
+.second-nav-logged {
+  margin-top: 7px;
+  font-size: .9em;
+}
+.second-nav-logged .username {
+  background: #343434;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #c8c8c8;
+  padding: 4px 8px;
+}
+.second-nav-logged .username i {
+  margin-right: 6px;
+  color: #666;
+}
+.second-nav-logged span {
+  display: block;
+  margin: 0px auto;
 }
 /* ==========================================================================
    Content
@@ -5978,6 +6028,13 @@ a.logo {
 /* ==========================================================================
    Footer
    ========================================================================== */
+.footer-info {
+  margin-top: 20px;
+}
+.footer-info p {
+  font-size: .9em;
+  text-align: center;
+}
 /* ==========================================================================
    WordPress Generated Classes
    See: http://codex.wordpress.org/CSS#WordPress_Generated_Classes
@@ -6000,10 +6057,23 @@ figure.alignnone {
    Media Queries
    ========================================================================== */
 @media (min-width: 768px) {
-  
+  .top-nav-bar nav {
+    float: right;
+  }
+  .second-nav {
+    margin-top: 20px;
+    font-size: 1.4em;
+  }
+  .second-nav-logged {
+    margin-top: 12px;
+    font-size: 1.1em;
+  }
 }
 @media (min-width: 992px) {
-  
+  a.logo {
+    margin-top: -14px;
+    width: 200px;
+  }
 }
 @media (min-width: 1200px) {
   

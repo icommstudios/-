@@ -10,6 +10,13 @@
 
 body { 
    background: #fff url('../img/main-back.jpg');
+   color: #535353;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 
@@ -22,10 +29,16 @@ body {
 
 .top-nav-bar {
    background:#f2f2f2;
+   min-height:32px;
+
+   nav {
+      float:left;
+   }
 
    ul.top-nav {
       margin-bottom: 0px;
       padding-left: 0px;
+      min-height:32px;
 
       li {
          display: inline-block;
@@ -34,6 +47,7 @@ body {
             display:block;
             font-size: 1em;
             padding: 4px 6px;
+            height: 100%;
          }
       }
 
@@ -42,14 +56,14 @@ body {
 
 ul.social-nav {
    margin-bottom: 0px;
-   padding-left: 15px;
+   padding-left: 12px;
    
    li {
       display: inline-block;
 
       a {
          display:block;
-         padding: 4px;
+         padding: 4px 6px;
          
          i {
             color:#888;
@@ -62,15 +76,57 @@ ul.social-nav {
    }
 }
 
+/* Responsive Navigation */
+
+.tinynav { display: none }
+
+/* styles for mobile */
+@media screen and (max-width: 767px) {
+   .tinynav { 
+      display: block;
+      margin-top:3px;
+      padding: 2px 0;
+      width:100%;
+
+   }
+   .top-nav { 
+      display: none;
+   }
+}
+
 a.logo {
    display: block;
-   margin-top: -14px;
-   width: 200px;
+   margin: 0px auto;
+   float:left;
+   width: 120px;
 }
 
 .second-nav {
-   margin-top: 20px;
-   font-size:1.4em;
+   margin-top: 14px;
+   font-size:1em;
+   color: #e53203;
+}
+
+.second-nav-logged {
+   margin-top: 7px;
+   font-size: .9em;
+
+      .username{
+      background: #343434;
+      .border-radius(5px);
+      color: #c8c8c8;
+      padding: 4px 8px;
+
+         i {
+            margin-right: 6px;
+            color: #666;
+         }
+      }
+
+      span {
+         display: block;
+         margin:0px auto;
+      }
 }
 
 
@@ -118,7 +174,14 @@ a.logo {
    Footer
    ========================================================================== */
 
-.content-info { }
+.footer-info { 
+   margin-top: 20px;
+
+      p {
+      font-size: .9em;
+      text-align: center;
+      }
+}
 
 
 
@@ -138,8 +201,34 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    Media Queries
    ========================================================================== */
 
-@media (min-width: @screen-sm) { }
 
-@media (min-width: @screen-md) { }
+@media (min-width: @screen-sm) { 
+
+   .top-nav-bar {
+      
+      nav {
+         float:right;
+      }
+   }
+
+   .second-nav {
+      margin-top: 20px;
+      font-size:1.4em;
+   }
+
+   .second-nav-logged {
+   margin-top: 12px;
+   font-size: 1.1em;
+   }
+
+}
+
+@media (min-width: @screen-md) { 
+            
+      a.logo { 
+         margin-top:-14px;
+         width:200px;
+      }
+}
 
 @media (min-width: @screen-lg) { }
