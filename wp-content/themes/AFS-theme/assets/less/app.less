@@ -25,11 +25,11 @@ img {
    Header
    ========================================================================== */
 
-.banner { }
+.banner { margin-bottom: 20px; }
 
 .top-nav-bar {
    background:#f2f2f2;
-   min-height:32px;
+   height:38px;
 
    nav {
       float:left;
@@ -38,7 +38,6 @@ img {
    ul.top-nav {
       margin-bottom: 0px;
       padding-left: 0px;
-      min-height:32px;
 
       li {
          display: inline-block;
@@ -46,8 +45,9 @@ img {
          a {
             display:block;
             font-size: 1em;
-            padding: 4px 6px;
-            height: 100%;
+            padding: 0px 6px;
+            height: 38px;
+            line-height: 38px;
          }
       }
 
@@ -63,14 +63,16 @@ ul.social-nav {
 
       a {
          display:block;
-         padding: 4px 6px;
+         padding: 0px 6px;
+         height: 38px;
+         line-height: 38px;
          
-         i {
-            color:#888;
-
-            &:hover {
+         &:hover i {
             color:#555;
             }
+
+         i {
+            color:#888;
          }
       }
    }
@@ -84,7 +86,7 @@ ul.social-nav {
 @media screen and (max-width: 767px) {
    .tinynav { 
       display: block;
-      margin-top:3px;
+      margin-top:6px;
       padding: 2px 0;
       width:100%;
 
@@ -102,7 +104,7 @@ a.logo {
 }
 
 .second-nav {
-   margin-top: 14px;
+   margin-top: 20px;
    font-size:1em;
    color: #e53203;
 }
@@ -137,6 +139,14 @@ a.logo {
 
 .content { }
 
+.container-full {
+   padding: 0 15px;
+}
+
+.container-overflow {
+   margin: 0 auto; padding:0;
+   max-width: 1140px;
+}
 
 
 /* ==========================================================================
@@ -196,13 +206,42 @@ a.logo {
 figure.alignnone { margin-left: 0; margin-right: 0; }
 
 
+/* ==========================================================================
+   Main Page Elements
+   ========================================================================== */
+
+.img-hero {
+   display: block;
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center 20%;
+   height: 250px;
+   margin: 0 -15px;
+   padding-top: 20px;
+
+   h1 {
+      margin: 0px auto;
+      max-width: 90%;
+      font-size: 23px;
+      color: #fff;
+      text-shadow: 1px 2px 8px #000;
+      text-align: center;
+   }
+}
+
+.img-hero-bar {
+   background-image: url('../img/img-hero-bar.jpg');
+}
+
 
 /* ==========================================================================
    Media Queries
    ========================================================================== */
 
 
-@media (min-width: @screen-sm) { 
+@media (min-width: @screen-sm-min) { 
+
+
 
    .top-nav-bar {
       
@@ -221,14 +260,29 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    font-size: 1.1em;
    }
 
+   .img-hero {
+
+      height: 418px;
+      padding-top: 50px;
+
+      h1 {
+      font-size: 36px;
+      width: 70%;
+      }
+   }
+
 }
 
-@media (min-width: @screen-md) { 
+@media (min-width: @screen-md-min) { 
             
       a.logo { 
          margin-top:-14px;
          width:200px;
       }
+
+      .img-hero h1 {
+      font-size: 48px;
+      }
 }
 
-@media (min-width: @screen-lg) { }
+@media (min-width: @screen-lg-min) { }
