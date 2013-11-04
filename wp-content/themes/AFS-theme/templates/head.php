@@ -11,8 +11,16 @@
   <?php wp_head(); ?>
 
 
-  <!-- Font Awesome -->
+  <!-- Fonts -->
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
 
   <link rel="alternate" type="application/rss+xml" title="<?php echo get_bloginfo('name'); ?> Feed" href="<?php echo home_url(); ?>/feed/">
+
+ <!-- News Ticker -->
+  <script type="text/javascript">
+		$(function(){
+			$(".ticker").webTicker();
+			});
+</script>
 </head>
