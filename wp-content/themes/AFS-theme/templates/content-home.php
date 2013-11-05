@@ -1,8 +1,8 @@
-<div class="img-hero img-hero-bar">
+<div class="img-hero overflow home-hero img-hero-bar">
 	<h1>Welcome to Alliance Facility Solutions, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
 </div>
-<div class="orange-hero">
-	<div class="container">
+<div class="orange-hero overflow">
+	<div class="col-lg-12 container">
 	<div class="row">
 		<div class="col-sm-4"><a href="#" class="btn white blue-text centered large-text">Search for Contractors</a></div>
 		<div class="col-sm-4"><img class="centered handshake-icon" src="/2013/assets/img/handshake.png" /></div>
@@ -10,7 +10,7 @@
 	</div>
 	</div>
 </div>
-<div class="news-ticker">
+<div class="news-ticker overflow">
 	<div class="container">
 	<div class="row">
 	<p>Recent Activity</p>
@@ -27,7 +27,7 @@
 	</div>
 	</div>
 </div>
-<div class="container text-center">
+<div class="container overflow text-center">
 	<section>
 	<h2>How Alliance Works</h2>
 	<div class="row">
