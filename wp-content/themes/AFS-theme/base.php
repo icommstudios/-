@@ -15,7 +15,7 @@
 
 <?php
         if ( is_page() ) {
-            get_template_part('templates/content', 'page-title');
+            get_template_part('templates/page-title');
         }
 ?>
 

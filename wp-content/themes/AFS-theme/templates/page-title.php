@@ -1,5 +1,5 @@
 <div class="orange-hero">
-	<div class="container">
-	<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+	<div class="col-lg-12 container">
+		<h1 class="page-title"><?php the_title(); ?></h1>
 	</div>
 </div>

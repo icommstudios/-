@@ -6042,6 +6042,34 @@ img {
   color: #8f8f8f;
   max-width: 100%;
 }
+.btn {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 18px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.white {
+  background: white;
+}
+.orange {
+  background: #f05006;
+  color: white;
+}
+.blue-text {
+  color: #08a4f2;
+}
+.purple-text {
+  color: #9a07ef;
+}
+.page-title {
+  font-size: 34px;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
 input {
   background: #ececec;
   -webkit-border-radius: 5px;
@@ -6154,22 +6182,30 @@ a.logo {
   margin: 0px auto;
 }
 /* ==========================================================================
+   Footer
+   ========================================================================== */
+.footer-info {
+  margin-top: 20px;
+}
+.footer-info p {
+  font-size: .9em;
+  text-align: center;
+}
+/* ==========================================================================
    Content
    ========================================================================== */
+.wrap {
+  margin-top: 20px;
+}
 .main section {
   margin: 60px 0;
 }
 .container-full {
   padding: 0 15px;
 }
-.container-overflow {
-  margin: 0 auto;
-  padding: 0;
-  max-width: 1140px;
+.overflow {
+  margin: 0 -15px;
 }
-/* ==========================================================================
-   Primary Content
-   ========================================================================== */
 /* Gallery Shortcode */
 .gallery-row {
   padding: 15px 0;
@@ -6180,16 +6216,6 @@ a.logo {
 /* ==========================================================================
    Posts
    ========================================================================== */
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-.footer-info {
-  margin-top: 20px;
-}
-.footer-info p {
-  font-size: .9em;
-  text-align: center;
-}
 /* ==========================================================================
    WordPress Generated Classes
    See: http://codex.wordpress.org/CSS#WordPress_Generated_Classes
@@ -6211,36 +6237,14 @@ figure.alignnone {
 /* ==========================================================================
    Main Page Elements
    ========================================================================== */
-.btn {
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 5px 0;
-  font-size: 18px;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
-}
-.white {
-  background: white;
-}
-.orange {
-  background: #f05006;
-  color: white;
-}
-.blue-text {
-  color: #08a4f2;
-}
-.purple-text {
-  color: #9a07ef;
-}
 .img-hero {
   display: block;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 196px;
-  margin: 0 -15px;
   padding-top: 20px;
+}
+.img-hero .home-hero {
+  height: 196px;
 }
 .img-hero h1 {
   margin: 0px auto;
@@ -6255,14 +6259,13 @@ figure.alignnone {
   background-image: url('../img/img-hero-bar.jpg');
 }
 .orange-hero {
-  margin: 0 -15px;
   background: url('../img/orange-hex-pattern.jpg');
 }
 .orange-hero .handshake-icon {
   display: none;
 }
 .news-ticker {
-  margin: 0 -15px 10px;
+  margin-bottom: 10px;
   background: #343434;
   height: 74px;
   font-size: 14px;
@@ -6340,6 +6343,9 @@ a.round-icon-blocks p {
    Media Queries
    ========================================================================== */
 @media (min-width: 768px) {
+  .page-title {
+    font-size: 40px;
+  }
   .ghosted-note {
     max-width: 40%;
   }
@@ -6362,8 +6368,10 @@ a.round-icon-blocks p {
     font-size: 1.1em;
   }
   .img-hero {
-    height: 418px;
     padding-top: 50px;
+  }
+  .img-hero .home-hero {
+    height: 418px;
   }
   .img-hero h1 {
     font-size: 36px;
@@ -6376,7 +6384,7 @@ a.round-icon-blocks p {
     padding: 25px 20px;
   }
   .orange-hero .handshake-icon {
-    display: inline-block;
+    display: block;
     margin-bottom: -26px;
   }
   .orange-hero .col-sm-4:first-child,

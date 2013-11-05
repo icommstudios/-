@@ -35,6 +35,37 @@ img {
    max-width: 100%;
 }
 
+.btn {
+   .border-radius(5px);
+   padding: 10px;
+   margin: 5px 0;
+   font-size: 18px;
+   .transition(.5s);
+}
+
+.white {
+   background:white;
+}
+
+.orange {
+   background: @orange;
+   color: white;
+}
+
+.blue-text {
+   color:@blue;
+}
+
+.purple-text {
+   color:@purple;
+}
+
+.page-title {
+   font-size: 34px;
+   font-family: 'Roboto', sans-serif;
+   color: white;
+}
+
 input {
    background: #ececec;
    .border-radius(5px);
@@ -168,8 +199,26 @@ a.logo {
 
 
 /* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer-info { 
+   margin-top: 20px;
+
+      p {
+      font-size: .9em;
+      text-align: center;
+      }
+}
+
+
+/* ==========================================================================
    Content
    ========================================================================== */
+
+.wrap {
+   margin-top: 20px;
+}
 
 .main section {
    margin: 60px 0;
@@ -179,21 +228,12 @@ a.logo {
    padding: 0 15px;
 }
 
-.container-overflow {
-   margin: 0 auto; padding:0;
-   max-width: 1140px;
+.overflow {
+   margin: 0 -15px;
 }
-
-
-/* ==========================================================================
-   Primary Content
-   ========================================================================== */
-
-.main { }
 
 /* Gallery Shortcode */
 .gallery-row { padding: 15px 0; }
-
 
 
 /* ==========================================================================
@@ -217,21 +257,6 @@ a.logo {
 
 
 /* ==========================================================================
-   Footer
-   ========================================================================== */
-
-.footer-info { 
-   margin-top: 20px;
-
-      p {
-      font-size: .9em;
-      text-align: center;
-      }
-}
-
-
-
-/* ==========================================================================
    WordPress Generated Classes
    See: http://codex.wordpress.org/CSS#WordPress_Generated_Classes
    ========================================================================== */
@@ -246,38 +271,15 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    Main Page Elements
    ========================================================================== */
 
-.btn {
-   .border-radius(5px);
-   padding: 10px;
-   margin: 5px 0;
-   font-size: 18px;
-   .transition(.5s);
-}
-
-.white {
-      background:white;
-}
-
-.orange {
-   background: @orange;
-   color: white;
-}
-
-.blue-text {
-   color:@blue;
-}
-
-.purple-text {
-   color:@purple;
-}
-
 .img-hero {
    display: block;
    background-repeat: no-repeat;
    background-size: cover;
-   height: 196px;
-   margin: 0 -15px;
    padding-top: 20px;
+
+   .home-hero {
+      height: 196px;
+   }
 
    h1 {
       margin: 0px auto;
@@ -296,7 +298,6 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 
 .orange-hero {
-   margin: 0 -15px;
    background: url('../img/orange-hex-pattern.jpg');
 
    .handshake-icon {
@@ -306,7 +307,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 }
 
 .news-ticker {
-   margin: 0 -15px 10px;
+   margin-bottom: 10px;
    background: @dark;
    height: 74px;
    font-size: 14px;
@@ -397,6 +398,10 @@ a.round-icon-blocks {
 
 @media (min-width: @screen-sm-min) { 
 
+.page-title {
+   font-size: 40px;
+}
+
 .ghosted-note {
    max-width: 40%;
 }
@@ -428,9 +433,11 @@ input.email {
    }
 
    .img-hero {
-
-      height: 418px;
       padding-top: 50px;
+
+      .home-hero{
+         height: 418px;
+      }
 
       h1 {
       font-size: 36px;
@@ -449,7 +456,7 @@ input.email {
    .orange-hero {
 
          .handshake-icon {
-            display: inline-block;
+            display: block;
             margin-bottom: -26px;
          }
 
