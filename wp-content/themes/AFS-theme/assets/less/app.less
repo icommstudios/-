@@ -52,6 +52,10 @@ img {
    color: white;
 }
 
+.white-text, .white-text a {
+   color: white;
+}
+
 .blue-text {
    color:@blue;
 }
@@ -66,16 +70,95 @@ img {
    color: white;
 }
 
-input {
+input, select {
    background: #ececec;
    .border-radius(5px);
    border: 0;
    margin: 0 0 5px 0;
    padding: 12px;
-   display: block;
+   display: inline-block;
    color: #7f7f7f;
    font-size: 22px;
+}
+
+input:not([type=submit]):not([type=checkbox]), select {
    width: 100%;
+}
+
+input[type=submit] {
+   width: 50%;
+}
+
+input[type=checkbox] {
+   visibility: hidden;
+}
+
+/* Custom Checkbox */
+
+.custom-checkbox {  
+   position: relative;
+}
+
+.custom-checkbox label {
+   cursor: pointer;
+   position: absolute;
+   width: 20px;
+   height: 20px;
+   top: 0; left: 0;
+   border-radius: 4px;
+
+   -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+   -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+   box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+   background: #ececec;
+}
+
+.custom-checkbox label:after {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+   filter: alpha(opacity=0);
+   opacity: 0;
+   content: '';
+   position: absolute;
+   width: 14px;
+   height: 8px;
+   background: transparent;
+   top: 4px;
+   left: 4px;
+   border: 3px solid #333;
+   border-top: none;
+   border-right: none;
+
+   -webkit-transform: rotate(-45deg);
+   -moz-transform: rotate(-45deg);
+   -o-transform: rotate(-45deg);
+   -ms-transform: rotate(-45deg);
+   transform: rotate(-45deg);
+}
+
+.custom-checkbox label:hover::after {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+   filter: alpha(opacity=30);
+   opacity: 0.5;
+}
+
+.custom-checkbox input[type=checkbox]:checked + label:after {
+   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+   filter: alpha(opacity=100);
+   opacity: 1;
+}
+
+.addon-icon {
+   position: relative;
+   input, select  {
+      padding-left: 50px;
+   }
+      .add-on {
+         position: absolute;
+         left:15px;
+         top: 8px;
+         color: #999999;
+         font-size: 24px;
+      }
 }
 
 
@@ -220,6 +303,10 @@ a.logo {
    margin-top: 20px;
 }
 
+.login .wrap, .register .wrap {
+   margin-top: 0px;
+}
+
 .main section {
    margin: 60px 0;
 }
@@ -277,10 +364,6 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    background-size: cover;
    padding-top: 20px;
 
-   .home-hero {
-      height: 196px;
-   }
-
    h1 {
       margin: 0px auto;
       max-width: 90%;
@@ -290,6 +373,14 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
       text-align: center;
    }
 }
+
+.img-hero.home-hero {
+      height: 196px;
+   }
+
+.img-hero.full-height {
+      height: 900px;
+   }
 
 .img-hero-bar {
    background-position: center 30%;
@@ -390,6 +481,14 @@ a.round-icon-blocks {
       
 }
 
+.mc-field-group .addon-icon {
+   width: 75%;
+}
+
+.login-meta {
+   margin-left: 20px;
+}
+
 
 /* ==========================================================================
    Media Queries
@@ -406,10 +505,6 @@ a.round-icon-blocks {
    max-width: 40%;
 }
 
-input {
-   display: inline-block;
-   width: auto;
-}
 
 input.email {
    width:40%;
@@ -435,15 +530,15 @@ input.email {
    .img-hero {
       padding-top: 50px;
 
-      .home-hero{
-         height: 418px;
-      }
-
       h1 {
       font-size: 36px;
       width: 70%;
       }
    }
+
+   .img-hero.home-hero {
+         height: 418px;
+      }
 
    .news-ticker {
       font-size: 18px;

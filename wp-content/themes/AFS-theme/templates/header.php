@@ -20,7 +20,7 @@
     <div class="col-lg-12 container">
       <a class="logo" href="<?php echo home_url(); ?>/"><img src="/2013/assets/img/AFS-logo.png" alt="Alliance Facility Solutions" /></a>
       <div class="pull-right second-nav">
-        <a href="#">Login</a> | <a href="#">Register</a> | <a href="#">Search</a>
+        <a href="http://facilityvendor.com/2013/login/">Login</a> | <a href="http://facilityvendor.com/2013/register/">Register</a> | <a href="#">Search</a>
       </div>
       <div class="pull-right second-nav-logged hidden">
         <div class="username">
