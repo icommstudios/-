@@ -1,0 +1,1 @@
+<p>Manage this in templates/contractors/content-contractor-posting.php</p>

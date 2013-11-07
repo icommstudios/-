@@ -6103,6 +6103,9 @@ select {
   color: #7f7f7f;
   font-size: 22px;
 }
+.field-meta {
+  margin-left: 12px;
+}
 input:not([type=submit]):not([type=checkbox]),
 select {
   width: 100%;
@@ -6122,8 +6125,9 @@ input[type=checkbox] {
   position: absolute;
   width: 20px;
   height: 20px;
-  top: 0;
+  top: 50%;
   left: 0;
+  margin-top: -10px;
   border-radius: 4px;
   -webkit-box-shadow: inset 0px 1px 1px #ffffff, 0px 1px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 0px 1px 1px #ffffff, 0px 1px 3px rgba(0, 0, 0, 0.5);
@@ -6162,6 +6166,7 @@ input[type=checkbox] {
 }
 .addon-icon {
   position: relative;
+  display: inline-block;
 }
 .addon-icon input,
 .addon-icon select {
@@ -6193,6 +6198,11 @@ input[type=checkbox] {
 }
 .top-nav-bar ul.top-nav li {
   display: inline-block;
+  text-align: right;
+}
+.top-nav-bar ul.top-nav li ul li {
+  display: block;
+  text-align: left;
 }
 .top-nav-bar ul.top-nav li a {
   display: block;
@@ -6236,6 +6246,7 @@ ul.social-nav li a i {
     margin-top: 6px;
     padding: 2px 0;
     width: 100%;
+    font-size: 15px;
   }
   .top-nav {
     display: none;
@@ -6438,10 +6449,70 @@ a.round-icon-blocks p {
   font-weight: 400;
 }
 .mc-field-group .addon-icon {
-  width: 75%;
+  width: 65%;
 }
-.login-meta {
-  margin-left: 20px;
+.search-wrap {
+  background: #f6f6f6;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+.search-wrap input {
+  margin: 0;
+  background: none;
+}
+.search-wrap input.search-field {
+  width: 60%;
+}
+.search-wrap .addon-icon {
+  width: 30%;
+}
+.search-wrap .addon-icon .add-on {
+  border-left: 1px solid #a8a8a8;
+  left: 0;
+  padding-left: 15px;
+}
+.search-wrap .search-submit {
+  width: 9%;
+  padding: 12px;
+  background: #343434;
+  border: 0;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  float: right;
+}
+.search-wrap .search-submit i {
+  color: white;
+  font-size: 24px;
+}
+.search-meta .custom-checkbox,
+.search-meta .addon-icon {
+  float: right;
+  width: auto;
+  margin-left: 30px;
+  color: #9a07ef;
+}
+.search-meta .addon-icon .add-on {
+  top: 2px;
+}
+.search-meta .custom-checkbox {
+  height: 100%;
+  padding: 8px 0;
+}
+.search-meta select {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: #cb4000;
+  font-size: 16px;
+  color: white;
+}
+.search-meta i {
+  color: white;
+}
+.search-meta .field-meta {
+  color: white;
 }
 /* ==========================================================================
    Media Queries

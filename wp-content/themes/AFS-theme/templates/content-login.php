@@ -15,12 +15,12 @@
 				<div class="form-group">
 					<div class="custom-checkbox">
 						<input type="checkbox" value="None" name="remember_me" id="remember_me"  class="white">
-						<label for="remember_me"></label><span class="login-meta">remember me</span>
+						<label for="remember_me"></label><span class="field-meta">remember me</span>
 					</div>
 				</div>
 				<div class="form-group">
 					<input type="submit" value="login" name="subscribe" class="orange">
-					<span class="login-meta"><a href="#">forgot password?</a> | <a href="#">register for account</a></span>
+					<span class="field-meta"><a href="#">forgot password?</a> | <a href="#">register for account</a></span>
 				</div>
 			</form>
 			</div>

@@ -22,7 +22,7 @@
 				<div class="form-group">
 					<div class="custom-checkbox">
 						<input type="checkbox" value="None" name="remember_me" id="remember_me" class="white"/>
-						<label for="remember_me"></label><span class="login-meta">I accept the AFS Terms of Use</span>
+						<label for="remember_me"></label><span class="field-meta">I accept the AFS Terms of Use</span>
 					</div>
 				</div>
 				<div class="form-group">

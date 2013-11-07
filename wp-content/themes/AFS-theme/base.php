@@ -14,11 +14,22 @@
   ?>
 
 <?php
-        if ( is_page() ) {
+        if ( is_page( 'search' ) ) {
+            get_template_part('templates/search-header');
+        }
+
+        elseif ( is_page( 'example-job-posting' ) ) {
+            get_template_part('templates/facility/job-posting-header');
+        }
+
+        elseif ( is_page( 'example-contractor-posting' ) ) {
+            get_template_part('templates/contractors/contractor-posting-header');
+        }
+
+        else {
             get_template_part('templates/page-title');
         }
 ?>
-
 
   <div class="wrap container" role="document">
     <div class="content row">

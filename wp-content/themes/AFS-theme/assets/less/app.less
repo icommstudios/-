@@ -81,6 +81,10 @@ input, select {
    font-size: 22px;
 }
 
+.field-meta {
+   margin-left: 12px;
+}
+
 input:not([type=submit]):not([type=checkbox]), select {
    width: 100%;
 }
@@ -104,7 +108,8 @@ input[type=checkbox] {
    position: absolute;
    width: 20px;
    height: 20px;
-   top: 0; left: 0;
+   top: 50%; left: 0;
+   margin-top: -10px;
    border-radius: 4px;
 
    -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
@@ -149,6 +154,8 @@ input[type=checkbox] {
 
 .addon-icon {
    position: relative;
+   display: inline-block;
+
    input, select  {
       padding-left: 50px;
    }
@@ -183,6 +190,12 @@ input[type=checkbox] {
 
       li {
          display: inline-block;
+         text-align: right;
+
+         ul li { 
+            display: block;
+            text-align: left;
+            }
 
          a {
             display:block;
@@ -237,6 +250,7 @@ ul.social-nav {
       margin-top:6px;
       padding: 2px 0;
       width:100%;
+      font-size: 15px;
 
    }
    .top-nav { 
@@ -482,12 +496,82 @@ a.round-icon-blocks {
 }
 
 .mc-field-group .addon-icon {
-   width: 75%;
+   width: 65%;
 }
 
-.login-meta {
-   margin-left: 20px;
+.search-wrap {
+   background: #f6f6f6;
+   .border-radius(5px);
+   margin: 10px 0;
+
+   input {
+      margin:0;
+      background:none;
+   }
+
+   input.search-field {
+      width:60%;
+   }
+
+   .addon-icon {
+       width: 30%;
+
+       .add-on {
+         border-left:1px solid #a8a8a8;
+         left: 0;
+         padding-left: 15px;
+       }
+   }
+
+   .search-submit {
+      width: 9%;
+      padding: 12px;
+      background: @dark;
+      border: 0;
+      .border-radius(5px);
+      float: right;
+
+      i {
+         color:white;
+         font-size: 24px;
+      }
+   }
 }
+
+.search-meta {
+
+      .custom-checkbox, .addon-icon {
+      float: right;
+      width:auto;
+      margin-left: 30px;
+      color: @purple;
+      }
+
+      .addon-icon .add-on {
+         top:2px;
+      }
+
+      .custom-checkbox {
+         height: 100%;
+         padding:8px 0;
+      }
+
+      select {
+         padding-top:8px;
+         padding-bottom:8px;
+         background:#cb4000;
+         font-size: 16px;
+         color: white;
+      }
+
+      i {
+           color: white; 
+         }
+
+      .field-meta {
+         color:white;
+      }
+   }
 
 
 /* ==========================================================================

@@ -64,7 +64,8 @@ function roots_display_sidebar() {
      */
     array(
       'template-login.php',
-      'template-register.php'
+      'template-register.php',
+      'template-search.php'
     )
   );
 
