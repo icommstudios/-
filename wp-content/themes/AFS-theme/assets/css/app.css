@@ -6090,6 +6090,7 @@ img {
   font-family: 'Roboto', sans-serif;
   color: white;
 }
+/* Form Elements */
 input,
 select {
   background: #ececec;
@@ -6164,6 +6165,7 @@ input[type=checkbox] {
   filter: alpha(opacity=100);
   opacity: 1;
 }
+/* Append icons to form elements */
 .addon-icon {
   position: relative;
   display: inline-block;
@@ -6185,6 +6187,13 @@ input[type=checkbox] {
 .banner {
   margin-bottom: 20px;
 }
+a.logo {
+  display: block;
+  margin: 0px auto;
+  float: left;
+  width: 120px;
+}
+/* Top main navigation */
 .top-nav-bar {
   background: #f2f2f2;
   height: 38px;
@@ -6216,6 +6225,7 @@ input[type=checkbox] {
   color: #e53203;
   text-decoration: none;
 }
+/* Social Media nav beside top-nav */
 ul.social-nav {
   margin-bottom: 0px;
   padding-left: 12px;
@@ -6252,12 +6262,7 @@ ul.social-nav li a i {
     display: none;
   }
 }
-a.logo {
-  display: block;
-  margin: 0px auto;
-  float: left;
-  width: 120px;
-}
+/* 2nd navigation */
 .second-nav {
   margin-top: 20px;
   font-size: 1em;
@@ -6320,7 +6325,10 @@ a.logo {
    Sidebar
    ========================================================================== */
 /* ==========================================================================
-   Posts
+   General Posts
+   ========================================================================== */
+/* ==========================================================================
+   Contractor & Job Posts
    ========================================================================== */
 /* ==========================================================================
    WordPress Generated Classes
@@ -6343,6 +6351,7 @@ figure.alignnone {
 /* ==========================================================================
    Main Page Elements
    ========================================================================== */
+/* Full page Image Hero */
 .img-hero {
   display: block;
   background-repeat: no-repeat;
@@ -6367,12 +6376,14 @@ figure.alignnone {
   background-position: center 30%;
   background-image: url('../img/img-hero-bar.jpg');
 }
+/* Orange Hero */
 .orange-hero {
   background: url('../img/orange-hex-pattern.jpg');
 }
 .orange-hero .handshake-icon {
   display: none;
 }
+/* News Ticker */
 .news-ticker {
   margin-bottom: 10px;
   background: #343434;
@@ -6415,6 +6426,7 @@ figure.alignnone {
   white-space: nowrap;
   font-family: 'Roboto', sans-serif;
 }
+/* Round Icons */
 a.round-icon-blocks {
   text-align: center;
   color: #343434;
@@ -6448,9 +6460,11 @@ a.round-icon-blocks p {
   font-size: 24px;
   font-weight: 400;
 }
+/* Homepage Email Input */
 .mc-field-group .addon-icon {
   width: 65%;
 }
+/* Search Header & Input */
 .search-wrap {
   background: #f6f6f6;
   -webkit-border-radius: 5px;
@@ -6518,18 +6532,23 @@ a.round-icon-blocks p {
    Media Queries
    ========================================================================== */
 @media (min-width: 768px) {
+  /* ==========================================================================
+     Base
+     ========================================================================== */
   .page-title {
     font-size: 40px;
   }
   .ghosted-note {
     max-width: 40%;
   }
-  input.email {
-    width: 40%;
-  }
+  /* ==========================================================================
+     Header
+     ========================================================================== */
+  /* Top Main Navigation */
   .top-nav-bar nav {
     float: right;
   }
+  /* 2nd Navigation */
   .second-nav {
     margin-top: 20px;
     font-size: 1.4em;
@@ -6538,6 +6557,10 @@ a.round-icon-blocks p {
     margin-top: 12px;
     font-size: 1.1em;
   }
+  /* ==========================================================================
+     Main Page Elements
+     ========================================================================== */
+  /* Full page Image Hero */
   .img-hero {
     padding-top: 50px;
   }
@@ -6548,12 +6571,14 @@ a.round-icon-blocks p {
   .img-hero.home-hero {
     height: 418px;
   }
+  /* News Ticker */
   .news-ticker {
     font-size: 18px;
   }
   .news-ticker p {
     padding: 25px 20px;
   }
+  /* Orange Hero */
   .orange-hero .handshake-icon {
     display: block;
     margin-bottom: -26px;
@@ -6564,15 +6589,23 @@ a.round-icon-blocks p {
   }
 }
 @media (min-width: 992px) {
-  a.logo {
+  /* ==========================================================================
+     Base
+     ========================================================================== */
+  .btn {
+    font-size: 25px;
+  }
+  /* ==========================================================================
+     Header
+     ========================================================================== */a.logo {
     margin-top: -14px;
     width: 200px;
   }
+  /* ==========================================================================
+     Main Page Elements
+     ========================================================================== */
   .img-hero h1 {
     font-size: 48px;
-  }
-  .btn {
-    font-size: 25px;
   }
 }
 @media (min-width: 1200px) {
