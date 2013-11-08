@@ -70,6 +70,8 @@ img {
    color: white;
 }
 
+/* Form Elements */
+
 input, select {
    background: #ececec;
    .border-radius(5px);
@@ -152,6 +154,8 @@ input[type=checkbox] {
    opacity: 1;
 }
 
+/* Append icons to form elements */
+
 .addon-icon {
    position: relative;
    display: inline-block;
@@ -176,6 +180,15 @@ input[type=checkbox] {
 
 .banner { margin-bottom: 20px; }
 
+a.logo {
+   display: block;
+   margin: 0px auto;
+   float:left;
+   width: 120px;
+}
+
+
+/* Top main navigation */
 .top-nav-bar {
    background:#f2f2f2;
    height:38px;
@@ -214,6 +227,8 @@ input[type=checkbox] {
 
    }
 }
+
+/* Social Media nav beside top-nav */
 
 ul.social-nav {
    margin-bottom: 0px;
@@ -258,12 +273,7 @@ ul.social-nav {
    }
 }
 
-a.logo {
-   display: block;
-   margin: 0px auto;
-   float:left;
-   width: 120px;
-}
+/* 2nd navigation */
 
 .second-nav {
    margin-top: 20px;
@@ -346,7 +356,7 @@ a.logo {
 
 
 /* ==========================================================================
-   Posts
+   General Posts
    ========================================================================== */
 
 .hentry header { }
@@ -354,6 +364,11 @@ a.logo {
 .hentry .byline { }
 .hentry .entry-content { }
 .hentry footer { }
+
+
+/* ==========================================================================
+   Contractor & Job Posts
+   ========================================================================== */
 
 
 
@@ -371,6 +386,8 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 /* ==========================================================================
    Main Page Elements
    ========================================================================== */
+
+/* Full page Image Hero */
 
 .img-hero {
    display: block;
@@ -402,6 +419,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 }
 
 
+/* Orange Hero */
 .orange-hero {
    background: url('../img/orange-hex-pattern.jpg');
 
@@ -411,6 +429,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 }
 
+/* News Ticker */
 .news-ticker {
    margin-bottom: 10px;
    background: @dark;
@@ -460,6 +479,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
    }
 }
 
+/* Round Icons */
 a.round-icon-blocks {
    text-align: center;
    color:@dark;
@@ -495,10 +515,13 @@ a.round-icon-blocks {
       
 }
 
+/* Homepage Email Input */
 .mc-field-group .addon-icon {
    width: 65%;
 }
 
+
+/* Search Header & Input */
 .search-wrap {
    background: #f6f6f6;
    .border-radius(5px);
@@ -581,6 +604,10 @@ a.round-icon-blocks {
 
 @media (min-width: @screen-sm-min) { 
 
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
 .page-title {
    font-size: 40px;
 }
@@ -590,9 +617,11 @@ a.round-icon-blocks {
 }
 
 
-input.email {
-   width:40%;
-}
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+/* Top Main Navigation */
 
    .top-nav-bar {
       
@@ -601,6 +630,7 @@ input.email {
       }
    }
 
+/* 2nd Navigation */
    .second-nav {
       margin-top: 20px;
       font-size:1.4em;
@@ -611,6 +641,11 @@ input.email {
    font-size: 1.1em;
    }
 
+/* ==========================================================================
+   Main Page Elements
+   ========================================================================== */
+
+/* Full page Image Hero */
    .img-hero {
       padding-top: 50px;
 
@@ -624,6 +659,7 @@ input.email {
          height: 418px;
       }
 
+/* News Ticker */
    .news-ticker {
       font-size: 18px;
 
@@ -632,6 +668,7 @@ input.email {
       }
    }
 
+/* Orange Hero */
    .orange-hero {
 
          .handshake-icon {
@@ -647,18 +684,28 @@ input.email {
 
 
 @media (min-width: @screen-md-min) { 
-            
+ 
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+   .btn {
+      font-size: 25px;
+   }
+
+ /* ==========================================================================
+   Header
+   ========================================================================== */           
       a.logo { 
          margin-top:-14px;
          width:200px;
       }
 
+/* ==========================================================================
+   Main Page Elements
+   ========================================================================== */
       .img-hero h1 {
       font-size: 48px;
-      }
-
-      .btn {
-      font-size: 25px;
       }
 }
 

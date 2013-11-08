@@ -1,22 +1,28 @@
 <div class="page-filters">
 <select>
-	  <option>nationwide</option>
-	  <option>25 miles</option>
-	  <option>50 miles</option>
-	  <option>100 miles</option>
-	  <option>150 miles</option>
-	  <option>250 miles</option>
-	  <option>500 miles</option>
+	  <option>Newest posts</option>
+	  <option>Oldest posts</option>
+	  <option>Highest budget</option>
+	  <option>Lowest Budget</option>
+	  <option>Contractors</option>
+	  <option>Job Postings</option>
 </select>
 <select>
-	  <option>nationwide</option>
-	  <option>25 miles</option>
-	  <option>50 miles</option>
-	  <option>100 miles</option>
-	  <option>150 miles</option>
-	  <option>250 miles</option>
-	  <option>500 miles</option>
+	  <option>sort by popular tags</option>
+	  <option>construction</option>
+	  <option>maintenance</option>
+	  <option>electrical</option>
+	  <option>roofing</option>
 </select>
 </div>
 
 <hr />
+
+<article class="posting job">
+  	<time>10/09/13</time>
+    <h2 class="posting-title"><a href="#">Post Title</a></h2>
+    <p class="posting-summary">If you have ever experienced the thrill of setting up an email app or client, you most certainly have had to deal with the terms POP and IMAP. However, you might not be able to recall which protocol you chose, … <a href="http://icommstudios.com/web-design-blog/web-design-resources/pop-vs-imap-which-one-is-right-for-you/">Continued</a></p>
+  <div class="posting-meta">
+  	<p class="author">posted by <a href="http://icommstudios.com/web-design-blog/author/thedrick/" rel="author" class="fn">thedrick</a></p>
+  </div>
+</article>
