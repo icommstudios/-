@@ -13,6 +13,11 @@ body {
    color: #5f5f5f;
 }
 
+p  {
+   font-size: 18px;
+   font-family: 'Roboto', sans-serif;
+}
+
 h1,h2,h3,h4,h5,h6 {
    font-family: 'Roboto', sans-serif;
    font-weight: 400;
@@ -343,6 +348,7 @@ ul.social-nav {
    margin: 0 -15px;
 }
 
+
 /* Gallery Shortcode */
 .gallery-row { padding: 15px 0; }
 
@@ -370,6 +376,49 @@ ul.social-nav {
    Contractor & Job Posts
    ========================================================================== */
 
+.posting {
+   padding-left: 10px;
+   padding-bottom: 6px;
+   margin-bottom: 20px;
+
+   &:hover {
+      background:#f2f2f2;
+      cursor: pointer;
+   }
+
+   time {
+      font-size: 20px;
+      color: #535353;
+   }
+
+   .posting-title {
+      display: inline-block;
+      margin: 0;
+   }
+
+   .posting-summary {
+
+   }
+
+   .posting-tags {
+   }
+
+   .posting-meta {
+
+      .author {
+         font-size: 14px;
+      }
+
+   }
+}
+
+.job-post {
+   border-left: 10px solid @purple;
+}
+
+.contractor-post {
+   border-left: 10px solid @blue;
+}
 
 
 /* ==========================================================================
