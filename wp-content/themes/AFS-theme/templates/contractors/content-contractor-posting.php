@@ -1,5 +1,5 @@
 <div class="main-content">
-<ul class="itinerary">
+<ul class="list-inline">
 	<li>Est. 2002</li>
 	<li><i class="fa fa-envelope-o"></i> email@email.com</li>
 	<li><i class="fa fa-phone"></i> 704-555-5555</li>	
@@ -15,29 +15,43 @@
   <li><a href="#licenses" data-toggle="tab">Licenses & Accreditations</a></li>
   <li><a href="#ratings" data-toggle="tab">Ratings & Referrals</a></li>
 </ul>
-
 <div class="tab-content">
   <div class="tab-pane active" id="general">
-  	<ul>
-  		<li>John C. Smith</li>
-  		<li>XYZ Company</li>
-  		<li>704-555-5555</li>
-  		<li>email@email.com</li>
-  		<li>Charlotte, NC</li>
+  	<ul class="col-xs-6 col-sm-3 fa-ul">
+  		<li><i class="fa-li fa fa-square"></i>John C. Smith</li>
+  		<li><i class="fa-li fa fa-square"></i>XYZ Company</li>
+  		<li><i class="fa-li fa fa-square"></i>704-555-5555</li>
+  		<li><i class="fa-li fa fa-square"></i>email@email.com</li>
+  		<li><i class="fa-li fa fa-square"></i>Charlotte, NC</li>
   	</ul>
-  	<ul>
-  		<li>9am - 5pm est.</li>
-  		<li>15 yrs. experience</li>
-  		<li>www.yourwebsite.com</li>
+  	<ul class="col-xs-6 col-sm-3 fa-ul">
+  		<li><i class="fa-li fa fa-square"></i>9am - 5pm est.</li>
+  		<li><i class="fa-li fa fa-square"></i>15 yrs. experience</li>
+  		<li><i class="fa-li fa fa-square"></i>www.yourwebsite.com</li>
   	</ul>
-  	<ul class="skillsets">
-  		<p>core skills</p>
-  		<li>Construction</li>
+  	<ul class="col-xs-6 col-sm-3 skillsets">
+  		<li class="btn-primary">Core skills</li>
+  		<li >Construction</li>
   		<li>Consturction</li>
   	</ul>
   </div>
   <div class="tab-pane" id="licenses">...</div>
   <div class="tab-pane" id="ratings">...</div>
 </div>
+<div class="clearfix"></div>
+<hr>
+<h4>Project Photos</h4>
+<ul class="list-inline">
+<li><a href="http://placehold.it/350x150" rel="prettyPhoto" title="You can add caption to pictures."><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Red round shape" /></a></li>
+
+<li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Nice building" /></a></li>
+
+<li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Fire!" /></a></li>
+
+<li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Rock climbing" /></a></li>
+
+<li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Fly kite, fly!" /></a> </li>
+</ul>
 </div>
+
 
