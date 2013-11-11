@@ -103,8 +103,8 @@
       &:focus {
         /*color: @nav-tabs-active-link-hover-color;
         background-color: @nav-tabs-active-link-hover-bg;*/
-        color: #ffffff;
-        background-color: #e93001;
+        color: #333;
+        background-color: rgb(242, 242, 242);
         border: 1px solid @nav-tabs-active-link-hover-border-color;
         border-bottom-color: transparent;
         cursor: default;
@@ -227,21 +227,29 @@
   }
 }
 
-
 // Tabbable tabs
 // -------------------------
 
-// Hide tabbable panes to start, show them when `.active`
+// Clear any floats
+.tabbable {
+  .clearfix();
+}
+
 .tab-content > .tab-pane {
-    display: none;
     padding: 1rem .5rem;
 }
-.tab-content > .tab-pane > ul > li{
-list-style:none;
-  }
+
+// Show/hide tabbable areas
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+.tab-content,
+.pill-content {
   > .active {
     display: block;
   }
+}
 
 
 // Dropdowns

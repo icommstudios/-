@@ -14,4 +14,11 @@
   });
 </script>
 
+<!-- PrettyPhoto -->
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+    $("a[rel='prettyPhoto']").prettyPhoto();
+  });
+</script>
+
 <?php wp_footer(); ?>

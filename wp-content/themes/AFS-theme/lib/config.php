@@ -65,7 +65,9 @@ function roots_display_sidebar() {
     array(
       'template-login.php',
       'template-register.php',
-      'template-search.php'
+      'template-search.php',
+      'template-contractor-postings.php',
+      'template-job-postings.php'
     )
   );
 

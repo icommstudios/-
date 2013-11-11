@@ -5,6 +5,7 @@
         </span>
 		<div class="posting-tags">
 			<span class="label label-primary">Construction</span>
+			<span class="label label-primary">Electrical</span>
 	  		<span class="label label-primary label-location">Charlotte, NC</span></div>
   		</div>
 </div>
