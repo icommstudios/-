@@ -1,4 +1,3 @@
-<div class="main-content">
 <ul class="list-inline">
 	<li>Est. 2002</li>
 	<li><i class="fa fa-envelope-o"></i> email@email.com</li>
@@ -52,6 +51,5 @@
 
 <li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Fly kite, fly!" /></a> </li>
 </ul>
-</div>
 
 

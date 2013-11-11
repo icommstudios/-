@@ -1,8 +1,7 @@
-<div class="main-content">
-<ul class="list-inline">
+<ul class="list-inline details-meta">
 	<li>Est. 2002</li>
-	<li><i class="fa fa-envelope-o"></i> email@email.com</li>
-	<li><i class="fa fa-phone"></i> 704-555-5555</li>	
+	<li><i class="fa fa-envelope-o"></i> <a href="mailto:email@email.com">email@email.com</a></li>
+	<li><i class="fa fa-phone"></i> <a href="tel:17045555555">704-555-5555</a></li>	
 	<li><i class="fa fa-clock-o"></i> 9am - 5pm est.</li>	
 </ul>
 <div class="featured-img">
@@ -52,6 +51,5 @@
 
 <li><a href="http://placehold.it/350x150" rel="prettyPhoto"><img class="img-thumbnail" src="http://placehold.it/60x60" width="60" height="60" alt="Fly kite, fly!" /></a> </li>
 </ul>
-</div>
 
 

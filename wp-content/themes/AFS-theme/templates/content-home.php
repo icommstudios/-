@@ -1,7 +1,7 @@
 <div class="img-hero overflow home-hero img-hero-bar">
 	<h1>Welcome to Alliance Facility Solutions, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
 </div>
-<div class="orange-hero overflow">
+<div class="hero orange-hero overflow">
 	<div class="col-lg-12 container">
 	<div class="row">
 		<div class="col-sm-4"><a href="#" class="btn white blue-text centered large-text">Search for Contractors</a></div>
