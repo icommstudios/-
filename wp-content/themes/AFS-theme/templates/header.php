@@ -1,7 +1,7 @@
 <header class="banner" role="banner">
   <div>
     <div class="top-nav-bar">
-    <div class="col-lg-12 container text-right">
+    <div class="container text-right">
       <ul class="social-nav pull-right">
         <li><a href=""><i class="fa fa-facebook"></i></a></li>
         <li><a href=""><i class="fa fa-twitter"></i></a></li>
@@ -17,7 +17,7 @@
       </nav>
     </div>
     </div>
-    <div class="col-lg-12 container">
+    <div class="container">
       <a class="logo" href="<?php echo home_url(); ?>/"><img src="/2013/assets/img/AFS-logo.png" alt="Alliance Facility Solutions" /></a>
       <div class="pull-right second-nav">
         <a href="http://facilityvendor.com/2013/login/">Login</a> | <a href="http://facilityvendor.com/2013/register/">Register</a> | <a href="http://facilityvendor.com/2013/search/">Search</a>

@@ -6,15 +6,15 @@
 			<form role="form">
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-envelope"></i></span>
-						<input type="email" value="email/username" name="email" class="clear-val white">
+						<input type="email" placeholder="email/username" name="email" class="lg-input full-width clear-val white">
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-key"></i></span>
-					<input type="password" name="password" value="enter password" class="white">
+					<input type="password" name="password" placeholder="enter password" class="lg-input full-width white">
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-user"></i></span>
-					<select class="white">
+					<select class="lg-select full-width white">
 					  <option>I am a trusted contractor</option>
 					  <option>I am an honest facility manager</option>
 					</select>
@@ -26,7 +26,8 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="submit" value="register" name="subscribe" class="orange">
+					<input type="submit" value="register" name="subscribe" class="lg-input orange">
+					<span class="field-meta"><a href="/2013/login/">already a member? login here</a></span>
 				</div>
 			</form>
 			</div>

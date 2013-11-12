@@ -2,18 +2,18 @@
 	<h1>Welcome to Alliance Facility Solutions, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
 </div>
 <div class="hero orange-hero overflow">
-	<div class="col-lg-12 container">
+	<div class="container">
 	<div class="row">
-		<div class="col-sm-4"><a href="#" class="btn white blue-text centered large-text">Search for Contractors</a></div>
+		<div class="col-sm-4"><a href="#" class="btn large white blue-text centered">Search for Contractors</a></div>
 		<div class="col-sm-4"><img class="centered handshake-icon" src="/2013/assets/img/handshake.png" /></div>
-		<div class="col-sm-4"><a href="#" class="btn white purple-text centered large-text">Search for Facility Jobs</a></div>
+		<div class="col-sm-4"><a href="#" class="btn large white purple-text centered">Search for Facility Jobs</a></div>
 	</div>
 	</div>
 </div>
 <div class="news-ticker overflow">
 	<div class="container">
 	<div class="row">
-	<p>Recent Activity</p>
+	<span>Recent Activity</span>
 	<div class="ticker-container">
 	<ul class="ticker">
 		<li><a href="#" class="facility">Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
@@ -50,9 +50,9 @@
 			<div class="mc-field-group">
 				<div class="addon-icon centered">
 					<span class="add-on"><i class="fa fa-envelope"></i></span>
-					<input type="email" value="enter valid email" name="EMAIL" class="required email clear-val" id="mce-EMAIL">
+					<input type="email" value="enter valid email" name="EMAIL" class="required lg-input email clear-val" id="mce-EMAIL">
 				</div>
-				<input type="submit" value="send invitation" name="subscribe" id="mc-embedded-subscribe" class="orange">
+				<input type="submit" value="send invitation" name="subscribe" id="mc-embedded-subscribe" class="btn large orange subscribe">
 			</div>
 				<div id="mce-responses" class="clear">
 					<div class="response" id="mce-error-response" style="display:none"></div>

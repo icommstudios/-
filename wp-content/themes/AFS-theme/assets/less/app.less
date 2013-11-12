@@ -20,9 +20,10 @@ p  {
 }
 
 h1,h2,h3,h4,h5,h6 {
-   font-family: 'Roboto', sans-serif;
+   font-family: 'arial', sans-serif;
    font-weight: 400;
    margin: 20px 0;
+   color: @text-color;
 }
 
 img {
@@ -55,30 +56,68 @@ img {
    background: @gray-lighter;
 }
 
-.btn.large {
+.btn.large, a.btn.large {
    padding: 10px;
-   margin: 5px 0;
+   margin-top: 5px;
+   margin-bottom: 5px;
    font-size: 18px;
+}
+
+.btn-group {
+   padding:0;
+   .btn {
+      width: 48%;
+      margin: 0 1%;
+   }
+}
+
+.btn.full-width, input.full-width, select.full-width, textarea.full-width {
+   width:100%;
 }
 
 .white {
    background:white;
 }
 
-.orange {
+.orange, a.orange {
    background: @orange;
    color: white;
+
+    &:hover {
+      color: white;
+      background:#fe680d;
+   }
 }
 
-.white-text, .white-text a {
+.blue, a.blue  {
+   background: @blue;
+   color: white;
+
+   &:hover {
+      color: white;
+      background:#45c1ff;
+   }
+}
+
+.purple, a.purple {
+   background: @purple;
+   color: white;
+
+   &:hover {
+      color: white;
+      background:#b438fc;
+   }
+}
+
+.white-text, .white-text a, .white-text h3 {
    color: white;
 }
 
-.blue-text {
+.blue-text, .blue-text a {
    color:@blue;
 }
 
-.purple-text {
+.purple-text, .purple-text a {
    color:@purple;
 }
 
@@ -90,7 +129,7 @@ img {
 
 /* Form Elements */
 
-input, select {
+input, select, textarea {
    background: #ececec;
    .border-radius(5px);
    border: 0;
@@ -105,6 +144,8 @@ input.lg-input, select.lg-select {
 padding: 12px;
 font-size: 22px;
 }
+
+
 
 .field-meta {
    margin-left: 12px;
@@ -209,6 +250,7 @@ a.logo {
 
    nav {
       float:left;
+      width: 60%;
    }
 
    ul.top-nav {
@@ -222,6 +264,26 @@ a.logo {
          ul li { 
             display: block;
             text-align: left;
+
+               a {
+                  background: inherit;
+                  color: inherit;
+               }
+
+            }
+
+            li.active {
+               &,
+              &:hover,
+              &:focus {
+                     background-color: @dropdown-link-active-bg;
+                     color:white;
+                  }
+
+                  a {
+                     background: inherit;
+                     color: inherit
+                  }
             }
 
          a {
@@ -285,6 +347,8 @@ ul.social-nav {
       padding: 2px 0;
       width:100%;
       font-size: 15px;
+      background: @gray-light;
+      color: white;
 
    }
    .top-nav { 
@@ -350,11 +414,8 @@ ul.social-nav {
    margin-top: 0px;
 }
 
-.main {
-   margin-top: 20px;
-   section {
+.main section {
    margin: 60px 0;
-   }
 }
 
 .container-full {
@@ -438,7 +499,7 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 /* Orange Hero */
 .hero {
-   padding:10px 0;
+   padding:20px 0;
 
    .handshake-icon {
       display:none;
@@ -475,7 +536,7 @@ background: url('../img/orange-hex-pattern.jpg');
    font-size: 14px;
    color: white;
 
-   p {
+   span {
       display:inline-block;
       background: #505050;
       height: 74px;
@@ -554,8 +615,19 @@ a.round-icon-blocks {
 }
 
 /* Homepage Email Input */
-.mc-field-group .addon-icon {
-   width: 65%;
+.mc-field-group {
+
+   .subscribe {
+      width:50%;
+   }
+
+      .addon-icon {
+      width: 50%;
+
+      .email {
+         width:100%;
+      }
+   }
 }
 
 /* ==========================================================================
@@ -693,7 +765,8 @@ a.round-icon-blocks {
    border-left: 10px solid @blue;
 }
 
-.rating {
+.rating-stars {
+   display: inline-block;
 unicode-bidi: bidi-override;
 direction: rtl;
 font-size: 20px;
@@ -702,8 +775,8 @@ margin-left: .8928rem;
 
    span.fa-star {
       padding-right: 5px;
-      color: rgba(47,153,248,1);
       display: inline-block;
+      color: @text-color;
    }
 
 }
@@ -715,6 +788,7 @@ margin-left: .8928rem;
 
    li {
       margin-right: 10px;
+      display: block;
 
       > a {
          color:@text-color;
@@ -773,17 +847,67 @@ margin-left: .8928rem;
       padding: 0;
 
       li {
-         margin: 0;
+         margin: 0 0 20px 0;
       }
+   }
+
+   h4 {
+      display: inline-block;
+      color:@brand-primary;
    }
 
    p {
       font-size: 15px;
+      margin: 0;
    }
 }
 
 .photo-group .col-sm-6, .photo-group .col-md-3 {
  margin-bottom: 20px;
+}
+
+
+/* Contractor & Job Posting Sidebar */
+
+.certified-badge {
+   margin: 5px 0;
+   display: block;
+   text-align: center;
+   font-size: 18px;
+
+   i {
+      font-size: 32px;
+      color: #ffba16;
+      margin-right: 5px;
+      vertical-align: -5px;
+   }
+}
+
+.related-posts {
+
+   ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+         margin: 0 0 20px 0;
+         border-bottom: 1px solid rgb(236, 236, 236);
+         padding-bottom: 10px;
+      }
+   }
+
+   p {
+      font-size: 16px;
+      margin: 10px 0 0 0;
+   }
+
+   h4 {
+      margin: 0;
+   }
+}
+
+#contactModal {
+   top:20%;
 }
 
 
@@ -797,7 +921,6 @@ margin-left: .8928rem;
 /* ==========================================================================
    Base
    ========================================================================== */
-
 
 .page-title {
    font-size: 40px;
@@ -818,8 +941,13 @@ margin-left: .8928rem;
       
       nav {
          float:right;
+         width: auto;
       }
    }
+
+   .nav-tabs > li { 
+      float: left !important;
+       }
 
 /* 2nd Navigation */
    .second-nav {
@@ -870,6 +998,11 @@ margin-left: .8928rem;
          .col-sm-4:first-child, .col-sm-4:last-child {
             padding-top: 40px;
          }
+   }
+
+/* Contractor & Job Posting Details */
+   .details-meta li {
+         display: block;
    }
 }
 

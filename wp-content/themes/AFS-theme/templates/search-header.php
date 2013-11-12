@@ -1,5 +1,5 @@
 <div class="hero orange-hero">
-	<div class="col-lg-12 container">
+	<div class="container">
 		<form role="search" method="get" class="search-form form-inline" action="<?php echo home_url('/'); ?>">
 		  <div class="search-wrap">
 		    <input type="search" value="search by project title, contractor name or keywords..." name="s" class="search-field lg-input clear-val">

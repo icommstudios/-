@@ -1,7 +1,7 @@
 <div class="hero blue-hero">
-	<div class="col-lg-12 container">
-		<h1>XYZ Contracting</h1><small><i>posted by John Smith</i></small><span class="rating">
-          <span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span>
+	<div class="container">
+		<h1>XYZ Contracting</h1><small><i>posted by John Smith</i></small><span class="rating-stars">
+          <span class="fa fa-star white-star"></span><span class="fa fa-star white-star"></span><span class="fa fa-star white-star"></span><span class="fa fa-star white-star"></span><span class="fa fa-star white-star"></span>
         </span>
 		<div class="posting-tags">
 			<span class="label label-primary">Construction</span>
