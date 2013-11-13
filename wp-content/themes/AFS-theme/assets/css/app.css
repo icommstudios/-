@@ -1888,7 +1888,6 @@ textarea.input-lg {
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
-  white-space: nowrap;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
@@ -5830,9 +5829,15 @@ body {
   color: #5f5f5f;
 }
 p {
-  font-size: 18px;
   margin: 20px 0;
   line-height: 1.7;
+  font-size: .9em;
+}
+a,
+input[type=submit],
+button {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
 }
 h1,
 h2,
@@ -5880,7 +5885,7 @@ a.btn.large {
   padding: 10px;
   margin-top: 5px;
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 14px;
 }
 .btn-group {
   padding: 0;
@@ -5965,6 +5970,9 @@ input.lg-input,
 select.lg-select {
   padding: 12px;
   font-size: 22px;
+}
+input[type=submit] {
+  width: 100%;
 }
 .field-meta {
   margin-left: 12px;
@@ -6352,10 +6360,10 @@ a.round-icon-blocks p {
 }
 /* Homepage Email Input */
 .mc-field-group .subscribe {
-  width: 50%;
+  width: 100%;
 }
 .mc-field-group .addon-icon {
-  width: 50%;
+  width: 100%;
 }
 .mc-field-group .addon-icon .email {
   width: 100%;
@@ -6375,42 +6383,56 @@ a.round-icon-blocks p {
   background: none;
 }
 .search-wrap input.search-field {
-  width: 60%;
+  width: 100%;
+  margin-bottom: 5px;
 }
 .search-wrap .addon-icon {
-  width: 30%;
+  width: 100%;
   display: inline-block;
+  margin-bottom: 5px;
 }
 .search-wrap .addon-icon .add-on {
-  border-left: 1px solid #a8a8a8;
   left: 0;
   padding-left: 15px;
 }
 .search-wrap .search-submit {
-  width: 9%;
-  padding: 12px;
+  width: 100%;
+  padding: 15px;
   background: #343434;
   border: 0;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
   float: right;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.search-wrap .search-submit:hover {
+  background: #494949;
 }
 .search-wrap .search-submit i {
   color: white;
   font-size: 24px;
 }
+.search-meta {
+  clear: both;
+}
 .search-meta .custom-checkbox,
 .search-meta .addon-icon {
-  float: right;
+  display: inline-block;
+  float: left;
   width: auto;
-  margin-left: 30px;
   color: #9a07ef;
 }
 .search-meta .addon-icon .add-on {
   top: 2px;
 }
+.search-meta .addon-icon {
+  width: 100%;
+  float: none;
+}
 .search-meta .custom-checkbox {
+  width: 50%;
   height: 100%;
   padding: 8px 0;
 }
@@ -6418,12 +6440,16 @@ a.round-icon-blocks p {
   background: #cb4000;
   font-size: 16px;
   color: white;
+  width: 100%;
 }
 .search-meta i {
   color: white;
 }
 .search-meta .field-meta {
   color: white;
+}
+.page-filters select {
+  font-size: .8em;
 }
 /* ==========================================================================
    Contractor & Job Posts
@@ -6488,7 +6514,7 @@ a.round-icon-blocks p {
 }
 .details-meta li {
   margin-right: 10px;
-  display: block;
+  display: inline-block;
 }
 .details-meta li > a {
   color: #5f5f5f;
@@ -6586,6 +6612,18 @@ a.round-icon-blocks p {
   /* ==========================================================================
      Base
      ========================================================================== */
+  p {
+    font-size: 1.1em;
+  }
+  input[type=submit] {
+    width: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .btn.large,
+  a.btn.large {
+    font-size: 18px;
+  }
   .page-title {
     font-size: 40px;
   }
@@ -6642,9 +6680,39 @@ a.round-icon-blocks p {
   .hero .col-sm-4:last-child {
     padding-top: 40px;
   }
-  /* Contractor & Job Posting Details */
-  .details-meta li {
-    display: block;
+  /* Homepage Email Input */
+  .mc-field-group .subscribe {
+    width: 50%;
+  }
+  .mc-field-group .addon-icon {
+    width: 50%;
+  }
+  /* ==========================================================================
+     Search Header & Input
+     ========================================================================== */
+  .search-wrap input.search-field {
+    width: 60%;
+    margin-bottom: 0px;
+  }
+  .search-wrap .addon-icon {
+    width: 30%;
+    margin-bottom: 0px;
+  }
+  .search-wrap .addon-icon .add-on {
+    border-left: 1px solid #a8a8a8;
+  }
+  .search-wrap .search-submit {
+    width: 9%;
+    margin: 0px;
+  }
+  .search-meta .custom-checkbox,
+  .search-meta .addon-icon {
+    float: right;
+    margin-left: 30px;
+    width: auto;
+  }
+  .page-filters select {
+    font-size: 1em;
   }
 }
 @media (min-width: 992px) {

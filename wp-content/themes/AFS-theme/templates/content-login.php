@@ -12,10 +12,6 @@
 					<span class="add-on"><i class="fa fa-key"></i></span>
 					<input type="password" name="password" placeholder="enter password" class="lg-input full-width white">
 				</div>
-				<div class="form-group addon-icon">
-					<span class="add-on"><i class="fa fa-key"></i></span>
-					<input type="password" name="password-confirm" placeholder="confirm password" class="lg-input full-width white">
-				</div>
 				<div class="form-group">
 					<div class="custom-checkbox">
 						<input type="checkbox" value="None" name="remember_me" id="remember_me"  class="lg-input white">

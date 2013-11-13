@@ -14,9 +14,13 @@ body {
 }
 
 p  {
-   font-size: 18px;
    margin: 20px 0;
    line-height: 1.7;
+   font-size: .9em;
+}
+
+a, input[type=submit], button {
+   .transition(.5s);
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -60,7 +64,7 @@ img {
    padding: 10px;
    margin-top: 5px;
    margin-bottom: 5px;
-   font-size: 18px;
+   font-size: 14px;
 }
 
 .btn-group {
@@ -145,7 +149,9 @@ padding: 12px;
 font-size: 22px;
 }
 
-
+input[type=submit] {
+   width: 100%;
+}
 
 .field-meta {
    margin-left: 12px;
@@ -618,11 +624,11 @@ a.round-icon-blocks {
 .mc-field-group {
 
    .subscribe {
-      width:50%;
+      width:100%;
    }
 
       .addon-icon {
-      width: 50%;
+      width: 100%;
 
       .email {
          width:100%;
@@ -645,27 +651,34 @@ a.round-icon-blocks {
    }
 
    input.search-field {
-      width:60%;
+      width:100%;
+      margin-bottom: 5px;
    }
 
    .addon-icon {
-       width: 30%;
+       width: 100%;
        display: inline-block;
+       margin-bottom: 5px;
 
        .add-on {
-         border-left:1px solid #a8a8a8;
          left: 0;
          padding-left: 15px;
        }
    }
 
    .search-submit {
-      width: 9%;
-      padding: 12px;
+      width: 100%;
+      padding: 15px;
       background: @dark;
       border: 0;
       .border-radius(5px);
       float: right;
+      margin-top: 10px;
+      margin-bottom: 5px;
+
+      &:hover {
+         background: #494949;
+      }
 
       i {
          color:white;
@@ -675,11 +688,12 @@ a.round-icon-blocks {
 }
 
 .search-meta {
+   clear: both;
 
       .custom-checkbox, .addon-icon {
-      float: right;
+      display: inline-block;
+      float: left;
       width:auto;
-      margin-left: 30px;
       color: @purple;
       }
 
@@ -687,7 +701,13 @@ a.round-icon-blocks {
          top:2px;
       }
 
+      .addon-icon {
+         width: 100%;
+         float:none;
+      }
+
       .custom-checkbox {
+         width: 50%;
          height: 100%;
          padding:8px 0;
       }
@@ -696,6 +716,7 @@ a.round-icon-blocks {
          background:#cb4000;
          font-size: 16px;
          color: white;
+         width:100%;
       }
 
       i {
@@ -704,6 +725,13 @@ a.round-icon-blocks {
 
       .field-meta {
          color:white;
+      }
+   }
+
+.page-filters {
+
+      select {
+      font-size: .8em;
       }
    }
 
@@ -788,7 +816,7 @@ margin-left: .8928rem;
 
    li {
       margin-right: 10px;
-      display: block;
+      display: inline-block;
 
       > a {
          color:@text-color;
@@ -922,6 +950,20 @@ margin-left: .8928rem;
    Base
    ========================================================================== */
 
+p {
+   font-size: 1.1em;
+}
+
+input[type=submit] {
+   width: auto;
+   padding-left: 40px;
+   padding-right: 40px;
+}
+
+.btn.large, a.btn.large { 
+   font-size: 18px;
+}
+
 .page-title {
    font-size: 40px;
 }
@@ -1000,10 +1042,63 @@ margin-left: .8928rem;
          }
    }
 
-/* Contractor & Job Posting Details */
-   .details-meta li {
-         display: block;
+/* Homepage Email Input */
+.mc-field-group {
+
+   .subscribe {
+      width:50%;
    }
+
+      .addon-icon {
+      width: 50%;
+   }
+}
+
+
+
+/* ==========================================================================
+   Search Header & Input
+   ========================================================================== */
+
+   .search-wrap {
+
+      input.search-field {
+         width:60%;
+         margin-bottom:0px; 
+      }
+
+      .addon-icon {
+          width: 30%;
+          margin-bottom:0px;
+
+          .add-on {
+            border-left:1px solid #a8a8a8;
+          }
+      }
+
+      .search-submit {
+         width: 9%;
+         margin: 0px;
+      }
+
+   }
+
+   .search-meta {
+
+      .custom-checkbox, .addon-icon {
+         float: right;
+         margin-left: 30px;
+         width: auto;
+      }
+   }
+
+   .page-filters {
+
+      select {
+      font-size: 1em;
+      }
+   }
+
 }
 
 
