@@ -138,11 +138,34 @@ input, select, textarea {
    .border-radius(5px);
    border: 0;
    margin: 0 0 5px 0;
-   padding:8px 12px;
+   padding:8px 40px 8px 12px;
    display: inline-block;
    color: #7f7f7f;
    font-size: 16px;
 }
+
+label.custom-select {
+   position:relative;
+
+   select {
+   -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+   }
+
+   }
+      
+      label.custom-select:after {
+          content:'▼';
+          color:rgba(0,0,0,.4);
+          font-size: 1em;
+          right:8px; top:50%;
+          margin-top: -12px;
+          padding:0 0 2px;
+          position:absolute;
+          pointer-events:none;
+      }
 
 input.lg-input, select.lg-select {
 padding: 12px;
@@ -172,7 +195,7 @@ input[type=checkbox] {
    position: absolute;
    width: 20px;
    height: 20px;
-   top: 50%; left: 0;
+   top: 50%; left: 0%;
    margin-top: -10px;
    border-radius: 4px;
 
@@ -230,6 +253,7 @@ input[type=checkbox] {
          top: 8px;
          color: #999999;
          font-size: 24px;
+         z-index: 1000;
       }
 }
 
@@ -659,6 +683,7 @@ a.round-icon-blocks {
        width: 100%;
        display: inline-block;
        margin-bottom: 5px;
+       border-top:1px solid #dddddd;
 
        .add-on {
          left: 0;
@@ -717,6 +742,7 @@ a.round-icon-blocks {
          font-size: 16px;
          color: white;
          width:100%;
+         line-height: 24px;
       }
 
       i {
@@ -940,6 +966,34 @@ margin-left: .8928rem;
 
 
 /* ==========================================================================
+   Contractor & Facility Profiles
+   ========================================================================== */
+
+.profile-nav {
+   background: #343434;
+   padding: 12px 0px;
+
+   nav li > {
+
+      a.save-btn {
+      background:@brand-primary;
+      padding-left: 88px;
+      padding-right: 88px;
+   }
+
+      a {
+         color: #d3d3d3;
+         font-size: 1.1em;
+
+         &:hover {
+            background: #272727;
+         }
+      }
+   }
+}
+
+
+/* ==========================================================================
    Media Queries
    ========================================================================== */
 
@@ -1070,6 +1124,7 @@ input[type=submit] {
       .addon-icon {
           width: 30%;
           margin-bottom:0px;
+          border-top:none;
 
           .add-on {
             border-left:1px solid #a8a8a8;

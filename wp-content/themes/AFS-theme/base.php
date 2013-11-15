@@ -25,7 +25,12 @@
         elseif ( is_page( 'example-contractor-posting' ) ) {
             get_template_part('templates/contractors/contractor-posting-header');
         }
-
+        elseif ( is_page( 'facility-profile' ) ) {
+            get_template_part('templates/facility/facility-profile-header');
+        }
+        elseif ( is_page( 'contractor-profile' ) ) {
+            get_template_part('templates/contractors/contractor-profile-header');
+        }
         else {
             get_template_part('templates/page-title');
         }

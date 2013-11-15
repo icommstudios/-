@@ -1,5 +1,6 @@
 <div class="page-filters clearfix">
-<select class="pull-left">
+<label class="custom-select pull-left">
+<select>
 	  <option>Newest posts</option>
 	  <option>Oldest posts</option>
 	  <option>Highest budget</option>
@@ -7,13 +8,16 @@
 	  <option>Contractors</option>
 	  <option>Job Postings</option>
 </select>
-<select class="pull-right">
+</label>
+<label class="custom-select pull-right">
+<select>
 	  <option>sort by popular tags</option>
 	  <option>construction</option>
 	  <option>maintenance</option>
 	  <option>electrical</option>
 	  <option>roofing</option>
 </select>
+</label>
 </div>
 
 <hr />

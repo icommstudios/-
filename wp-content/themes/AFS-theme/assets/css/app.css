@@ -208,7 +208,7 @@ table {
   img {
     max-width: 100% !important;
   }
-  @page  {
+  @page {
     margin: 2cm .5cm;
   }
   p,
@@ -441,7 +441,6 @@ h2,
 h3 {
   /*  margin-top: @line-height-computed;
   margin-bottom: (@line-height-computed / 2);*/
-
 }
 h1 small,
 h2 small,
@@ -456,7 +455,6 @@ h5,
 h6 {
   /*  margin-top: (@line-height-computed / 2);
   margin-bottom: (@line-height-computed / 2);*/
-
 }
 h4 small,
 h5 small,
@@ -552,10 +550,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -564,10 +560,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -680,10 +674,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -692,10 +684,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -708,10 +698,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -720,10 +708,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -1569,7 +1555,6 @@ input[type="checkbox"] {
   margin: 4px 0 0;
   margin-top: 1px \9;
   /* IE8-9 */
-
   line-height: normal;
 }
 input[type="file"] {
@@ -1851,10 +1836,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -1863,10 +1846,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -3127,10 +3108,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3139,10 +3118,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3213,7 +3190,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a:focus {
   /*color: @nav-tabs-active-link-hover-color;
         background-color: @nav-tabs-active-link-hover-bg;*/
-
   color: #333;
   background-color: #f2f2f2;
   border: 1px solid #dddddd;
@@ -3342,10 +3318,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .tabbable:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .tabbable:after {
   clear: both;
@@ -3354,10 +3328,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .tabbable:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .tabbable:after {
   clear: both;
@@ -3396,10 +3368,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3408,10 +3378,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3425,10 +3393,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3437,10 +3403,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3463,10 +3427,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -3475,10 +3437,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -4041,10 +4001,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4053,10 +4011,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4553,10 +4509,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -4565,10 +4519,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -4926,10 +4878,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -4938,10 +4888,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -5368,10 +5316,8 @@ button.close {
 .clearfix:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .clearfix:after {
   clear: both;
@@ -5961,10 +5907,30 @@ textarea {
   border-radius: 5px;
   border: 0;
   margin: 0 0 5px 0;
-  padding: 8px 12px;
+  padding: 8px 40px 8px 12px;
   display: inline-block;
   color: #7f7f7f;
   font-size: 16px;
+}
+label.custom-select {
+  position: relative;
+}
+label.custom-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+label.custom-select:after {
+  content: '▼';
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 1em;
+  right: 8px;
+  top: 50%;
+  margin-top: -12px;
+  padding: 0 0 2px;
+  position: absolute;
+  pointer-events: none;
 }
 input.lg-input,
 select.lg-select {
@@ -5990,7 +5956,7 @@ input[type=checkbox] {
   width: 20px;
   height: 20px;
   top: 50%;
-  left: 0;
+  left: 0%;
   margin-top: -10px;
   border-radius: 4px;
   -webkit-box-shadow: inset 0px 1px 1px #ffffff, 0px 1px 3px rgba(0, 0, 0, 0.5);
@@ -6042,6 +6008,7 @@ input[type=checkbox] {
   top: 8px;
   color: #999999;
   font-size: 24px;
+  z-index: 1000;
 }
 /* ==========================================================================
    Header
@@ -6390,6 +6357,7 @@ a.round-icon-blocks p {
   width: 100%;
   display: inline-block;
   margin-bottom: 5px;
+  border-top: 1px solid #dddddd;
 }
 .search-wrap .addon-icon .add-on {
   left: 0;
@@ -6441,6 +6409,7 @@ a.round-icon-blocks p {
   font-size: 16px;
   color: white;
   width: 100%;
+  line-height: 24px;
 }
 .search-meta i {
   color: white;
@@ -6606,12 +6575,31 @@ a.round-icon-blocks p {
   top: 20%;
 }
 /* ==========================================================================
+   Contractor & Facility Profiles
+   ========================================================================== */
+.profile-nav {
+  background: #343434;
+  padding: 12px 0px;
+}
+.profile-nav nav li a.save-btn {
+  background: #e53203;
+  padding-left: 88px;
+  padding-right: 88px;
+}
+.profile-nav nav li a {
+  color: #d3d3d3;
+  font-size: 1.1em;
+}
+.profile-nav nav li a:hover {
+  background: #272727;
+}
+/* ==========================================================================
    Media Queries
    ========================================================================== */
 @media (min-width: 768px) {
   /* ==========================================================================
-     Base
-     ========================================================================== */
+   Base
+   ========================================================================== */
   p {
     font-size: 1.1em;
   }
@@ -6631,8 +6619,8 @@ a.round-icon-blocks p {
     max-width: 40%;
   }
   /* ==========================================================================
-     Header
-     ========================================================================== */
+   Header
+   ========================================================================== */
   /* Top Main Navigation */
   .top-nav-bar nav {
     float: right;
@@ -6651,8 +6639,8 @@ a.round-icon-blocks p {
     font-size: 1.1em;
   }
   /* ==========================================================================
-     Main Page Elements
-     ========================================================================== */
+   Main Page Elements
+   ========================================================================== */
   /* Full page Image Hero */
   .img-hero {
     padding-top: 50px;
@@ -6688,8 +6676,8 @@ a.round-icon-blocks p {
     width: 50%;
   }
   /* ==========================================================================
-     Search Header & Input
-     ========================================================================== */
+   Search Header & Input
+   ========================================================================== */
   .search-wrap input.search-field {
     width: 60%;
     margin-bottom: 0px;
@@ -6697,6 +6685,7 @@ a.round-icon-blocks p {
   .search-wrap .addon-icon {
     width: 30%;
     margin-bottom: 0px;
+    border-top: none;
   }
   .search-wrap .addon-icon .add-on {
     border-left: 1px solid #a8a8a8;
@@ -6717,26 +6706,24 @@ a.round-icon-blocks p {
 }
 @media (min-width: 992px) {
   /* ==========================================================================
-     Base
-     ========================================================================== */
+   Base
+   ========================================================================== */
   .btn {
     font-size: 25px;
   }
   /* ==========================================================================
-     Header
-     ========================================================================== */a.logo {
+   Header
+   ========================================================================== */
+  a.logo {
     margin-top: -14px;
     width: 200px;
   }
   /* ==========================================================================
-     Main Page Elements
-     ========================================================================== */
+   Main Page Elements
+   ========================================================================== */
   .img-hero h1 {
     font-size: 48px;
   }
-}
-@media (min-width: 1200px) {
-  
 }
 /* Pretty Photo */
 div.pp_default .pp_top,

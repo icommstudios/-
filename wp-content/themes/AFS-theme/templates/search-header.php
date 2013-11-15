@@ -20,6 +20,7 @@
 			</div>
 			 <div class="addon-icon">
 			    <span class="add-on"><i class="fa fa-truck"></i></span>
+					<label class="custom-select">
 					<select>
 							  <option>nationwide</option>
 							  <option>25 miles</option>
@@ -29,6 +30,7 @@
 							  <option>250 miles</option>
 							  <option>500 miles</option>
 					</select>
+					</label>
 			</div>
 		 </div>
 		</form>
