@@ -79,6 +79,17 @@ img {
    width:100%;
 }
 
+button {
+   i {
+      margin-right: 10px;
+      padding-right: 10px;
+   }
+
+   i.border-right {
+      border-right:1px solid;
+   }
+}
+
 .white {
    background:white;
 }
@@ -766,7 +777,7 @@ a.round-icon-blocks {
    ========================================================================== */
 
 /* Posting Preview */
-.posting-preview {
+.content-item {
    padding-left: 10px;
    padding-bottom: 6px;
    margin-bottom: 20px;
@@ -783,7 +794,7 @@ a.round-icon-blocks {
       margin-right: 10px;
    }
 
-   .posting-title {
+   .content-title {
       display: inline-block;
       margin: 0;
    }
@@ -793,10 +804,10 @@ a.round-icon-blocks {
       line-height: 1.5em;
    }
 
-   .posting-summary {
+   .content-summary {
    }
 
-   .posting-meta {
+   .conent-meta {
       margin-top: 5px;
 
       .author {
@@ -807,9 +818,13 @@ a.round-icon-blocks {
    }
 }
 
- .posting-tags {
+ .tags {
       display: block;
    }
+
+.general {
+   border-left: 10px solid @gray-lighter;
+}
 
 .job-post {
    border-left: 10px solid @purple;
@@ -973,9 +988,9 @@ margin-left: .8928rem;
    background: #343434;
    padding: 12px 0px;
 
-   nav li > {
+   nav li {
 
-      a.save-btn {
+      > a.save-btn {
       background:@brand-primary;
       padding-left: 88px;
       padding-right: 88px;
@@ -984,11 +999,46 @@ margin-left: .8928rem;
       a {
          color: #d3d3d3;
          font-size: 1.1em;
+         position: relative;
 
-         &:hover {
+         &:hover, &:focus {
             background: #272727;
          }
       }
+
+      span.counter-bubble {
+         background: #5d5d5d;
+         color: #efefef;
+         font-size: 11px;
+         .border-radius(50%);
+         text-align: center;
+         line-height: 20px;
+         position: absolute;
+         width:20px; height:20px;
+         top:-3px; left: -3px;
+      }
+   }
+}
+
+.click-upload {
+   display: block;
+   background: #ccc;
+   min-height: 100%;
+   position: relative;
+   color: #c9c9c9;
+
+   span {
+      position: absolute;
+      width: 100%;
+      top:30%; bottom:0;
+      left: 0; right:0;
+      text-align: center;
+      font-size: 16px;
+   }
+
+   i  {
+      display: block;
+      font-size: 24px;
    }
 }
 
@@ -1163,9 +1213,7 @@ input[type=submit] {
 /* ==========================================================================
    Base
    ========================================================================== */
-   .btn {
-      font-size: 25px;
-   }
+
 
  /* ==========================================================================
    Header

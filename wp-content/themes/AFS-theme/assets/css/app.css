@@ -5846,6 +5846,13 @@ select.full-width,
 textarea.full-width {
   width: 100%;
 }
+button i {
+  margin-right: 10px;
+  padding-right: 10px;
+}
+button i.border-right {
+  border-right: 1px solid;
+}
 .white {
   background: white;
 }
@@ -6424,39 +6431,42 @@ a.round-icon-blocks p {
    Contractor & Job Posts
    ========================================================================== */
 /* Posting Preview */
-.posting-preview {
+.content-item {
   padding-left: 10px;
   padding-bottom: 6px;
   margin-bottom: 20px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
-.posting-preview:hover {
+.content-item:hover {
   background: #f1f1f1;
   cursor: pointer;
 }
-.posting-preview time {
+.content-item time {
   font-size: 20px;
   color: #535353;
   margin-right: 10px;
 }
-.posting-preview .posting-title {
+.content-item .content-title {
   display: inline-block;
   margin: 0;
 }
-.posting-preview p {
+.content-item p {
   margin: 0;
   line-height: 1.5em;
 }
-.posting-preview .posting-meta {
+.content-item .conent-meta {
   margin-top: 5px;
 }
-.posting-preview .posting-meta .author {
+.content-item .conent-meta .author {
   font-size: 14px;
   margin-left: 10px;
 }
-.posting-tags {
+.tags {
   display: block;
+}
+.general {
+  border-left: 10px solid #ececec;
 }
 .job-post {
   border-left: 10px solid #9a07ef;
@@ -6581,7 +6591,7 @@ a.round-icon-blocks p {
   background: #343434;
   padding: 12px 0px;
 }
-.profile-nav nav li a.save-btn {
+.profile-nav nav li > a.save-btn {
   background: #e53203;
   padding-left: 88px;
   padding-right: 88px;
@@ -6589,9 +6599,47 @@ a.round-icon-blocks p {
 .profile-nav nav li a {
   color: #d3d3d3;
   font-size: 1.1em;
+  position: relative;
 }
-.profile-nav nav li a:hover {
+.profile-nav nav li a:hover,
+.profile-nav nav li a:focus {
   background: #272727;
+}
+.profile-nav nav li span.counter-bubble {
+  background: #5d5d5d;
+  color: #efefef;
+  font-size: 11px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -3px;
+  left: -3px;
+}
+.click-upload {
+  display: block;
+  background: #ccc;
+  min-height: 100%;
+  position: relative;
+  color: #c9c9c9;
+}
+.click-upload span {
+  position: absolute;
+  width: 100%;
+  top: 30%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 16px;
+}
+.click-upload i {
+  display: block;
+  font-size: 24px;
 }
 /* ==========================================================================
    Media Queries
@@ -6708,9 +6756,6 @@ a.round-icon-blocks p {
   /* ==========================================================================
    Base
    ========================================================================== */
-  .btn {
-    font-size: 25px;
-  }
   /* ==========================================================================
    Header
    ========================================================================== */
