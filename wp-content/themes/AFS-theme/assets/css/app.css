@@ -1589,16 +1589,16 @@ output {
   vertical-align: middle;
 }
 .form-control:-moz-placeholder {
-  color: #888888;
+  color: #5f5f5f;
 }
 .form-control::-moz-placeholder {
-  color: #888888;
+  color: #5f5f5f;
 }
 .form-control:-ms-input-placeholder {
-  color: #888888;
+  color: #5f5f5f;
 }
 .form-control::-webkit-input-placeholder {
-  color: #888888;
+  color: #5f5f5f;
 }
 .form-control {
   display: block;
@@ -5914,19 +5914,43 @@ textarea {
   border-radius: 5px;
   border: 0;
   margin: 0 0 5px 0;
-  padding: 8px 40px 8px 12px;
+  padding: 8px 12px 8px 12px;
   display: inline-block;
-  color: #7f7f7f;
   font-size: 16px;
+}
+input:-moz-placeholder,
+select:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #5f5f5f;
+}
+input::-moz-placeholder,
+select::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #5f5f5f;
+}
+input:-ms-input-placeholder,
+select:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #5f5f5f;
+}
+input::-webkit-input-placeholder,
+select::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: #5f5f5f;
+}
+textarea {
+  color: #5f5f5f;
 }
 label.custom-select {
   position: relative;
+  display: block;
 }
 label.custom-select select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   cursor: pointer;
+  padding-right: 40px;
 }
 label.custom-select:after {
   content: '▼';
@@ -5956,6 +5980,9 @@ input[type=checkbox] {
 /* Custom Checkbox */
 .custom-checkbox {
   position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 .custom-checkbox label {
   cursor: pointer;
@@ -6593,8 +6620,7 @@ a.round-icon-blocks p {
 }
 .profile-nav nav li > a.save-btn {
   background: #e53203;
-  padding-left: 88px;
-  padding-right: 88px;
+  text-align: center;
 }
 .profile-nav nav li a {
   color: #d3d3d3;

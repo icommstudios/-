@@ -11,95 +11,143 @@ Pastrami boudin bacon pork chop swine beef ribs. Tongue flank corned beef veniso
 <article>
 <h4>Profile Info</h4>
 <ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#general" data-toggle="tab">General</a></li>
-  <li><a href="#licenses" data-toggle="tab">Licenses & Accreditations</a></li>
-  <li><a href="#ratings" data-toggle="tab">Ratings & Referrals</a></li>
+  <li class="active"><a href="#afs-account" data-toggle="tab">AFS Account</a></li>
+  <li><a href="#personal-profile" data-toggle="tab">Personal Profile</a></li>
+  <li><a href="#contractor-profile" data-toggle="tab">Contractor Profile</a></li>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane active" id="general">
-  	<ul class="col-lg-3 fa-ul">
-  		<li><i class="fa-li fa fa-square"></i>John C. Smith</li>
-  		<li><i class="fa-li fa fa-square"></i>XYZ Company</li>
-  		<li><i class="fa-li fa fa-square"></i>704-555-5555</li>
-  		<li><i class="fa-li fa fa-square"></i>email@email.com</li>
-  		<li><i class="fa-li fa fa-square"></i>Charlotte, NC</li>
-  	</ul>
-  	<ul class="col-lg-3 fa-ul">
-  		<li><i class="fa-li fa fa-square"></i>9am - 5pm est.</li>
-  		<li><i class="fa-li fa fa-square"></i>15 yrs. experience</li>
-  		<li class="disabled" ><i class="fa-li fa fa-square"></i>www.yourwebsite.com</li>
-  	</ul>
-  	<ul class="col-lg-5 skillsets">
-  		<li class="head">Core skills</li>
-  		<li><span class="label label-primary">Construction</span></li>
-  		<li><span class="label label-primary">Electrical</span></li>
-      <li><span class="label label-primary label-location">Charlotte, NC</span></li>
-  	</ul>
+  <div class="tab-pane active clearfix" id="afs-account">
+    <div class="col-lg-6">
+        <div class="form-group">
+        <input type="email" placeholder="email/username" name="email" class="full-width">
+        </div>
+        <div class="form-group">
+        <input type="password" name="password" placeholder="enter password" class="full-width">
+        </div>
+        <div class="form-group">
+        <input type="password" name="confirm-password" placeholder="confirm password" class="full-width">
+        </div>
+        <div class="form-group">
+        <label class="custom-select">
+        <select class="full-width">
+                <option>I am a trusted contractor</option>
+                <option>I am an honest facility manager</option>
+        </select>
+      </label>
+        </div>
+        <div class="form-group">
+        <div class="custom-checkbox">
+                <input type="checkbox" value="None" name="hide_profile" id="hide_profile"/>
+                <label for="hide_profile"></label><span class="field-meta">hide my profile</span>
+        </div>
+        </div>
+      </div>
   </div>
-  <div class="tab-pane" id="licenses">
-    <div class="col-lg-4 text-center">
-         <i class="fa fa-credit-card"></i>
-        <a href="#">NC | GFT567HY8899</a>
-      <span>General Contractors License & State</span>
-      
-    </li>
+  <div class="tab-pane clearfix" id="personal-profile">
+    <div class="col-lg-6">
+        <div class="form-group">
+          <input placeholder="name" name="name" class="full-width">
+        </div>
+        <div class="form-group">
+          <input placeholder="title" name="title" class="full-width">
+        </div>
+        <div class="form-group">
+          <input type="email" placeholder="email" name="email" class="full-width">
+        </div>
+        <div class="form-group">
+            <input type="hours" placeholder="available hours" name="hours" class="full-width">
+        </div>
     </div>
-    <div class="col-lg-4 text-center">
-      
-        <i class="fa fa-check-square-o"></i>
-        <a href="http://www.bbb.org/atlanta/business-reviews/web-design/mail-chimp-in-atlanta-ga-5001250" target="_blank">View BBB Profile</a>
-      <span>Better Business Bureau Accredited</span>
-      
-    </li>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+          <input placeholder="company name" name="company_name" class="full-width">
+        </div>
+        <div class="form-group">
+          <input placeholder="phone" name="phone" class="full-width">
+        </div>
+        <div class="form-group">
+          <input placeholder="location (city,state)" name="location" class="full-width">
+          </div>
+          <div class="form-group">
+        <label class="custom-select">
+        <select class="full-width" placeholder="do you have criminal history?">
+                <option>do you have criminal history?</option>
+                <option>yes</option>
+                <option>no</option>
+        </select>
+      </label>
+        </div>
     </div>
-    <div class="col-lg-4 text-center">
-         <i class="fa fa-clipboard"></i>
-         <a href="#">Mutual Insurance Co.</a>
-      <span>Insurance Name & Account Number</span>
-      
-    </li>
-    </div>
+
   </div>
-  <div class="tab-pane" id="ratings">
-    <a href="#" class="btn pull-right">Post Review</a>
-    <ul>
-      <li>
-        <h4>Great Contractor!</h4>
-        <span class="rating-stars">
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-        </span>
-        <p>Bacon ipsum dolor sit amet flank andouille pancetta venison swine, drumstick pig tongue brisket. Pastrami boudin bacon pork chop swine beef ribs. Tongue flank corned beef venison, meatball biltong shank short ribs ribeye.</p>
-        <p class="author">posted by <a href="#" rel="author" class="fn">thedrick</a></p>
-      </li>
-      <li>
-        <h4>Great Contractor!</h4>
-        <span class="rating-stars">
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-          <span class="fa fa-star"></span>
-        </span>
-        <p>Bacon ipsum dolor sit amet flank andouille pancetta venison swine, drumstick pig tongue brisket. Pastrami boudin bacon pork chop swine beef ribs. Tongue flank corned beef venison, meatball biltong shank short ribs ribeye.</p>
-        <p class="author">posted by <a href="#" rel="author" class="fn">thedrick</a></p>
-      </li>
-    </ul>
-    <ul class="pagination">
-      <li><a href="#">«</a></li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li><a href="#">»</a></li>
-    </ul>
+  <div class="tab-pane clearfix" id="contractor-profile">
+    <div class="form-group">
+      <p><strong>Do you have prior facility experience in any of these fields?</strong></p>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="restaurant" id="restaurant"/>
+                  <label for="restaurant"></label><span class="field-meta">restaurant/food service</span>
+      </div>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="hospitality" id="hospitality"/>
+                  <label for="hospitality"></label><span class="field-meta">hospitality</span>
+      </div>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="medical" id="medical"/>
+                  <label for="medical"></label><span class="field-meta">hospital/medical</span>
+      </div>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="retail" id="retail"/>
+                  <label for="retail"></label><span class="field-meta">retail</span>
+      </div>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="institutional" id="institutional"/>
+                  <label for="institutional"></label><span class="field-meta">institutional</span>
+      </div>
+      <div class="custom-checkbox">
+                  <input type="checkbox" value="None" name="other" id="other"/>
+                  <label for="other"></label><span class="field-meta">other</span>
+      </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+          <label class="custom-select">
+        <select class="full-width">
+                <option>primary contractor category</option>
+                <option>option 1</option>
+                <option>option 2</option>
+        </select>
+      </label>
+        </div>
+        <div class="form-group">
+          <input placeholder="better businees bureau profile" name="bbb-profile" class="full-width">
+        </div>
+        <div class="form-group">
+        <label class="custom-select">
+        <select class="full-width">
+                <option>yrs. of experience</option>
+                <option>option 1</option>
+                <option>option 2</option>
+        </select>
+      </label>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+          <input placeholder="general contractor license & state" name="contractor-license" class="full-width">
+        </div>
+        <div class="form-group">
+          <input placeholder="insurance name & account #" name="insurance" class="full-width">
+        </div>
+        <div class="form-group disabled">
+          <input placeholder="website url" name="website" class="full-width">
+          </div>
+    </div>
   </div>
 </div>
 </article>
 <article class="clearfix">
-<h4>Project Photos</h4>
 <div class="photo-group">
 <h4>Project Photos</h4>
   <div class="col-sm-6 col-md-3">

@@ -149,20 +149,26 @@ input, select, textarea {
    .border-radius(5px);
    border: 0;
    margin: 0 0 5px 0;
-   padding:8px 40px 8px 12px;
+   padding:8px 12px 8px 12px;
    display: inline-block;
-   color: #7f7f7f;
    font-size: 16px;
+   .placeholder();
+}
+
+textarea {
+   color:@text-color;
 }
 
 label.custom-select {
    position:relative;
+   display: block;
 
    select {
    -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
     cursor:pointer;
+    padding-right: 40px;
    }
 
    }
@@ -199,6 +205,9 @@ input[type=checkbox] {
 
 .custom-checkbox {  
    position: relative;
+   display: inline-block;
+   margin-bottom: 10px;
+   margin-right: 10px;
 }
 
 .custom-checkbox label {
@@ -992,8 +1001,7 @@ margin-left: .8928rem;
 
       > a.save-btn {
       background:@brand-primary;
-      padding-left: 88px;
-      padding-right: 88px;
+      text-align: center;
    }
 
       a {
