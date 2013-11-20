@@ -163,6 +163,22 @@ input, select, textarea {
    .placeholder(#333);
 }
 
+[placeholder]:focus::-moz-placeholder {
+  .opacity(.2);
+}
+
+[placeholder]:focus:-moz-placeholder {
+  .opacity(.2);
+}
+
+[placeholder]:focus:-ms-input-placeholder {
+  .opacity(.2);
+}
+
+[placeholder]:focus::-webkit-input-placeholder {
+  .opacity(.2);
+}
+
 label.custom-select {
    position:relative;
    display: block;
@@ -277,6 +293,11 @@ input[type=checkbox] {
 
    input, select  {
       padding-left: 50px;
+   }
+
+   input.lg-input {
+      padding-right: 0px;
+      padding-left: 40px;
    }
       .add-on {
          position: absolute;
@@ -699,6 +720,7 @@ a.round-icon-blocks {
    background: #f6f6f6;
    .border-radius(5px);
    margin: 10px 0;
+   padding:0px;
 
    input {
       margin:0;
