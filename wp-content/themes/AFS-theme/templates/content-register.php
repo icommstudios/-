@@ -6,18 +6,20 @@
 			<form role="form">
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-envelope"></i></span>
-						<input type="email" placeholder="email/username" name="email" class="lg-input full-width clear-val white">
+						<input type="email" placeholder="email/username" name="email" class="lg-input white full-width clear-val white">
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-key"></i></span>
-					<input type="password" name="password" placeholder="enter password" class="lg-input full-width white">
+					<input type="password" name="password" placeholder="enter password" class="lg-input white full-width white">
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-user"></i></span>
-					<select class="lg-select full-width white">
-					  <option>I am a trusted contractor</option>
-					  <option>I am an honest facility manager</option>
-					</select>
+					<label class="custom-select">
+						<select class="lg-select full-width white">
+						  <option>I am a trusted contractor</option>
+						  <option>I am an honest facility manager</option>
+						</select>
+					</label>
 				</div>
 				<div class="form-group">
 					<div class="custom-checkbox">

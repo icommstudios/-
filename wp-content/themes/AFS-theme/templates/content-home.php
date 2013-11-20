@@ -4,9 +4,9 @@
 <div class="hero orange-hero overflow">
 	<div class="container">
 	<div class="row">
-		<div class="col-sm-4"><a href="#" class="btn large white blue-text centered">Search for Contractors</a></div>
+		<div class="col-sm-4"><a href="#" class="btn x-large white blue-text centered">Search for Contractors</a></div>
 		<div class="col-sm-4"><img class="centered handshake-icon" src="/2013/assets/img/handshake.png" /></div>
-		<div class="col-sm-4"><a href="#" class="btn large white purple-text centered">Search for Facility Jobs</a></div>
+		<div class="col-sm-4"><a href="#" class="btn x-large white purple-text centered">Search for Facility Jobs</a></div>
 	</div>
 	</div>
 </div>
@@ -16,12 +16,12 @@
 	<span>Recent Activity</span>
 	<div class="ticker-container">
 	<ul class="ticker">
-		<li><a href="#" class="facility">Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
-		<li><a href="#" class="contractor">Contractors Name</a></li>
-		<li><a href="#" class="facility">Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
-		<li><a href="#" class="facility">Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
-		<li><a href="#" class="contractor">Contractors Name</a></li>
-		<li><a href="#" class="facility">Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
+		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
+		<li><a href="#" class="contractor"><i class="fa fa-briefcase"></i> Contractors Name | Whiteville, VA | 08-10-13</a></li>
+		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Project Title Goes here | Mooresville, NC | 11-10-13</a></li>
+		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Another Project Title | Memphis, TN | 06-03-13</a></li>
+		<li><a href="#" class="contractor"><i class="fa fa-briefcase"></i> Contractors Name | Charlotte, NC | 10-03-13</a></li>
+		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Another Project Title | Raleigh, NC | 10-03-13</a></li>
 	</ul>
 	</div>
 	</div>

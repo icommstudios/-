@@ -2,10 +2,10 @@
 	<div class="container">
 		<form role="search" method="get" class="search-form form-inline" action="<?php echo home_url('/'); ?>">
 		  <div class="search-wrap">
-		    <input type="search" value="search by project title, contractor name or keywords..." name="s" class="search-field lg-input clear-val">
+		    <input type="search" placeholder="search by project title, contractor name or keywords..." name="s" class="search-field lg-input white clear-val">
 		    <div class="addon-icon">
 			    <span class="add-on"><i class="fa fa-map-marker"></i></span>
-			    <input type="text" title="Location" name="location" class="location-field clear-val lg-input" value="location" />
+			    <input type="text" title="Location" name="location" class="location-field white clear-val lg-input" placeholder="location" />
 			</div>
 		      <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
 		  </div>

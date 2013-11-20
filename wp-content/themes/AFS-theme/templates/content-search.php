@@ -24,7 +24,7 @@
 
 <article class="content-item job-post">
   	<time>10/09/13</time>
-    <h2 class="content-title"><a href="#">Post Title</a></h2>
+    <h3 class="content-title"><a href="#">Post Title</a></h3>
     <p class="content-summary">If you have ever experienced the thrill of setting up an email app or client, you most certainly have had to deal with the terms POP and IMAP. However, you might not be able to recall which protocol you chose, … </p>
   <div class="content-meta">
     <div class="tags">
@@ -36,7 +36,7 @@
 </article>
 <article class="content-item contractor-post">
   	<time>10/09/13</time>
-    <h2 class="content-title"><a href="#">XYZ Contractors</a></h2>
+    <h3 class="content-title"><a href="#">XYZ Contractors</a></h3>
     <p class="content-summary">If you have ever experienced the thrill of setting up an email app or client, you most certainly have had to deal with the terms POP and IMAP. However, you might not be able to recall which protocol you chose, …</p>
   <div class="content-meta">
     <div class="tags">
@@ -48,7 +48,7 @@
 </article>
 <article class="content-item job-post">
     <time>10/09/13</time>
-    <h2 class="content-title"><a href="#">Post Title</a></h2>
+    <h3 class="content-title"><a href="#">Post Title</a></h3>
     <p class="content-summary">If you have ever experienced the thrill of setting up an email app or client, you most certainly have had to deal with the terms POP and IMAP. However, you might not be able to recall which protocol you chose, … </p>
   <div class="content-meta">
     <div class="tags">
@@ -60,7 +60,7 @@
 </article>
 <article class="content-item contractor-post">
     <time>10/09/13</time>
-    <h2 class="content-title"><a href="#">XYZ Contractors</a></h2>
+    <h3 class="content-title"><a href="#">XYZ Contractors</a></h3>
     <p class="content-summary">If you have ever experienced the thrill of setting up an email app or client, you most certainly have had to deal with the terms POP and IMAP. However, you might not be able to recall which protocol you chose, …</p>
   <div class="content-meta">
     <div class="tags">

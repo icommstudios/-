@@ -140,8 +140,8 @@ Pastrami boudin bacon pork chop swine beef ribs. Tongue flank corned beef veniso
         <div class="form-group">
           <input placeholder="insurance name & account #" name="insurance" class="full-width">
         </div>
-        <div class="form-group disabled">
-          <input placeholder="website url" name="website" class="full-width">
+        <div class="form-group">
+          <input placeholder="website url" name="website" class="full-width disabled" disabled>
           </div>
     </div>
   </div>

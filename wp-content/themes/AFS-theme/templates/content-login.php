@@ -20,7 +20,7 @@
 				</div>
 				<div class="form-group">
 					<input type="submit" value="login" name="subscribe" class="lg-input orange">
-					<span class="field-meta"><a href="#">forgot password?</a> | <a href="#">register for account</a></span>
+					<span class="field-meta"><a href="#">forgot password?</a> | <a href="#">register for an account</a></span>
 				</div>
 			</form>
 			</div>

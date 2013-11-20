@@ -17,7 +17,7 @@
 			<li><a href="#">endorsements/ratings</a></li>
 			<li><a href="#"><span class="counter-bubble">2</span>messages</a></li>
 			<li><a href="#">media library</a></li>
-			<li class="pull-right col-lg-3"><a class="save-btn" href="#">save</a></li>
+			<li class="col-lg-3 save-btn-li"><a class="save-btn" href="#">save</a></li>
 		</ul>
 	</nav>
 </div>
