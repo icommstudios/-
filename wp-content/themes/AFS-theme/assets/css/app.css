@@ -6083,7 +6083,7 @@ input[type=checkbox] {
 }
 .addon-icon input.lg-input {
   padding-right: 0px;
-  padding-left: 40px;
+  padding-left: 50px;
 }
 .addon-icon .add-on {
   position: absolute;
@@ -6238,7 +6238,8 @@ ul.social-nav li a i {
   margin-top: 20px;
 }
 .login .wrap,
-.register .wrap {
+.register .wrap,
+.password-reminder .wrap {
   margin-top: 0px;
 }
 .main section {

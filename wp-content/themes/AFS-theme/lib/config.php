@@ -69,7 +69,8 @@ function roots_display_sidebar() {
       'template-contractor-postings.php',
       'template-job-postings.php',
       'template-contractor-profile.php',
-      'template-facility-profile.php'
+      'template-facility-profile.php',
+      'template-send-password.php'
     )
   );
 
