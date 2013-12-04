@@ -23,3 +23,27 @@
   	<p><a href="#">edit</a> or <a href="#">delete</a></p>
   </div>
 </article>
+<h3>Create a Job Posting</h3>
+      <form role="form">
+        <div class="form-group">
+            <input placeholder="project name" name="project name" class="full-width">
+        </div>
+        <div class="form-group">
+            <input placeholder="budget" name="budget" class="full-width">
+        </div>
+        <div class="form-group">
+            <input placeholder="deadline" name="deadline" id="deadline" class="full-width">
+        </div>
+        <div class="form-group">
+            <textarea placeholder="project description" name="project description" class="full-width" rows="5"></textarea>
+        </div>
+        <div class="form-group">
+            <input type="file" name="upload images" size="40">
+        </div>
+        <div class="form-group">
+            <input placeholder="project tags, comma seperated" name="project tags" class="full-width">
+        </div>
+        <div class="form-group">
+          <input type="submit" value="create job" name="create job" class="orange">
+        </div>
+      </form>

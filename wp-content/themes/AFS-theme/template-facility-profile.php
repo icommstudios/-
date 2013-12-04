@@ -12,6 +12,7 @@ Template Name: Facility Profile
 <?php get_template_part('templates/facility/content', 'facility-membership'); ?>
 <?php get_template_part('templates/facility/content', 'facility-endorsements'); ?>
 <?php get_template_part('templates/facility/content', 'facility-medialibrary'); ?>
+<?php get_template_part('templates/content', 'add-endorsements'); ?>
   </div>
   <div class="col-lg-3">
   	<?php get_template_part('templates/facility/content', 'facility-sidebar'); ?>

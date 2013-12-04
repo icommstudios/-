@@ -17,3 +17,8 @@ $(document).ready(function () {
         });
     });
 });
+
+// Call jQuery UI Datepicker
+ $(function() {
+$( "#deadline" ).datepicker();
+});

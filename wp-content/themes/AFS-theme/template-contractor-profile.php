@@ -10,6 +10,7 @@ Template Name: Contractor Profile
 <?php get_template_part('templates/contractors/content', 'contractor-membership'); ?>
 <?php get_template_part('templates/contractors/content', 'contractor-endorsements'); ?>
 <?php get_template_part('templates/contractors/content', 'contractor-medialibrary'); ?>
+<?php get_template_part('templates/content', 'add-endorsements'); ?>
   </div>
   <div class="col-lg-3">
   	<?php get_template_part('templates/contractors/content', 'contractor-sidebar'); ?>
