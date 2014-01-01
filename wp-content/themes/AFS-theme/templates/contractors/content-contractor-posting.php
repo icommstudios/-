@@ -160,16 +160,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="contactModalLabel">How to proceed with John Smith:</h4>
+        <h4 class="modal-title" id="contactModalLabel">Contact John Smith:</h4>
       </div>
-<!--  <div class="modal-body">
-        ...
-      </div> -->
+  <div class="modal-body">
+        <textarea class="full-width" rows="6"></textarea>
+        invite to jobs:
+      </div>
       <div class="modal-footer">
         <div class="btn-group">
-         <a class="btn large" href="#">invite to job (3)</a>
-         <a class="btn large" href="#">send a message</a>
-        </div>
+         <a class="btn large" href="#">send</a>
+         <a class="btn large" href="#">go to messages</a>
+       </div>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
