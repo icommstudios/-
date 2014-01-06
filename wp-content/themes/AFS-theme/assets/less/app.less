@@ -53,7 +53,6 @@ img {
    margin: 5px 0;
    font-size: 14px;
    .transition(.5s);
-   
 }
 
 .btn.large, a.btn.large {
@@ -830,6 +829,15 @@ a.round-icon-blocks {
       cursor: pointer;
    }
 
+   &:before,&:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+   }
+
+   &:after {
+       clear: both;
+   }
+
    time {
       font-size: 16px;
       color: #535353;
@@ -851,6 +859,7 @@ a.round-icon-blocks {
 
    .content-meta {
       margin-top: 5px;
+      clear: both;
 
       .author {
          font-size: 14px;

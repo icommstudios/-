@@ -14,6 +14,7 @@
 		<ul class="nav nav-pills">
 			<li><a href="#">edit profile</a></li>
 			<li><a href="#">membership</a></li>
+			<li><a href="#"><span class="counter-bubble">3</span>jobs</a></li>
 			<li><a href="#">endorsements/ratings</a></li>
 			<li><a href="#"><span class="counter-bubble">2</span>messages</a></li>
 			<li><a href="#">media library</a></li>

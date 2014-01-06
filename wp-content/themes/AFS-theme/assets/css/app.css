@@ -1869,6 +1869,8 @@ textarea.input-lg {
   cursor: pointer;
   background-image: none;
   border: 1px solid transparent;
+  background-color: #717171;
+  color: white;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.428571429;
@@ -1886,7 +1888,7 @@ textarea.input-lg {
 }
 .btn:hover,
 .btn:focus {
-  color: #333333;
+  color: #cccccc;
   text-decoration: none;
 }
 .btn:active,
@@ -1907,7 +1909,7 @@ fieldset[disabled] .btn {
   box-shadow: none;
 }
 .btn-default {
-  color: #333333;
+  color: #cccccc;
   background-color: #ffffff;
   border-color: #cccccc;
 }
@@ -1916,7 +1918,7 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
-  color: #333333;
+  color: #cccccc;
   background-color: #ebebeb;
   border-color: #adadad;
 }
@@ -5828,7 +5830,6 @@ a.btn {
   font-size: 14px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  background: #ececec;
 }
 .btn.large,
 a.btn.large {
@@ -6520,6 +6521,16 @@ a.round-icon-blocks p {
   background: #f1f1f1;
   cursor: pointer;
 }
+.content-item:before,
+.content-item:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.content-item:after {
+  clear: both;
+}
 .content-item time {
   font-size: 16px;
   color: #535353;
@@ -6535,6 +6546,7 @@ a.round-icon-blocks p {
 }
 .content-item .content-meta {
   margin-top: 5px;
+  clear: both;
 }
 .content-item .content-meta .author {
   font-size: 14px;
