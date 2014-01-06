@@ -10,7 +10,7 @@
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-key"></i></span>
-					<input type="password" name="password" placeholder="enter password" class="lg-input white full-width white">
+					<input type="password" name="password" class="lg-input white full-width white">
 				</div>
 				<div class="form-group addon-icon">
 					<span class="add-on"><i class="fa fa-user"></i></span>
@@ -20,6 +20,16 @@
 						  <option>I am an honest facility manager</option>
 						</select>
 					</label>
+				</div>
+				<hr>
+				<div class="form-group">
+					<input name="company-name" placeholder="company name" class="lg-input white full-width white">
+				</div>
+				<div class="form-group">
+					<input name="phone-number" placeholder="phone number" class="lg-input white full-width white">
+				</div>
+				<div class="form-group">
+					<input name="website" placeholder="website url" class="lg-input white full-width white">
 				</div>
 				<div class="form-group">
 					<div class="custom-checkbox">

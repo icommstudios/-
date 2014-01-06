@@ -164,7 +164,20 @@
       </div>
   <div class="modal-body">
         <textarea class="full-width" rows="6"></textarea>
-        invite to jobs:
+        <hr>
+        <p>Also invite to jobs:</p>
+        <div class="custom-checkbox">
+            <input type="checkbox" value="None" name="Job Title" id="Job Title" class="white"/>
+            <label for="Job Title"></label><span class="field-meta">Job Title</span>
+      </div>
+      <div class="custom-checkbox">
+            <input type="checkbox" value="None" name="Another Job Title" id="Another Job Title" class="white"/>
+            <label for="Another Job Title"></label><span class="field-meta">Another Job Title</span>
+      </div>
+      <div class="custom-checkbox">
+            <input type="checkbox" value="None" name="Yet Another Job Title" id="Yet Another Job Title" class="white"/>
+            <label for="Yet Another Job Title"></label><span class="field-meta">Yet Another Job Title</span>
+      </div>
       </div>
       <div class="modal-footer">
         <div class="btn-group">
