@@ -7,6 +7,11 @@
     <div class="tags">
       <span class="label label-primary">Construction</span>
       <span class="label label-primary label-location">Charlotte, NC</span>
+      <span class="label label-success">new</span>
+      <span class="label label-success">invited</span>
+      <span class="label label-success">awarded</span>
+      <span class="label label-success">complete</span>
+      <span class="label label-success">endorsed</span>
   </div>
   </div>
 </article>
@@ -18,6 +23,11 @@
     <div class="tags">
     <span class="label label-primary">Construction</span>
     <span class="label label-primary label-location">Charlotte, NC</span>
+    <span class="label label-success">new</span>
+    <span class="label label-success">invited</span>
+    <span class="label label-success">awarded</span>
+    <span class="label label-success">complete</span>
+    <span class="label label-success">endorsed</span>
   </div>
   </div>
 </article>
@@ -43,13 +53,16 @@
             <input placeholder="budget" name="budget" class="full-width">
         </div>
         <div class="form-group">
+            <input placeholder="location" name="location" id="location" class="full-width">
+        </div>
+        <div class="form-group">
             <input placeholder="deadline" name="deadline" id="deadline" class="full-width">
         </div>
         <div class="form-group">
             <textarea placeholder="project description" name="project description" class="full-width" rows="5"></textarea>
         </div>
         <div class="form-group">
-            <input type="file" name="upload images" size="40">
+            <input type="file" name="upload images" size="40"> <a href="#"><i class="fa fa-plus-circle"></i> add photos</a>
         </div>
         <div class="form-group">
             <input placeholder="project tags, comma seperated" name="project tags" class="full-width">

@@ -5,7 +5,7 @@
 		    <input type="search" placeholder="search by project title, contractor name or keywords..." name="s" class="search-field lg-input white">
 		    <div class="addon-icon">
 			    <span class="add-on"><i class="fa fa-map-marker"></i></span>
-			    <input type="text" title="Location" name="location" class="location-field lg-input white" placeholder="location">
+			    <input type="text" title="zipcode" name="zipcode" class="location-field lg-input white" placeholder="zipcode">
 			</div>
 		      <button type="submit" class="search-submit"><i class="fa fa-search"></i></button>
 		  </div>
@@ -24,7 +24,7 @@
 					<select>
 							  <option>nationwide</option>
 							  <option>25 miles</option>
-							  <option>50 miles</option>
+							  <option selected>50 miles</option>
 							  <option>100 miles</option>
 							  <option>150 miles</option>
 							  <option>250 miles</option>

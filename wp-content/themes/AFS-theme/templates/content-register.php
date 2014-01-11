@@ -23,6 +23,9 @@
 				</div>
 				<hr>
 				<div class="form-group">
+					<input name="listing-name" placeholder="listing name" class="lg-input white full-width white">
+				</div>
+				<div class="form-group">
 					<input name="company-name" placeholder="company name" class="lg-input white full-width white">
 				</div>
 				<div class="form-group">
