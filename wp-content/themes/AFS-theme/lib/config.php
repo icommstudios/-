@@ -6,7 +6,7 @@ add_theme_support('root-relative-urls');    // Enable relative URLs
 add_theme_support('rewrites');              // Enable URL rewrites
 // add_theme_support('bootstrap-top-navbar');   Enable Bootstrap's top navbar
 add_theme_support('bootstrap-gallery');     // Enable Bootstrap's thumbnails component on [gallery]
-add_theme_support('nice-search');           // Enable /?s= to /search/ redirect
+//add_theme_support('nice-search');           // Enable /?s= to /search/ redirect
 add_theme_support('jquery-cdn');            // Enable to load jQuery from the Google CDN
 
 /**
@@ -56,7 +56,12 @@ function roots_display_sidebar() {
      */
     array(
       'is_404',
-      'is_front_page'
+      'is_front_page',
+	  'is_search',
+	  array('is_singular', array("fv_facility")),
+	  array('is_singular', array("fv_contractor")),
+	  array('is_singular', array("fv_project")),
+    array('is_page', array("membership-pricing")),
     ),
     /**
      * Page template checks (via is_page_template())
@@ -69,8 +74,7 @@ function roots_display_sidebar() {
       'template-contractor-postings.php',
       'template-job-postings.php',
       'template-contractor-profile.php',
-      'template-facility-profile.php',
-      'template-send-password.php'
+      'template-facility-profile.php'
     )
   );
 

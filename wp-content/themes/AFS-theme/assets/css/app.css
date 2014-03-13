@@ -6104,7 +6104,7 @@ a.logo {
   display: block;
   margin: 0px auto;
   float: left;
-  width: 120px;
+  width: 200px;
 }
 /* Top main navigation */
 .top-nav-bar {
@@ -6592,9 +6592,11 @@ a.round-icon-blocks p {
 .featured-img {
   border: 1px solid #bdbdbd;
   padding: 8px;
+  display: inline-block;
 }
 .tab-content i.fa-square {
   color: #bababa !important;
+  font-size: 24px;
 }
 .skillsets {
   list-style: none;
@@ -6738,6 +6740,18 @@ a.round-icon-blocks p {
   font-size: 24px;
 }
 /* ==========================================================================
+   Membership & Pricing
+   ========================================================================== */
+.ptp-col-id-2,
+.ptp-col-id-3 {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  cursor: not-allowed;
+}
+/* ==========================================================================
+
+
+/* ==========================================================================
    Media Queries
    ========================================================================== */
 @media (min-width: 768px) {
@@ -6877,8 +6891,8 @@ a.round-icon-blocks p {
    Header
    ========================================================================== */
   a.logo {
-    margin-top: -14px;
-    width: 200px;
+    margin-top: -20px;
+    width: 360px;
   }
   /* ==========================================================================
    Main Page Elements

@@ -1,12 +1,19 @@
+<?php global $facility_id, $fields, $user_fields; 
+//Is quality verified
+$quality_verified = fv_get_facility_quality_verified ( $facility_id, $fields);
+?>
 <div class="text-center">
-<strong>Become Quality Verified!</strong>
-<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-    <span class="percentage">60%</span>
-  </div>
-</div>
-
-<a href="#" data-toggle="modal" data-target="#tasksModal">see remaining tasks</a> | <a href="#"  data-toggle="modal" data-target="#verified-info-Modal">more info</a>
+    <strong>Become Quality Verified!</strong>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow="<?php echo (int)$quality_verified['completed']; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo ($quality_verified['completed'] >= 15 ) ? (int)$quality_verified['completed'] : 15; ?>%;">
+        <span class="percentage"><?php echo (int)$quality_verified['completed']; ?>%</span>
+      </div>
+    </div>
+    <?php if ( $quality_verified['completed'] && $quality_verified['completed'] == 100 ) : ?>
+    <a href="#"  data-toggle="modal" data-target="#verified-info-Modal">more info</a>
+    <?php else: ?>
+    <a href="#" data-toggle="modal" data-target="#tasksModal">see remaining tasks</a> | <a href="#"  data-toggle="modal" data-target="#verified-info-Modal">more info</a>
+    <?php endif; ?>
 </div>
 
 <!-- Tasks Modal -->
@@ -20,15 +27,10 @@
   <div class="modal-body">
   	<p>Remaining tasks:</p>
         <ul class="list-group">
-        	<li class="list-group-item">Basic Profile Info <span class="badge">50%</span></li>
-			<li class="list-group-item">Add Photos <span class="badge">10%</span></li>
-			<li class="list-group-item">Biz Web Address <span class="badge">10%</span></li>
-			<li class="list-group-item">BBB link <span class="badge">10%</span></li>
-			<li class="list-group-item">Contractor Lic. <span class="badge">10%</span></li>
-			<li class="list-group-item">Refer a Friend <span class="badge">10%</span></li>
-			<li class="list-group-item">Post your 1st job <span class="badge">10%</span></li>
-			<li class="list-group-item">Bid on your 1st job <span class="badge">10%</span></li>
-			<li class="list-group-item">Share to FB, Twitter or LinkedIn <span class="badge">10%</span></li>
+        	<?php if ( empty($quality_verified['profile'])) : ?><li class="list-group-item">Basic Profile Info <span class="badge">70%</span></li><?php endif; ?>
+			<?php if ( empty($quality_verified['photo'])) : ?><li class="list-group-item">Add Photos <span class="badge">10%</span></li><?php endif; ?>
+			<?php if ( empty($quality_verified['website'])) : ?><li class="list-group-item">Biz Web Address <span class="badge">10%</span></li><?php endif; ?>
+			<?php if ( empty($quality_verified['bbb_url'])) : ?><li class="list-group-item">BBB link <span class="badge">10%</span></li><?php endif; ?>
         </ul>
       </div>
       <div class="modal-footer">

@@ -10,6 +10,7 @@
 
   <?php wp_head(); ?>
 
+  <link href='<?php echo get_stylesheet_directory_uri(); ?>/assets/css/custom.css' rel='stylesheet' type='text/css'>
 
   <!-- Fonts -->
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">

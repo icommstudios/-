@@ -1,0 +1,9 @@
+/* Custom css additions */
+#alert-wrapper {
+	position: absolute;
+	top: 46px;
+	z-index: 9;
+}
+.admin-bar #alert-wrapper {
+	top: 74px;
+}

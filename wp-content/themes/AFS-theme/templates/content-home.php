@@ -1,38 +1,56 @@
 <div class="img-hero overflow home-hero img-hero-bar">
-	<h1>Welcome to Alliance Facility Solutions, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
+	<h1>Welcome to the National Alliance of Facility Vendors Association, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
 </div>
 <div class="hero orange-hero overflow">
 	<div class="container">
 	<div class="row">
-		<div class="col-sm-4"><a href="#" class="btn x-large white blue-text centered">Search for Contractors</a></div>
-		<div class="col-sm-4"><img class="centered handshake-icon" src="/2013/assets/img/handshake.png" /></div>
-		<div class="col-sm-4"><a href="#" class="btn x-large white purple-text centered">Search for Facility Jobs</a></div>
+		<div class="col-sm-4"><a href="<?php echo home_url('search').'?s=&contractors_filter=1&distance=50'; //add_query_arg (array('precheck_contractor' => 1), home_url('search')); ?>" class="btn x-large white blue-text centered">Search for Vendors</a></div>
+		<div class="col-sm-4"><img class="centered handshake-icon" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/handshake.png" /></div>
+		<div class="col-sm-4"><a href="<?php echo home_url('search').'?s=&job_postings_filter=1&distance=50'; //add_query_arg (array('precheck_job' => 1), home_url('search')); ?>" class="btn x-large white purple-text centered">Search for Facility Jobs</a></div>
 	</div>
 	</div>
 </div>
+<?php
+//Build args
+	$args = array(
+		'post_type' => array(SF_Project::POST_TYPE, SF_Contractor::POST_TYPE),
+		'posts_per_page' => 10,
+		'order' => 'DESC',
+		'orderby' => 'date',
+	);
+	$recent_query = new WP_Query( $args );
+	?>
 <div class="news-ticker overflow">
 	<div class="container">
 	<div class="row">
 	<span>Recent Activity</span>
 	<div class="ticker-container">
 	<ul class="ticker">
-		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Project Title Goes here | Charlotte, NC | 10-03-13</a></li>
-		<li><a href="#" class="contractor"><i class="fa fa-briefcase"></i> Contractors Name | Whiteville, VA | 08-10-13</a></li>
-		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Project Title Goes here | Mooresville, NC | 11-10-13</a></li>
-		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Another Project Title | Memphis, TN | 06-03-13</a></li>
-		<li><a href="#" class="contractor"><i class="fa fa-briefcase"></i> Contractors Name | Charlotte, NC | 10-03-13</a></li>
-		<li><a href="#" class="facility"><i class="fa fa-pencil-square-o"></i> Another Project Title | Raleigh, NC | 10-03-13</a></li>
-	</ul>
+     <?php if ( $recent_query->have_posts() ) : ?>
+     	<?php $count; while ( $recent_query->have_posts() ) : $recent_query->the_post(); $count++; 
+			$listing_icon = ( get_post_type ( get_the_ID() ) == SF_Project::POST_TYPE ) ? '<i class="fa fa-pencil-square-o"></i>' : '<i class="fa fa-briefcase"></i>';
+			$listing_label = get_the_title( get_the_ID() );
+			$listing_location = get_post_meta ( get_the_ID(), '_location', true);
+			$listing_date = get_the_time ( 'm-d-Y', get_the_ID() );
+			//Add to label
+			$listing_label .= ( $listing_location ) ? ' | '.$listing_location : '';
+			$listing_label .= ( $listing_date ) ? ' | '.$listing_date : '';
+		?>
+		<li><a href="<?php echo get_permalink( get_the_ID() ); ?>" class="<?php echo get_post_type ( get_the_ID() ); ?>"><?php echo $listing_icon; ?> <?php echo $listing_label; ?></a></li>
+        <?php endwhile; ?>
+	<?php endif; ?>
+    </ul>
 	</div>
 	</div>
 	</div>
 </div>
+
 <div class="container text-center">
 	<section>
 	<h2>How Alliance Works</h2>
 	<div class="row">
-		<div class="col-sm-3"><a href="#" class="round-icon-blocks"><i class="fa fa-user round-icons"></i><p>Register an Account</p></a></div>
-		<div class="col-sm-3"><a href="#" class="round-icon-blocks"><i class="fa fa-th-list round-icons"></i><p>Post or Search</p></a></div>
+		<div class="col-sm-3"><a href="<?php echo home_url(SF_Users::REGISTER_PATH); ?>" class="round-icon-blocks"><i class="fa fa-user round-icons"></i><p>Register an Account</p></a></div>
+		<div class="col-sm-3"><a href="<?php echo home_url('search'); ?>" class="round-icon-blocks"><i class="fa fa-th-list round-icons"></i><p>Post or Search</p></a></div>
 		<div class="col-sm-3"><a href="#" class="round-icon-blocks"><i class="fa fa-check-square-o round-icons"></i><p>Award or Accept</p></a></div>
 		<div class="col-sm-3"><a href="#" class="round-icon-blocks"><i class="fa fa-star round-icons"></i><p>Review & Repeat!</p></a></div>
 	</div>

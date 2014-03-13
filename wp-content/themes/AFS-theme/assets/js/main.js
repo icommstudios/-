@@ -19,6 +19,12 @@ $(document).ready(function () {
 });
 
 // Call jQuery UI Datepicker
- $(function() {
-$( "#deadline" ).datepicker();
+$(function() {
+	$( "#deadline" ).datepicker();
+});
+
+// Show alerts
+jQuery(window).load(function() {
+	jQuery('#alert-wrapper').has('.alert').fadeIn('medium');
+	jQuery('#alert-wrapper').delay(6000).fadeOut('medium');
 });

@@ -18,16 +18,22 @@
     </div>
     </div>
     <div class="container">
-      <a class="logo" href="<?php echo home_url(); ?>/"><img src="/2013/assets/img/AFS-logo.png" alt="Alliance Facility Solutions" /></a>
-      <div class="pull-right second-nav">
-        <a href="http://facilityvendor.com/2013/login/">Login</a> | <a href="http://facilityvendor.com/2013/register/">Register</a> | <a href="http://facilityvendor.com/2013/search/">Search</a>
-      </div>
-      <div class="pull-right second-nav-logged hidden">
+      <a class="logo" href="<?php echo home_url(); ?>/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/NAFVA-logo.png" alt="Alliance Facility Solutions" /></a>
+      <?php if ( is_user_logged_in() ) : 
+	  	$current_user = get_userdata(get_current_user_id());
+	  	?>
+      <div class="pull-right second-nav-logged">
         <div class="username">
-        <i class="fa fa-user"></i>hello [username]
+        	<i class="fa fa-user"></i>hello <?php echo $current_user->user_email; ?>
         </div>
-        <span class="text-center"><a href="#">my account</a> | <a href="#">logout</a></span>
+        <span class="text-center"><a href="<?php echo SF_Users::user_profile_url(); ?>">my account</a> | <a href="<?php echo wp_logout_url(); ?>">logout</a></span>
       </div>
+      
+      <?php else : ?>
+       <div class="pull-right second-nav">
+        <a href="<?php echo home_url(SF_Users::LOGIN_PATH); ?>">Login</a> | <a href="<?php echo home_url(SF_Users::REGISTER_PATH); ?>">Register</a> | <a href="<?php echo home_url('search'); ?>">Search</a>
+      </div>
+      <?php endif; ?>
     </div>
   </div>
 </header>
