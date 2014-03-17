@@ -6596,7 +6596,6 @@ a.round-icon-blocks p {
 }
 .tab-content i.fa-square {
   color: #bababa !important;
-  font-size: 24px;
 }
 .skillsets {
   list-style: none;
@@ -6748,9 +6747,6 @@ a.round-icon-blocks p {
   filter: alpha(opacity=50);
   cursor: not-allowed;
 }
-/* ==========================================================================
-
-
 /* ==========================================================================
    Media Queries
    ========================================================================== */

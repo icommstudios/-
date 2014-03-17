@@ -115,6 +115,7 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
   <li class="active"><a href="#general" data-toggle="tab">General</a></li>
   <?php if (!empty($membership_type)) : ?><li><a href="#licenses" data-toggle="tab">Licenses & Accreditations</a></li><?php endif; ?>
   <?php if (!empty($membership_type)) : ?><li><a href="#ratings" data-toggle="tab">Ratings & Referrals</a></li><?php endif; ?>
+  <li><a href="#photos" data-toggle="tab">Photos</a></li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="general">
@@ -245,12 +246,9 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
 	?>
     </div>
   <?php endif; ?>
-  
-</div>
-<div class="clearfix"></div>
-<hr>
-    <div class="photo-group">
-    <h4>Project Photos</h4>
+
+    <div class="tab-pane" id="photos">
+          <div class="photo-group">
     <?php
         //Loop photos
         $photo_attachments = SF_Contractor::load_attachments($contractor_id);
@@ -266,6 +264,10 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
       <?php endforeach;
         } ?>
     </div>
+  </div>
+  
+</div>
+<div class="clearfix"></div>
 </div>
 
 <?php endif; //end which page to show else ?>
