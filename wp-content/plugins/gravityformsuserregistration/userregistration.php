@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms User Registration Add-On
 Plugin URI: http://www.gravityforms.com
 Description: Allows WordPress users to be automatically created upon submitting a Gravity Form
-Version: 1.7
+Version: 1.8
 Author: rocketgenius
 Author URI: http://www.rocketgenius.com
 
@@ -35,13 +35,15 @@ class GFUser {
     private static $path = "gravityformsuserregistration/userregistration.php";
     private static $url = "http://www.gravityforms.com";
     private static $slug = "gravityformsuserregistration";
-    private static $version = "1.7";
-    private static $min_gravityforms_version = "1.5";
-    private static $supported_fields = array("checkbox", "radio", "select", "text", "website", "textarea", "email", "hidden", "number", "phone", "multiselect", "post_title",
-		                            "post_tags", "post_custom_field", "post_content", "post_excerpt");
+    private static $version = "1.8";
+    private static $min_gravityforms_version = "1.7";
+    private static $supported_fields = array( "checkbox", "radio", "select", "text", "website", "textarea", "email", "hidden", "number", "phone", "multiselect", "post_title",
+		                                      "post_tags", "post_custom_field", "post_content", "post_excerpt" );
 
     //Plugin starting point. Will load appropriate files
     public static function init(){
+    	//supports logging
+		add_filter("gform_logging_supported", array("GFUser", "set_logging_supported"));
 
         //loading translations
         load_plugin_textdomain('gravityformsuserregistration', FALSE, '/gravityformsuserregistration/languages' );
@@ -59,7 +61,7 @@ class GFUser {
 
             //runs the setup when version changes
             self::setup();
-            
+
             // automatic upgrade hooks
             add_filter("transient_update_plugins", array('GFUser', 'check_update'));
             add_filter("site_transient_update_plugins", array('GFUser', 'check_update'));
@@ -92,9 +94,7 @@ class GFUser {
                 //loading data lib
                 require_once(self::get_base_path() . "/data.php");
 
-                //loading upgrade lib
-                if(!class_exists("RGUserUpgrade"))
-                    require_once("plugin-upgrade.php");
+                self::include_upgrade_library();
 
                 //loading Gravity Forms tooltips
                 require_once(GFCommon::get_base_path() . "/tooltips.php");
@@ -202,14 +202,15 @@ class GFUser {
         return $premium_update;
     }
 
-    public static function flush_version_info(){
-        if(!class_exists("RGUserUpgrade"))
-            require_once("plugin-upgrade.php");
-
+    public static function flush_version_info() {
+        self::include_upgrade_library();
         RGUserUpgrade::set_version_info(false);
     }
 
     public static function plugin_row(){
+
+        self::include_upgrade_library();
+
         if(!self::is_gravityforms_supported()){
             $message = sprintf(__("Gravity Forms " . self::$min_gravityforms_version . " is required. Activate it now or %spurchase it today!%s", "gravityformsuserregistration"), "<a href='http://www.gravityforms.com'>", "</a>");
             RGUserUpgrade::display_plugin_message($message, true);
@@ -226,22 +227,19 @@ class GFUser {
     }
 
     //Displays current version details on Plugin's page
-    public static function display_changelog(){
-        if($_REQUEST["plugin"] != self::$slug)
+    public static function display_changelog() {
+
+        if( $_REQUEST['plugin'] != self::$slug )
             return;
 
-        //loading upgrade lib
-        if(!class_exists("RGUserUpgrade"))
-            require_once("plugin-upgrade.php");
+        self::include_upgrade_library();
+        RGUserUpgrade::display_changelog( self::$slug, self::get_key(), self::$version );
 
-        RGUserUpgrade::display_changelog(self::$slug, self::get_key(), self::$version);
     }
 
     public static function check_update($update_plugins_option){
-        if(!class_exists("RGUserUpgrade"))
-            require_once("plugin-upgrade.php");
-
-        return RGUserUpgrade::check_update(self::$path, self::$slug, self::$url, self::$slug, self::get_key(), self::$version, $update_plugins_option);
+        self::include_upgrade_library();
+        return RGUserUpgrade::check_update( self::$path, self::$slug, self::$url, self::$slug, self::get_key(), self::$version, $update_plugins_option );
     }
 
     private static function get_key(){
@@ -249,6 +247,11 @@ class GFUser {
             return GFCommon::get_key();
         else
             return "";
+    }
+
+    public static function include_upgrade_library() {
+        if( ! class_exists( 'RGUserUpgrade' ) )
+            require_once( 'plugin-upgrade.php' );
     }
 
     //------------------------------------------------------------------------
@@ -725,7 +728,10 @@ class GFUser {
         $form = (isset($config["form_id"]) && $config["form_id"]) ? RGFormsModel::get_form_meta($config["form_id"]) : array();
         $form_fields = $email_fields = $selection_fields = $password_fields = array();
 
-        if(!empty($form)) {
+        $set_author_style = 'display:none';
+
+        if( ! empty( $form ) ) {
+
             $set_author_style = (GFCommon::has_post_field($form['fields'])) ? 'display:block' : 'display:none';
             $form_fields = self::get_form_fields($form, $is_update_feed);
             $email_fields = self::get_fields_by_type($form, 'email');
@@ -735,6 +741,7 @@ class GFUser {
             $password_default = $is_update_feed ? array(array('', __('Preserve current password', 'gravityformsuserregistration') )) : array(array('', __('Auto Generate Password', 'gravityformsuserregistration') ));
             $password_fields = self::get_fields_by_type($form, 'password');// ? self::get_fields_by_type($form, 'password') : array();
             $password_fields = array_merge($password_fields, $password_default);
+
         }
 
         if(!empty($error_messages)) { ?>
@@ -2050,8 +2057,9 @@ class GFUser {
             $user = new WP_User($user_id);
             $user->set_role($root_role);
         }
-
+		self::log_debug("Calling wpmu_welcome_notification to send multisite welcome - blog_id: {$blog_id} user_id: {$user_id}" );
         wpmu_welcome_notification($blog_id, $user_id, $password, $site_data['title'], array('public' => 1));
+        self::log_debug("Done with wpmu_welcome_notification");
 
         do_action('gform_site_created', $blog_id, $user_id, $lead, $config, $password);
 
@@ -2083,6 +2091,7 @@ class GFUser {
 
     // Hook into Gravity Forms
     public static function gf_create_user($entry, $form, $fulfilled = false) {
+    	self::log_debug("in gf_create_user");
         global $wpdb;
 
         // if the entry is marked as spam
@@ -2121,7 +2130,7 @@ class GFUser {
         $user_data = self::get_user_data($entry, $form, $config, $is_update_feed);
         if(!$user_data)
             return;
-            
+
         $user_activation = rgars($config, 'meta/user_activation');
 
         // if about to create user, check if activation required... only use activation if payment is not fulfilled by payment
@@ -2142,7 +2151,9 @@ class GFUser {
                 // we can run this same code here to allow successful retrievel of the activation_key without actually
                 // changing the user name when it is activated. 'd smith' => 'dsmith', but when activated, username is 'd smith'.
                 $user_data['user_login'] = preg_replace( '/\s+/', '', sanitize_user( $user_data['user_login'], true ) );
+                self::log_debug("Calling wpmu_signup_user (sends email with activation link) with login: " . $user_data['user_login'] . " email: " . $user_data['user_email'] . " meta: " . print_r($meta, true));
                 wpmu_signup_user($user_data['user_login'], $user_data['user_email'], $meta);
+                self::log_debug("Done with wpmu_signup_user");
             }
 
             $activation_key = $wpdb->get_var($wpdb->prepare("SELECT activation_key FROM $wpdb->signups WHERE user_login = %s ORDER BY registered DESC LIMIT 1", $user_data['user_login']));
@@ -2159,6 +2170,7 @@ class GFUser {
         } else {
         	//only run create_user when manual/email activation NOT set
         	if (!$user_activation){
+        		self::log_debug("in gf_create_user - calling create_user");
             	self::create_user($entry, $form, $config);
 			}
         }
@@ -2166,7 +2178,7 @@ class GFUser {
     }
 
     public static function create_user($lead, $form, $config = false) {
-
+		self::log_debug("in create_user with form id " . $form["id"] . " and lead: " . print_r($lead, true));
         if(!$config)
             $config = self::get_active_config($form, $lead);
 
@@ -2178,6 +2190,7 @@ class GFUser {
         if(!$user_id && empty($user_data['password'])) {
 
             $user_data['password'] = wp_generate_password();
+            self::log_debug("calling wp_create_user for login " . $user_data['user_login'] . " with email " . $user_data['user_email']);
             $user_id = wp_create_user($user_data['user_login'], $user_data['password'], $user_data['user_email']);
 
             if(is_wp_error($user_id))
@@ -2188,7 +2201,7 @@ class GFUser {
 
         }
         else if(!$user_id) {
-
+			self::log_debug("calling wp_create_user for login " . $user_data['user_login'] . " with email " . $user_data['user_email']);
             $user_id = wp_create_user($user_data['user_login'], $user_data['password'], $user_data['user_email']);
             if(is_wp_error($user_id))
                 return;
@@ -2221,12 +2234,14 @@ class GFUser {
             self::attribute_post_author($user_id, $lead['post_id']);
 
         // send notifications
+        self::log_debug("Calling wp_new_user_notification for user id {$user_id}");
         if(rgar($meta, 'notification')) {
             wp_new_user_notification($user_id, $user_data['password']);
         } else {
             // sending a blank password only sends notification to admin
             wp_new_user_notification($user_id, "");
         }
+        self::log_debug("Done with wp_new_user_notification - email with username should have been sent.");
 
         do_action('gform_user_registered', $user_id, $config, $lead, $user_data['password']);
 
@@ -2357,7 +2372,7 @@ class GFUser {
 
         $entry = RGFormsModel::get_lead($lead_id);
         $form = RGFormsModel::get_form_meta($entry['form_id']);
-
+		self::log_debug("in gf_process_user - calling gf_create_user");
         self::gf_create_user($entry, $form);
 
     }
@@ -2557,8 +2572,13 @@ class GFUser {
                     for( $i = count( $errors['user_email'] ) - 1; $i >= 0; $i-- ) {
                         $error_message = $errors['user_email'][$i];
                         // if user is re-submitting their own email address, don't give already used error
-                        if( $error_message == __( 'Sorry, that email address is already used!' ) && self::is_users_email( $user_email ) )
+                        if( $error_message == __( 'Sorry, that email address is already used!' ) && self::is_users_email( $user_email ) ){
                             unset( $errors['user_email'][$i] );
+						}
+						//made as a separate else for ease of readability
+						elseif ( $error_message == __( 'That email address has already been used. Please check your inbox for an activation email. It will become available in a couple of days if you do nothing.') && self::is_users_email( $user_email ) ){
+							unset( $errors['user_email'][$i] );
+						}
                     }
 
                     // if no other user email errors remain, unset
@@ -2885,6 +2905,7 @@ class GFUser {
     public static function add_paypal_user($entry, $config, $transaction_id, $amount) {
 
         $form = RGFormsModel::get_form_meta($entry['form_id']);
+        self::log_debug("in add_paypal_user - calling gf_create_user");
         self::gf_create_user($entry, $form, true);
 
     }
@@ -3335,8 +3356,8 @@ class GFUser {
             return $form;
         } else
         // if the user is not logged in, add action to hide form and display error message
-        if(!is_user_logged_in()) {
-            add_action('gform_get_form_filter', array('GFUser', 'hide_form'));
+        if( ! is_user_logged_in() ) {
+            add_action( 'gform_get_form_filter_' . $form['id'], array( 'GFUser', 'hide_form' ) );
             return $form;
         } else {
             // prepopulate the form
@@ -3474,6 +3495,8 @@ class GFUser {
 
                 if(is_array($value)) {
                     foreach($value as $vals) {
+                        if( ! is_array( $vals ) )
+                            $vals = array( $vals );
                         $list_values = array_merge($list_values, array_values($vals));
                     }
                     $value = $list_values;
@@ -3504,8 +3527,9 @@ class GFUser {
 
             }
 
-            if(!$value)
+            if (rgblank($value)){
                 continue;
+			}
 
             $value = self::maybe_get_category_id($field, $value);
             $filter_name = self::prepopulate_input($field['id'], $value);
@@ -3803,6 +3827,28 @@ class GFUser {
         return $available_forms;
     }
 
+    public static function set_logging_supported($plugins)
+	{
+		$plugins[self::$slug] = "User Registration";
+		return $plugins;
+	}
+
+	private static function log_error($message){
+		if(class_exists("GFLogging"))
+		{
+			GFLogging::include_logger();
+			GFLogging::log_message(self::$slug, $message, KLogger::ERROR);
+		}
+	}
+
+	private static function log_debug($message){
+		if(class_exists("GFLogging"))
+		{
+			GFLogging::include_logger();
+			GFLogging::log_message(self::$slug, $message, KLogger::DEBUG);
+		}
+	}
+
 }
 
 
@@ -3876,5 +3922,3 @@ function rgobj($obj, $name){
     return '';
 }
 }
-
-?>

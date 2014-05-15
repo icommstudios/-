@@ -1,10 +1,25 @@
 -----------------------------------------------------------
+Version 1.8
+    - Added more debug statements for logging.
+	- Added logging support and some initial debug statements.
+	- Updated two strings in activate.php to match their equivalents in wp-activate.php (as of WP 1.8.1).
+	- Updated signup activation to check if email address is already in use and return a message indicating such.
+    - Updated all places where RGUserUpgrade class was manually included to use new GFUser::include_upgrade_library() method.
+	- Fixed notice with missing variable $set_post_author.
+    - Fixed issue on single site installs where activation email title and from name defaulted to "WordPress".
+	- Fixed issue on Update form where pre-population didn't always work when a value was set to zero.
+    - Fixed issue where RGUserUpgrade class was called but not included.
+    - Fixed issue where single column list fields were not updating correctly on Update feeds.
+    - Fixed issue where deprecated functions were used in activation process.
+	- Fixed issue in Update feed on multi-site where email address said to already be used.
+
+-----------------------------------------------------------
 Version 1.7
     - Fixed issue with invalid site domain and path when creating a new site
     - Fixed issue with email activation link displaying errors when mapping BBPress fields
 	- Fixed issue where $base global variable in wp-config.php may not have the trailing slash, causing the site url created to be bad
 	- Fixed bug where PayPal integration caused user to be registered regardless of being set to manual/email activation
-	
+
 -----------------------------------------------------------
 Version 1.6
     - Updated automatic upgrade so that it caches remote requests for 12 hours (even on plugin's page)

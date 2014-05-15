@@ -6514,8 +6514,8 @@ a.round-icon-blocks p {
   padding-left: 10px;
   padding-bottom: 6px;
   margin-bottom: 20px;
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 .content-item:hover {
   background: #f1f1f1;

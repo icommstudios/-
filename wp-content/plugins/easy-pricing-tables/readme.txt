@@ -1,12 +1,12 @@
 === Easy Pricing Tables ===
 Contributors: davidhme
 Donate link: http://easypricingtables.com/
-Tags: pricing table, responsive pricing table, comparison, comparison table, css table, price, price gird, pricing, pricing box, pricing grid, table
+Tags: pricing table, responsive pricing table, comparison, comparison table, css table, price, price gird, pricing, pricing box, pricing grid, table, pricing page
 Author URI: http://davidhehenberger.com/
 Plugin URI: http://easypricingtables.com/
 Requires at least: 3.6
-Tested up to: 3.8.1
-Stable tag: 1.4.4
+Tested up to: 3.9
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,11 +15,13 @@ Create a Beautiful, Responsive and Highly Converting Pricing Table in Less Than 
 == Description ==
 **Easy Pricing Tables for Wordpress** makes it easy to create and publish beautiful pricing tables on your WordPress site. You will be able to set up and publish your pricing table in no time.
 
-Easy Pricing Tables implements conversion rate optimization (CRO) best practices and guides you through the process of creating a pricing table that converts. 
+*   [View A Pricing Table Live Demo &raquo;](http://easypricingtables.com/easy-pricing-tables-live-demo/?utm_source=wp-plugin-directory&utm_medium=free-plugin-readme.txt&utm_campaign=link-to-pricing-table-demo)
+
+[youtube http://www.youtube.com/watch?v=657Qs5Yng5Q]
+
+Easy Pricing Tables implements conversion rate optimization (CRO) best practices and guides you through the process of creating a pricing table that converts 
 
 This plugin works with any WordPress theme you have installed. After installing the plugin and creating your first pricing table, you can publish your table anywhere on your site using a shortcode.
-
-*   [View A Pricing Table Live Demo &raquo;](http://easypricingtables.com/easy-pricing-tables-live-demo/?utm_source=wp-plugin-directory&utm_medium=free-plugin-readme.txt&utm_campaign=link-to-pricing-table-demo)
 
 **Features**
 
@@ -50,7 +52,7 @@ This plugin works with any WordPress theme you have installed. After installing 
 == Frequently Asked Questions ==
 
 = I'm using S2 member / WooCommerce / etc and would like to replace your built-in button with a button generated from a shortcode =
-Do disable the pricing table button and replace it with a shortcode, simply enter the following in the 'Button Text' row:
+To disable the pricing table button and replace it with a shortcode, simply enter the following in the 'Button Text' row:
 `[shortcode][my-example-shortcode/][/shortcode]`
 
 = My table rows aren't aligned properly =
@@ -58,12 +60,20 @@ If within the same row, you use a lot more text in some features than in others,
 This problem is due to tables being responsive instead of fixed width. You can fix it by adding manual linebreaks for your features.
 <br/><br/> results in one linebreak.
 
-= I want to change my colors for each individual column =
+= I want to change the design for each individual column =
 This currently isn't supported in the user interface. However, each column has its own unique HTML class that can be modified using a css class selector.
 
 *	Class of the first column: ptp-col-id-0
 *	Class of the second column: ptp-col-id-1
 *	Class of the third column: ptp-col-id-2
+*	etc...
+
+= How do I change the design of individual feature rows? =
+This currently isn't supported in the user interface. However, each feature row has its own unique HTML class that can be modified using a css class selector.
+
+*	Class of the first feature row: ptp-row-id-0
+*	Class of the second feature row: ptp-row-id-1
+*	Class of the third feature row: ptp-row-id-2
 *	etc...
 
 = I want to adjust my column width =
@@ -99,6 +109,29 @@ david[at]davidhehenberger[dot]com
 8. Another design from [Easy Pricing Tables Premium](http://easypricingtables.com/?utm_source=wp-plugin-directory&utm_medium=free-plugin-readme.txt&utm_campaign=link-to-premium-marketing-page-from-screenshots)
 
 == Changelog ==
+
+= 1.5.2 =
+* Confirmed compatibility with WordPress 3.9
+* Changed Easy Pricing Tables icon
+
+= 1.5.1 =
+* Bugfix: Unable to resize bullet font
+* Bugfix: Preview didn't work for about 1% of sites
+* Bugfix: "Pricing Table" menu disappears
+* Improve HTML & CSS by removing a couple of !importants from my code
+* Changes to email opt-in system
+* Added Easy Pricing Tables Premium - preview
+
+= 1.5.0.2 =
+* Fixed incompatibility with netstudio-wp theme
+* Added YouTube video link to readme.txt
+
+= 1.5 =
+* Easy Pricing Tables now supports translations (contact me if you'd like to submit a translation).
+* Added Lithuanian language support. 
+* Improved compatibility with legacy browsers (in particular old Internet Exploreer versions).
+* Easy Pricing Tables is now compatible with http://wordpress.org/plugins/responsive-mobile-friendly-tooltip/.
+* Small UI improvement: moved the "Pricing Tables" setting link in the left-hand navigation further down.
 
 = 1.4.4 =
 * UI improvements
