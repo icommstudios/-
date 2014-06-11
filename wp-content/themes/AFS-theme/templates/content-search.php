@@ -1,11 +1,116 @@
-
 <?php if (!is_search()) : ?>
   <div class="alert alert-warning">
-    <?php _e('To search, type a search term above.', 'roots'); ?>
+    <?php _e('Type a search term above or choose a category below.', 'roots'); ?>
   </div>
 <?php endif; ?>
 
 <?php if ( is_search()) : ?>
+
+    <div class="search-by-category">
+        <h3>Search by Category</h3>
+        <div class="row">
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
 
 	<?php if (!have_posts()) : ?>
       <div class="alert alert-warning">

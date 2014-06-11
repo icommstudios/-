@@ -814,6 +814,57 @@ a.round-icon-blocks {
    }
 
 /* ==========================================================================
+   Search by Category
+   ========================================================================== */
+
+.search-by-category {
+
+   ul {
+      list-style: none;
+
+      li {
+
+         a {
+            color:#5b5b5b;
+            display: block;
+            padding: 2px 2px 2px 8px;
+
+            &:hover {
+               background: #f1f1f1;
+            } 
+         }
+
+         ul {
+
+
+
+            li:before {
+            content: '-- ';
+            display: inline;
+            float: left;
+            padding-right: 4px;
+            }
+         }
+      }
+
+      li.main-cat {
+         background: #343434;
+         color: white;
+         padding: 8px 8px 8px 14px;
+
+         a {
+            color: white;
+
+            &:hover {
+               text-decoration: underline;
+               background: #343434;
+            }
+         }
+      }
+   }
+}
+
+/* ==========================================================================
    Contractor & Job Posts
    ========================================================================== */
 

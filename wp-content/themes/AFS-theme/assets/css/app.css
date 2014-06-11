@@ -5994,7 +5994,7 @@ label.custom-select select {
   padding-right: 40px;
 }
 label.custom-select:after {
-  content: '▼';
+  content: 'â–¼';
   color: rgba(0, 0, 0, 0.4);
   font-size: 1em;
   right: 10px;
@@ -6505,6 +6505,38 @@ a.round-icon-blocks p {
 }
 .page-filters select {
   font-size: .8em;
+}
+/* ==========================================================================
+   Search by Category
+   ========================================================================== */
+.search-by-category ul {
+  list-style: none;
+}
+.search-by-category ul li a {
+  color: #5b5b5b;
+  display: block;
+  padding: 2px 2px 2px 8px;
+}
+.search-by-category ul li a:hover {
+  background: #f1f1f1;
+}
+.search-by-category ul li ul li:before {
+  content: '-- ';
+  display: inline;
+  float: left;
+  padding-right: 4px;
+}
+.search-by-category ul li.main-cat {
+  background: #343434;
+  color: white;
+  padding: 8px 8px 8px 14px;
+}
+.search-by-category ul li.main-cat a {
+  color: white;
+}
+.search-by-category ul li.main-cat a:hover {
+  text-decoration: underline;
+  background: #343434;
 }
 /* ==========================================================================
    Contractor & Job Posts
