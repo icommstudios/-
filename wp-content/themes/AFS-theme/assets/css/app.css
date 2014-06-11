@@ -5994,7 +5994,7 @@ label.custom-select select {
   padding-right: 40px;
 }
 label.custom-select:after {
-  content: 'â–¼';
+  content: '▼';
   color: rgba(0, 0, 0, 0.4);
   font-size: 1em;
   right: 10px;
@@ -6775,6 +6775,78 @@ a.round-icon-blocks p {
 .click-upload i {
   display: block;
   font-size: 24px;
+}
+.skillset {
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.skillset h3 {
+  display: block;
+  background: #08a4f2;
+  padding: 10px;
+  margin-top: 0px;
+  font-size: 20px;
+  color: white;
+  font-weight: normal;
+}
+.skillset h3 .reference-popup {
+  display: none;
+  position: absolute;
+  bottom: 105%;
+  right: 0;
+  padding: 12px;
+  background-color: #fff;
+  border: solid 1px #dcdcdc;
+  width: auto;
+}
+.skillset h3 .reference-popup ul,
+.skillset h3 .reference-popup p {
+  font-size: 12px;
+  color: #535353;
+  margin: 5px;
+}
+.skillset h3 .reference-popup ul {
+  padding-left: 0px;
+}
+.skillset h3 .reference-popup a {
+  display: inline;
+}
+.skillset h3 a.show-references {
+  float: right;
+  font-size: 12px;
+  color: white;
+  position: relative;
+  top: 5px;
+}
+.skillset ul {
+  list-style: none;
+}
+.skillset ul li a {
+  color: #5b5b5b;
+  display: block;
+  padding: 2px 2px 2px 8px;
+}
+.skillset ul li a:hover {
+  background: #f1f1f1;
+}
+.verified i {
+  color: #78b21c;
+}
+.un-verified i {
+  color: #b2461c;
+}
+.verified a,
+.un-verified a {
+  color: #424242;
+  text-decoration: underline;
+}
+.add-more-references i {
+  color: #159a1b;
+}
+.add-more-references a {
+  color: #3d3d3d;
 }
 /* ==========================================================================
    Membership & Pricing

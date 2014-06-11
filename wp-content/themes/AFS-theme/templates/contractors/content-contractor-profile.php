@@ -258,8 +258,192 @@ $is_membership_active = ( $membership_type ) ? true : false;
   </div>
 </div>
 </article>
+<article>
+<h4>Core Skills: Industries & Vendor Categories</h4>
+<div class="skillset">
+<div>
+  <p>Industry Type</p>
+        <div class="form-group">
+            <label class="custom-select" for="industry_type">
+            <select name="industry_type" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+             </select>
+          </label>
+          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a href="#" data-toggle="modal" data-target="#referenceModal">Please provide 3 references to be listed in this category!</a></span>
+          </div>
+</div>
+<p>Vendor Categories</p>
+<div class="row">
+<div class="col-lg-6">
+        <div class="form-group">
+            <label class="custom-select" for="vendor_cat">
+            <select name="vendor_cat" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 2 Sub">-- option 2 Sub</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+             </select>
+          </label>
+          </div>
+</div>
+<div class="col-lg-6">
+          <div class="form-group">
+            <label class="custom-select" for="vendor_cat">
+            <select name="vendor_cat" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 2 Sub">-- option 2 Sub</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+             </select>
+          </label>
+          </div>
+</div>
+</div>
+</div>
+<div class="skillset">
+<div>
+  <p>Industry Type</p>
+        <div class="form-group">
+            <label class="custom-select" for="industry_type">
+            <select name="industry_type" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+             </select>
+          </label>
+          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
+          </div>
+</div>
+<p>Vendor Categories</p>
+<div class="row">
+<div class="col-lg-6">
+        <div class="form-group">
+            <label class="custom-select" for="vendor_cat">
+            <select name="vendor_cat" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 2 Sub">-- option 2 Sub</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+             </select>
+          </label>
+          </div>
+</div>
+<div class="col-lg-6">
+          <div class="form-group">
+            <label class="custom-select" for="vendor_cat">
+            <select name="vendor_cat" class="full-width">
+                <option value="option 1">option 1</option>
+                <option value="option 2">option 2</option>
+                <option value="option 2 Sub">-- option 2 Sub</option>
+                <option value="option 3">option 3</option>
+                <option value="option 4">option 4</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+                <option value="option 4 Sub">-- option 4 Sub</option>
+             </select>
+          </label>
+          </div>
+</div>
+</div>
+</div>
+</article>
 </form>
 
+<!-- References Modal -->
+<div class="modal fade" id="referenceModal" tabindex="-1" role="dialog" aria-labelledby="referenceModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="reference_upload_form" role="form" method="post" enctype="multipart/form-data">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="photoUploadModalLabel">Industry Title Here</h4>
+        </div>
+         <div class="modal-body">
+          <p>Please provide 3 references to be listed in this category. Remember, we will verify your information!</p>
+          <div class="reference">
+            <strong>Reference 1</strong>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone" id="phone" value="Phone">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reference">
+            <strong>Reference 2</strong>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone" id="phone" value="Phone">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="reference">
+            <strong>Reference 3</strong>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone" id="phone" value="Phone">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="add-more-references"><a href="#"><i class="fa fa-plus-circle"></i> add more references</a></p>
+         </div>
+         <div class="modal-footer">
+          <button type="submit" id="referenceSubmit" class="btn btn-primary">Submit References</button>
+         </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- Modal -->
 <div class="modal fade" id="photoUploadModal" tabindex="-1" role="dialog" aria-labelledby="photoUploadModalLabel" aria-hidden="true">

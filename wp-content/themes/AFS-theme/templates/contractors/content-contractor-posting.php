@@ -268,6 +268,35 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
   
 </div>
 <div class="clearfix"></div>
+<hr>
+<h4>Core Skills & Services</h4>
+<div class="skillset clearfix">
+  <h3>Industry Type <a class="show-references" href="#"><i class="fa fa-plus-circle"></i> show references</a>
+        <div class="reference-popup">
+      <p>References</p>
+      <ul>
+        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
+        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
+        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
+      </ul>
+    </div>
+  </h3>
+  <ul class="col-md-4">
+      <li><a href="#">Sub Category 1</a></li>
+      <li><a href="#">-- Sub Category 2</a></li>
+      <li><a href="#">-- Sub Category 3</a></li>
+  </ul>
+  <ul class="col-md-4">
+      <li><a href="#">Sub Category 1</a></li>
+      <li><a href="#">-- Sub Category 2</a></li>
+      <li><a href="#">-- Sub Category 3</a></li>
+  </ul>
+  <ul class="col-md-4">
+      <li><a href="#">Sub Category 1</a></li>
+      <li><a href="#">-- Sub Category 2</a></li>
+      <li><a href="#">-- Sub Category 3</a></li>
+  </ul>
+</div>
 </div>
 
 <?php endif; //end which page to show else ?>
