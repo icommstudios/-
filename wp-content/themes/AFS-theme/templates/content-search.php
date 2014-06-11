@@ -109,8 +109,110 @@
                     </ul>
                 </li>
             </ul>
+<ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="col-md-3">
+                <li class="main-cat"><a href="#">Main Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Sub Category</a></li>
+                <li><a href="#">Sub Category</a>
+                    <ul>
+                        <li><a href="#">Sub Category 2</a>
+                            <ul>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                                <li><a href="#">Sub Category 3</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                        <li><a href="#">Sub Category 2</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
+
+    <hr>
 
 	<?php if (!have_posts()) : ?>
       <div class="alert alert-warning">
