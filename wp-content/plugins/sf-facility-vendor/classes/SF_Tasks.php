@@ -1,19 +1,99 @@
 <?php
 
 class SF_Tasks extends SF_FV {
+	
+	const OPTION_LAST_ADMIN_REFERENCES_REVIEW = 'fv_last_admin_references_review';
 
 	public static function init() {
 		
 		// Scheduled task
 		add_action( 'sf_fv_hourly_event', array(get_class(), 'run_hourly_events') );
-	}
 	
+	}
+
 	// Hourly schedule
 	public function run_hourly_events() {
 		//Run
 		
 		//self::send_project_proposal_reminders(); //Disabled - not used 
 		self::handle_projects_ending_soon();
+		self::handle_references_admin_review();	
+	}
+	
+	private function handle_references_admin_review() {
+		
+		$last_review = get_option(self::OPTION_LAST_ADMIN_REFERENCES_REVIEW, 0);
+		$next_review = $last_review + ( 86400 * 7 ); //send every 7 days 
+		//Have we passed the next review period
+		if ( time() < $next_review ) { 
+			return;
+		}
+		
+		//Set review time
+		update_option(self::OPTION_LAST_ADMIN_REFERENCES_REVIEW, time());
+		
+		$reference_to_review_count = 0;
+		
+		//Find projects that have the admin review meta
+		$args = array(
+			'post_type' => SF_Contractor::POST_TYPE,
+			'post_status' => 'any',
+			'posts_per_page' => -1,
+			'fields' => 'ids',
+			'fv_bypass_filter' => TRUE,
+			'meta_query' => array(
+				array(
+					'key' => '_category_references_admin_review',
+					//'value' => '1', //If version is less than WP 3.9, then a value is required for EXISTS
+					'compare' => 'EXISTS',
+				),
+			)
+		);
+
+		$result = get_posts( $args );
+
+		if ( !empty( $result ) ) {
+			foreach ( $result as $contractor_id ) {
+				//Search for one review
+				$reference_to_review = SF_Contractor::get_field_multiple($contractor_id, 'category_references_admin_review');
+				if ( !empty($reference_to_review) && sizeof( $reference_to_review ) > 0 ) {
+					$reference_to_review_count++;
+				}
+			}
+		}
+		
+		//We found at least one reference to review
+		$review_csv_url = site_url('/wp-admin/admin.php').'?page=sf-fv-references-review&review_references_csv='.time();
+		if ( $reference_to_review_count > 0) {
+			$subject = 'Weekly Reference Reviews - '.intval($reference_to_review_count).' to review';
+
+			$content = 'There are '.intval($reference_to_review_count).' references to review.'."\n";
+			$content .= 'Review: <a href="'.$review_csv_url.'">'.$review_csv_url.'</a> '."\n";
+			$content .= '-----'."\n";
+			$content .= 'Sent from: '.get_option('blogname')."\n";
+		} else {
+			
+			$subject = 'Weekly Reference Reviews - NO references to review';
+			
+			$content = 'There are '.intval($reference_to_review_count).' references to review.'."\n";
+			$content .= 'Review: <a href="'.$review_csv_url.'">'.$review_csv_url.'</a> '."\n";
+			$content .= '-----'."\n";
+			$content .= 'Sent from: '.get_option('blogname')."\n";
+		}
+		
+		$admin_email = get_option('admin_email');
+		//$admin_email = 'daniel@studiofidelis.com'; //test email
+
+		$email_data = array(
+			'to_email' => $admin_email,
+			'from_email' => self::$notification_from_email,
+			'from_name' => self::$notification_from_name,
+			'subject' => $subject,
+			'content' => $content,
+			'is_html' => self::$notification_format_is_html
+		);
+		
+		$result = SF_FV::send_email($email_data);
 	}
 	
 	private function handle_projects_ending_soon() {

@@ -33,7 +33,9 @@ class SF_Contractor extends SF_FV {
 		'membership_expiration' => '_membership_expiration', //string
 		'membership_data' => '_membership_data', //array 
 		'membership_addon_data' => '_membership_addon_data', //array (multiple entries)
-		'membership_history' => '_membership_history' //array (multiple entries)
+		'membership_history' => '_membership_history', //array (multiple entries)
+		'category_references' => '_category_references', //array
+		'category_references_admin_review' => '_category_references_admin_review', //array (multiple entries)
 	);
 	
 	public static function init() {
@@ -657,27 +659,79 @@ class SF_Contractor extends SF_FV {
 		
 		//Save taxonomy
 		if ( isset( $_POST[SF_Taxonomies::JOB_TYPE_TAXONOMY] ) ) {
-			//Filter posted categories for amount allowed based on membership
-			$allowed_categories = fv_get_contractor_membership_addon_categories($post_id);
-			$selected_cats = $_POST[SF_Taxonomies::JOB_TYPE_TAXONOMY];
-			if ( !empty($selected_cats) && sizeof($selected_cats) > $allowed_categories) {
-				$cat_ii = 1;
-				foreach ($selected_cats as $cat_key => $cat ) {
-					if ( $cat_ii > $allowed_categories ) {
-						unset($selected_cats[$cat_key]);
-					}
-					$cat_ii++; //increase category count
-				}
-			}
-			wp_set_post_terms( $post_id, $selected_cats, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-			//also save data as array in order sent to preserve  the primary
-			update_post_meta($post_id, self::$meta_keys['category_data'], $selected_cats );
+			//Handle saving taxonomy for category fields (based on allowed cats, valid references)
+			self::save_category_fields($post_id, $_POST[SF_Taxonomies::JOB_TYPE_TAXONOMY]);
 		}
 		/*
 		if ( isset( $_POST[SF_Taxonomies::JOB_SKILL_TAXONOMY] ) ) {
 			wp_set_post_terms( $post_id, $_POST[SF_Taxonomies::JOB_SKILL_TAXONOMY], SF_Taxonomies::JOB_SKILL_TAXONOMY );
 		}
 		*/
+		
+	}
+	
+	public static function append_category_field ( $post_id, $category_term_id, $replace_category_data_ii) {
+		$selected_cats = get_post_meta($post_id, self::$meta_keys['category_data'], true );	
+		//Replace the specific saved category_data index item
+		$selected_cats[$replace_category_data_ii] = $category_term_id;
+		update_post_meta($post_id, self::$meta_keys['category_data'], $selected_cats );
+	}
+	
+	public static function save_category_fields($post_id, $selected_cats, $append_cat_ii = FALSE) {
+		
+		//Filter posted categories for amount allowed based on membership
+		$allowed_categories = fv_get_contractor_membership_addon_categories($post_id);
+		if ( !empty($selected_cats) && sizeof($selected_cats) > $allowed_categories) {
+			$cat_ii = 1;
+			foreach ($selected_cats as $cat_key => $cat ) {
+				if ( $cat_ii > $allowed_categories ) {
+					unset($selected_cats[$cat_key]);
+				}
+				$cat_ii++; //increase category count
+			}
+		}
+		
+		//Save data as array in order sent to preserve the list
+		update_post_meta($post_id, self::$meta_keys['category_data'], $selected_cats );
+		
+		self::enable_valid_categories($post_id);
+
+	}
+	
+	public function enable_valid_categories($post_id) {
+		
+		//Get the categories on the profile
+		$selected_cats = get_post_meta($post_id, self::$meta_keys['category_data'], TRUE );
+		
+		//Only set terms for the terms with enough references
+		$references = self::get_field($post_id, 'category_references');
+		$valid_cat_references = array();
+		if ( !empty( $references ) ) {
+			foreach ( $references as $ref_term_id => $ref ) {
+				$count_ref = 0;
+				foreach ( $ref as $r ) {
+					if ( !empty($r['name_company']) && ( !empty($r['phone']) || !empty($r['email_address']) ) ) {
+						$count_ref++;
+					}
+				}
+				//If enough counted refs
+				if ( $count_ref >= 3) {
+					$valid_cat_references[] = $ref_term_id;
+				}
+			}
+		}
+		
+		//Set any terms?
+		$save_cats = array();
+		foreach ($selected_cats as $cat_key => $cat ) {
+			//Get the top most parent term
+			$ancestors = get_ancestors( $cat, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+			$top_most_ancestor = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $cat; //highest is last
+			if (in_array($top_most_ancestor, $valid_cat_references)) { //if term id is in list of term_ids with valid references
+				$save_cats[$cat_key] = $cat;
+			}
+		}
+		wp_set_post_terms( $post_id, $save_cats, SF_Taxonomies::JOB_TYPE_TAXONOMY );
 		
 	}
 	

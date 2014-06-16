@@ -28,17 +28,21 @@ abstract class SF_FV {
 		'reset_password' => "fv_email_subject_reset_password", //wordpess option key
 		'registration' => "fv_email_subject_registration",
 		'message_notification' => "fv_email_subject_message_notification",
+		'welcome_invite' => "fv_email_subject_welcome_invite",
 	);
 	static $notification_email_content_key = array(
 		'reset_password' => "fv_email_content_reset_password",
 		'registration' => "fv_email_content_registration",
 		'message_notification' => "fv_email_content_message_notification",
+		'welcome_invite' => "fv_email_content_welcome_invite",
 	);
 	static $notification_email_replace_codes = array(
 		'reset_password' => array('user_email', 'site_name', 'site_url', 'reset_link'), //replace codes usable on this 
 		'registration' => array('user_email', 'site_name', 'site_url'),
 		'message_notification' => array('user_email', 'site_name', 'site_url', 'message_title', 'message_link'),
+		'welcome_invite' => array( 'user_email', 'name', 'site_name', 'site_url', 'promo_code', 'register_link_with_promo_code'),
 	);
+	
 	
 	static $countries = array(
 		'US' => "United States",

@@ -309,6 +309,35 @@ function fv_get_contractor_quality_verified( $id = null, $fields = null ) {
 	return $quality_verified;
 }
 
+//Contractor categories & references
+function fv_get_contractor_category_and_references( $id = null ) {
+	if ( !$id ) return;
+	
+	$categories = array();
+	$references = SF_Contractor::get_field($id, 'category_references');
+	
+	//Assigned wordpress terms
+	$post_terms = wp_get_object_terms( $id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'orderby' => 'name', 'order' => 'ASC', 'fields' => 'all' ) );
+	
+	if ( !empty($post_terms) && !is_wp_error($post_terms) ) {
+		foreach ( $post_terms as $term ) {
+			$ancestors = get_ancestors( $term->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+			$save_all_ancestors = $ancestors;
+			$top_most_ancestor_term_id = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $term->term_id; //highest is last
+			//Put in groups by parent term
+			$categories[$top_most_ancestor_term_id]['parent_term_id'] = $top_most_ancestor_term_id;
+			$categories[$top_most_ancestor_term_id]['references'] = $references[$top_most_ancestor_term_id];
+			$categories[$top_most_ancestor_term_id]['categories'][] = array('term_object' => $term, 'ancestors' => $save_all_ancestors);
+			
+		}
+		
+	}
+	
+	return $categories;
+}
+
+
+
 //Project status
 function fv_get_project_status( $id = null, $fields = null ) {
 	//If we already have fields, don't look up again

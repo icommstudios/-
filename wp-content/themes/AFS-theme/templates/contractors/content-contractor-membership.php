@@ -4,13 +4,32 @@
 
 	<?php if ( $fields['membership_type'] && time() < $fields['membership_expiration'] ) : ?>
     	
-        <button class="btn append large orange"><i class="fa fa-thumbs-up border-right"></i>Paid Subscriber</button>
-        <p>Your subscription renews on <?php echo date('m/d/Y', $fields['membership_expiration']); ?> for <?php echo '$'.SF_Users::$contractor_membership_types[$fields['membership_type']]['cost']; ?>. <a target="_blank" href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_manage-paylist">manage your subscription at Paypal.</a></p>
-      
+        <?php 
+		//If paypal subscription? or free promo membership
+		if ( isset($fields['membership_data']['promo_code'] ) && $fields['membership_data']['promo_code'] = '1yearfree' ) {
+			?>
+             <button class="btn append large orange"><i class="fa fa-thumbs-up border-right"></i>1 Year Free Paid Subscriber</button>
+       		 <p>Your 1 year free subscription will expire on <?php echo date('m/d/Y', $fields['membership_expiration']); ?></p>
+             <p>To continue your paid membership, before it expires please upgrade for <?php echo '$'.SF_Users::$contractor_membership_types[$fields['membership_type']]['cost']; ?> /yr.</p>
+      		<?php
+			//Get the subscribe button
+			$new_membership = 'C1'; //main
+			$button = '<button class="btn append large orange"><i class="fa fa-thumbs-up border-right"></i>'.'$'.SF_Users::$contractor_membership_types[$new_membership]['cost'].'/yr. Paid Membership</button>';
+			$subscribe_form = SF_Users::get_new_contractor_subscription_form(get_current_user_id(), $contractor_id, $button, $new_membership);
+			?>
+			<a href="" class="btn large" data-toggle="modal" data-target="#membershipModal">Click to Upgrade!</a>
+            <?php
+		} else {
+			//Paypal paid membership
+			?>
+             <button class="btn append large orange"><i class="fa fa-thumbs-up border-right"></i>Paid Subscriber</button>
+        	<p>Your subscription renews on <?php echo date('m/d/Y', $fields['membership_expiration']); ?> for <?php echo '$'.SF_Users::$contractor_membership_types[$fields['membership_type']]['cost']; ?>. <a target="_blank" href="https://www.paypal.com/us/cgi-bin/webscr?cmd=_manage-paylist">manage your subscription at Paypal.</a></p>
+            <?php
+		}
+		?>
+       
        <?php 
 	   //Check for addons
-	   echo 'categories: '.fv_get_contractor_membership_addon_categories ($contractor_id);
-	   
 	   $existing_addons = fv_get_contractor_membership_addons($contractor_id);
 	   if ( $existing_addons ) {
 		   	echo '<h4>active add-ons</h4>';
@@ -89,8 +108,10 @@
     ?>
     <a href="" class="btn large" data-toggle="modal" data-target="#membershipModal">Free Account | Click to Upgrade!</a>
     <p><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/paypal-logo.png"></p>
-    
-    <!-- membership Modal -->
+
+<?php endif; ?>
+
+ <!-- membership Modal -->
     <div class="modal fade" id="membershipModal" tabindex="-1" role="dialog" aria-labelledby="membershipModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -113,5 +134,3 @@
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    
-<?php endif; ?>

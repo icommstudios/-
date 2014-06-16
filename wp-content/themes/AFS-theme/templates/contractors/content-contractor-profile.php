@@ -124,52 +124,6 @@ $is_membership_active = ( $membership_type ) ? true : false;
 	?>
     
     <div class="col-lg-6">
-    	<?php
-		//taxonomy is type category (so use ids for field value) 
-		$types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-			
-		//selected categories ( get the primary category ) 
-		$selected_categories = array();
-		if ( !empty($fields['category_data'][0]) && in_array($fields['category_data'][0], $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY]) ) {
-			$selected_categories[] = $fields['category_data'][0]; //set primary as first
-			foreach ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] as $catkey => $cat) {
-				if ( $cat != $fields['category_data'][0] ) {
-					$selected_categories[] = $cat;
-				}
-			}
-		} else {
-			$selected_categories = $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY]; //use order in category list
-		}
-		
-		?>
-        <?php 
-		//Number of categories
-		if ( $categories_permitted ) :
-			$cat_ii = 1;
-			while ($cat_ii <= $categories_permitted ) :
-			?>
-        <div class="form-group">
-            <label class="custom-select">
-            <select class="full-width" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]">
-            <option value=""><?php echo ( $cat_ii == 1 ) ? 'primary' : 'another'; ?> contractor category</option>
-            <?php
-			//taxonomy is type category (so use ids for field value) 
-			$types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-            foreach ( $types as $type ) : ?>
-            <option <?php echo ($type->term_id == $selected_categories[$cat_ii-1]) ? 'selected="selected"' : ''; ?> value="<?php echo $type->term_id; ?>"><?php echo $type->name; ?></option>
-          	<?php endforeach; ?>
-            </select>
-          </label>
-        </div>
-        <?php 
-			$cat_ii++;
-			endwhile;
-		endif;
-		?>
-        
-    </div>
-
-    <div class="col-lg-6">
     	<div class="form-group">
             <label class="custom-select" for="_years_of_experience">
             <select name="_years_of_experience" class="full-width">
@@ -196,6 +150,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
         <div class="form-group">
           <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="insurance name & account #" name="_insurance_account" value="<?php echo $fields['insurance_account']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
         </div>
+        
+    </div>
+
+    <div class="col-lg-6">
+    	
         <div class="form-group">
           <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="website url" name="_website" value="<?php echo $fields['website']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
         </div>
@@ -203,6 +162,77 @@ $is_membership_active = ( $membership_type ) ? true : false;
           <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
         </div>
     </div>
+    
+   <div style="clear: both;"></div>
+   
+   <div class="col-lg-12">
+     	<div class="form-group">
+        
+        <h4>Core Skills: Industries & Vendor Categories</h4>
+    	<?php
+		//taxonomy is type category (so use ids for field value) 
+		$types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+		
+		$post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
+			
+		//selected categories ( merge term categories with the selected category data )
+		$selected_categories = $fields['category_data']; //set category_data as first
+		//merge with post terms
+		if ( !empty( $post_terms ) ) {
+			foreach ( $post_terms as $catkey => $cat_term_id) {
+				if ( !in_array($cat_term_id, $fields['category_data']) ) {
+					$selected_categories[] = $cat_term_id;
+				}
+			}
+		} 
+		?>
+        <?php 
+		//Number of categories
+		if ( $categories_permitted ) :
+			
+			$cat_ii = 1;
+			while ($cat_ii <= $categories_permitted ) :
+			?>
+           <div class="skillset">
+            <div>
+              <p>Industry Type & Vendor Categories (<?php echo $cat_ii; ?> of <?php echo $categories_permitted; ?>) </p>
+                    <div class="form-group">
+                        <label class="custom-select" for="industry_type">
+                        <?php 
+						  $select_name = SF_Taxonomies::JOB_TYPE_TAXONOMY.'[]';
+						  $select_id = 'reference-selectid-'.$cat_ii;
+						  $select_cat_index = $cat_ii-1;
+						  $selected_term = $selected_categories[$select_cat_index];
+						  $none_option = ( $cat_ii == 1 ) ? '-- select primary contractor category --' : '-- select another contractor category --';
+						  wp_dropdown_categories( array( 'taxonomy' => SF_Taxonomies::JOB_TYPE_TAXONOMY, 'name' => $select_name, 'id' => $select_id, 'selected' => $selected_term, 'class' => 'full-width', 'show_option_none' => $none_option, 'hierarchical' => true, 'hide_empty' => false )); 
+						  ?>
+                      </label>
+                     
+                      <?php
+					  //Verfied category? (is it in the terms)
+					  if ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] && in_array($selected_term, $post_terms) ) {
+					  ?>
+                          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
+                     <?php
+					  } else {
+					  ?>
+                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">Please provide 3 references to be listed in this category!</a></span>
+					  <?php
+					  } 
+					  ?>
+                      </div>
+            </div>
+           </div>
+            <?php 
+			$cat_ii++;
+			endwhile;
+		endif;
+		?>
+      
+      </div> 
+    </div>
+    
+    
   </div>
   <div class="tab-pane clearfix" id="project-photos">
     <div class="photo-group">
@@ -258,117 +288,22 @@ $is_membership_active = ( $membership_type ) ? true : false;
   </div>
 </div>
 </article>
-<article>
-<h4>Core Skills: Industries & Vendor Categories</h4>
-<div class="skillset">
-<div>
-  <p>Industry Type</p>
-        <div class="form-group">
-            <label class="custom-select" for="industry_type">
-            <select name="industry_type" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-             </select>
-          </label>
-          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a href="#" data-toggle="modal" data-target="#referenceModal">Please provide 3 references to be listed in this category!</a></span>
-          </div>
-</div>
-<p>Vendor Categories</p>
-<div class="row">
-<div class="col-lg-6">
-        <div class="form-group">
-            <label class="custom-select" for="vendor_cat">
-            <select name="vendor_cat" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 2 Sub">-- option 2 Sub</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-             </select>
-          </label>
-          </div>
-</div>
-<div class="col-lg-6">
-          <div class="form-group">
-            <label class="custom-select" for="vendor_cat">
-            <select name="vendor_cat" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 2 Sub">-- option 2 Sub</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-             </select>
-          </label>
-          </div>
-</div>
-</div>
-</div>
-<div class="skillset">
-<div>
-  <p>Industry Type</p>
-        <div class="form-group">
-            <label class="custom-select" for="industry_type">
-            <select name="industry_type" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-             </select>
-          </label>
-          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
-          </div>
-</div>
-<p>Vendor Categories</p>
-<div class="row">
-<div class="col-lg-6">
-        <div class="form-group">
-            <label class="custom-select" for="vendor_cat">
-            <select name="vendor_cat" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 2 Sub">-- option 2 Sub</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-             </select>
-          </label>
-          </div>
-</div>
-<div class="col-lg-6">
-          <div class="form-group">
-            <label class="custom-select" for="vendor_cat">
-            <select name="vendor_cat" class="full-width">
-                <option value="option 1">option 1</option>
-                <option value="option 2">option 2</option>
-                <option value="option 2 Sub">-- option 2 Sub</option>
-                <option value="option 3">option 3</option>
-                <option value="option 4">option 4</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-                <option value="option 4 Sub">-- option 4 Sub</option>
-             </select>
-          </label>
-          </div>
-</div>
-</div>
-</div>
-</article>
+
+
 </form>
 
-<!-- References Modal -->
+<!-- References Modal (NEW) -->
 <div class="modal fade" id="referenceModal" tabindex="-1" role="dialog" aria-labelledby="referenceModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form id="reference_upload_form" role="form" method="post" enctype="multipart/form-data">
+      <form id="reference_upload_form" role="form" method="post">
+      	<input type="hidden" name="fv_profile_edit_category_reference" value="contractor" />
+        <?php wp_nonce_field( 'fv_profile_edit_category_reference_nonce', 'fv_profile_edit_category_reference_nonce' ); ?>
+      	<input type="hidden" class="field_reference_term_id" name="reference_term_id" value="">
+        <input type="hidden" class="category_data_index" name="category_data_index" value="">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="photoUploadModalLabel">Industry Title Here</h4>
+          <h4 class="modal-title" id="referenceModalLabel">Industry Title Here</h4>
         </div>
          <div class="modal-body">
           <p>Please provide 3 references to be listed in this category. Remember, we will verify your information!</p>
@@ -377,18 +312,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                  <input type="text" name="name_company[0]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone" id="phone" value="Phone">
+                  <input type="text" name="phone[0]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                  <input type="text" name="email_address[0]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                  <input type="text" name="work_location[0]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
@@ -398,18 +333,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                  <input type="text" name="name_company[1]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone" id="phone" value="Phone">
+                  <input type="text" name="phone[1]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                  <input type="text" name="email_address[1]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                  <input type="text" name="work_location[1]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
@@ -419,23 +354,25 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company" id="name_company" value="Name/Company">
+                  <input type="text" name="name_company[2]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone" id="phone" value="Phone">
+                  <input type="text" name="phone[2]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address" id="email_address" value="Email Address">
+                  <input type="text" name="email_address[2]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="work_location" id="work_location" value="Work Location/City">
+                  <input type="text" name="work_location[2]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
           </div>
-          <p class="add-more-references"><a href="#"><i class="fa fa-plus-circle"></i> add more references</a></p>
+          <div class="additional-references">
+          </div>
+          <p class="add-more-references"><a href="#" class="btn-add-more-references"><i class="fa fa-plus-circle"></i> add more references</a></p>
          </div>
          <div class="modal-footer">
           <button type="submit" id="referenceSubmit" class="btn btn-primary">Submit References</button>
@@ -444,6 +381,136 @@ $is_membership_active = ( $membership_type ) ? true : false;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<?php
+  //Loop existing references and build modals
+  if ( $fields['category_references'] ) {
+  foreach ($fields['category_references'] as $existing_ref_term_id => $existing_ref) : 
+  ?>
+  <div class="modal fade" id="referenceModal-term<?php echo $existing_ref_term_id; ?>" tabindex="-1" role="dialog" aria-labelledby="referenceModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="reference_upload_form" role="form" method="post">
+      	<input type="hidden" name="fv_profile_edit_category_reference" value="contractor" />
+        <?php wp_nonce_field( 'fv_profile_edit_category_reference_nonce', 'fv_profile_edit_category_reference_nonce' ); ?>
+      	<input type="hidden" class="field_reference_term_id" name="reference_term_id" value="">
+        <input type="hidden" class="category_data_index" name="category_data_index" value="">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="referenceModalLabel">Industry Title Here</h4>
+        </div>
+         <div class="modal-body">
+          <p>Please provide 3 references to be listed in this category. Remember, we will verify your information!</p>
+          <?php 
+		  $ref_count = ( sizeof( $existing_ref ) > 3 ) ? sizeof($existing_ref) : 3; 
+		  $ref_ii = 0;
+		  while ($ref_ii < $ref_count) {
+			  ?>
+          <div class="reference">
+            <strong>Reference <?php echo ($ref_ii + 1); ?></strong>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="name_company[<?php echo $ref_ii; ?>]" placeholder="Name/Company" value="<?php echo ($existing_ref[$ref_ii]['name_company']) ? $existing_ref[$ref_ii]['name_company'] : ''; ?>">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone[<?php echo $ref_ii; ?>]" placeholder="Phone" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['phone'] : ''; ?>">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <input type="text" name="email_address[<?php echo $ref_ii; ?>]" placeholder="Email Address" value="<?php echo ($existing_ref[$ref_ii]['email_address']) ? $existing_ref[$ref_ii]['email_address'] : ''; ?>">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="work_location[<?php echo $ref_ii; ?>]" placeholder="Work Location/City" value="<?php echo ($existing_ref[$ref_ii]['work_location']) ? $existing_ref[$ref_ii]['work_location'] : ''; ?>">
+                </div>
+              </div>
+            </div>
+          </div>
+          <?php
+		  	 $ref_ii++;
+		  }
+		  ?>
+          <div class="additional-references">
+          </div>
+          <p class="add-more-references"><a href="#" class="btn-add-more-references"><i class="fa fa-plus-circle"></i> add more references</a></p>
+         </div>
+         <div class="modal-footer">
+          <button type="submit" id="referenceSubmit" class="btn btn-primary">Submit References</button>
+         </div>
+      </form>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+  <?php
+  endforeach;
+  }
+  ?>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//Set the term_id on reference modal open
+	$(document).on("click", ".open-ReferenceModal", function (e) {
+		e.preventDefault();
+		
+		 var select_id = $(this).data('select_id');
+		 //Get selected
+		 var term_id = $('#' + select_id +' :selected').val();
+		 var category_data_index = $(this).data('select_cat_index');
+		 //Get the modal to open
+		 var open_ref_modal = '#referenceModal-term' + term_id;
+		 if ( $(open_ref_modal).length > 0 ) {
+			//found existing ref modal
+		 } else {
+			//new
+			open_ref_modal =  '#referenceModal';
+		 }
+		 if ( term_id > 0 ) {
+			var term_title = $('#' + select_id +' :selected').text();
+			$(open_ref_modal + " .field_reference_term_id").val( term_id );
+			$(open_ref_modal + " .category_data_index").val( category_data_index );
+			//set the title for the modal
+		 	$(open_ref_modal + " .modal-title").html( term_title );
+			//Open the modal
+			$(open_ref_modal).modal('show'); 
+		 } else {
+			alert('You must select a category first.'); 
+			return false;
+		 }
+	});
+	//Add new reference in modal
+	var countref = 3;
+	$('.btn-add-more-references').on('click', function() {
+		countref++;
+		var ref_html = '<div class="reference">'
+		+ '<strong>Reference ' + countref + ' </strong>'
+		+ '<div class="row">'
+		+ '  <div class="col-lg-6">'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="name_company[' + countref + ']" id="name_company' + countref + '" placeholder="Name/Company">'
+		+ '	</div>'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="phone[' + countref + ']" id="phone' + countref + '" placeholder="Phone">'
+		+ '	</div>'
+		+ '  </div>'
+		+ '  <div class="col-lg-6">'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="email_address[' + countref + ']" id="email_address' + countref + '" placeholder="Email Address">'
+		+ '	</div>'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="work_location[' + countref + ']" id="work_location' + countref + '" placeholder="Work Location/City">'
+		+ '	</div>'
+		+ '  </div>'
+		+ '</div>'
+	  	+ '</div>';
+		$('.additional-references').append(ref_html);
+		
+	});
+	
+	
+	 
+});
+</script>
 
 <!-- Modal -->
 <div class="modal fade" id="photoUploadModal" tabindex="-1" role="dialog" aria-labelledby="photoUploadModalLabel" aria-hidden="true">

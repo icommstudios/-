@@ -42,6 +42,7 @@ class SF_Search extends SF_FV {
 			$query->set('search_job_postings_filter', (bool)$_REQUEST['job_postings_filter'] );
 			$query->set('search_contractors_filter', (bool)$_REQUEST['contractors_filter'] );
 			$query->set('search_distance', $_REQUEST['distance'] );
+			$query->set('search_category', $_REQUEST['category'] );
 			
 			$query->set('search_sort_by_first', $_REQUEST['sort_by_first'] );
 			$query->set('search_sort_by_second', $_REQUEST['sort_by_second'] );
@@ -94,6 +95,11 @@ class SF_Search extends SF_FV {
 		} else {
 			//no post types, so make a result that won't return anything
 			$where = "AND $wpdb->posts.ID < 0";
+		}
+		
+		// Where category (if a category should be used as a filter - as opposed to a search option below)
+		if ( self::$query_instance->query_vars['search_category'] ) {
+			$where .= " AND ( tter.slug = '".self::$query_instance->query_vars['search_category']."' AND ttax.taxonomy = '".SF_Taxonomies::JOB_TYPE_TAXONOMY."' ) ";
 		}
 		
 		// Where Location (meta field = _location_zip )
@@ -151,7 +157,7 @@ class SF_Search extends SF_FV {
 			}
 		}
 		
-		//Search terms
+		//Search taxonomy terms
 		$searchand = '';
 		$add_search = '';
 		foreach ( $search_terms as $term ) {
@@ -166,6 +172,7 @@ class SF_Search extends SF_FV {
 				$search .= " ( $add_search ) ";	
 			}
 		}
+		
 		
 		//do we have anything to search
 		if ( !empty( $search ) ) {

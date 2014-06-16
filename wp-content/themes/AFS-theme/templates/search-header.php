@@ -1,6 +1,7 @@
 <div class="hero orange-hero">
 	<div class="container">
 		<form role="search" method="get" class="search-form form-inline" action="<?php echo home_url('/'); ?>">
+          <input type="hidden" name="category" value="<?php echo get_query_var( 'search_category' ); ?>">
 		  <div class="search-wrap">
 		    <input type="search" value="<?php echo (is_search()) ? get_search_query() : ''; ?>" placeholder="search by project title, contractor name or keywords..." name="s" class="search-field lg-input white">
 		    <div class="addon-icon">

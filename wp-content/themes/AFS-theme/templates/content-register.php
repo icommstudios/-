@@ -10,6 +10,14 @@ if ( $is_claim_listing ) {
 		$preset_email = get_post_meta($claim_data['listing_id'], '_email', true);
 	}
 }
+//Is this a promo code claim
+$is_promo_code_register = (isset($_GET['promo_code'])) ? TRUE : FALSE;
+if ( $is_promo_code_register ) {
+	$promo_code_arr = SF_Users::lookup_register_promo_code($_GET['promo_code']);
+	if ( $promo_code_arr != FALSE) {
+		$preset_email = $promo_code_arr['email'];
+	}
+}
 ?>
 
 <div class="img-hero overflow full-height img-hero-bar">
@@ -21,6 +29,13 @@ if ( $is_claim_listing ) {
             <h3>Register an account below to claim your new AFS account Listing!</h3>
             <?php else : ?>
             <h3>Register your new AFS account</h3>
+            <?php endif; ?>
+            <?php if ( $is_promo_code_register ) : ?>
+            	 <?php if ( $promo_code_arr != FALSE && $promo_code_arr['key'] == '1yearfree'  ) : ?>
+            	 <p><strong>Promo Code applied! </strong> You are registering with a 1 year free upgrade promo code.</p>
+                <?php else : ?>
+                <p><strong>Promo Code is invalid.</strong> You are registering with an invalid promo code. Please contact us if you believe there has been an error.</p>
+                <?php endif; ?>
             <?php endif; ?>
 			<form id="fv_register" role="form" method="post">
             	<input type="hidden" name="fv_register" value="1" />

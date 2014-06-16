@@ -2,6 +2,7 @@
 $contractor_id = get_the_ID();
 $membership_type = fv_get_contractor_membership_type($contractor_id);
 $categories_permitted = fv_get_contractor_membership_addon_categories($contractor_id);
+$categories = fv_get_contractor_category_and_references($contractor_id);
 $fields = fv_get_contractor_fields($contractor_id);
 $quality_verified = fv_get_contractor_quality_verified ( $contractor_id, $fields );
 $featured_thumb = get_the_post_thumbnail($contractor_id, 'img_400', array('class' => ''));
@@ -270,33 +271,55 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
 <div class="clearfix"></div>
 <hr>
 <h4>Core Skills & Services</h4>
-<div class="skillset clearfix">
-  <h3>Industry Type <a class="show-references" href="#"><i class="fa fa-plus-circle"></i> show references</a>
+<?php 
+//Loop each by parent group
+if ( !empty($categories ) ) {
+	foreach ( $categories as $cat_parent_term_id => $each_cat_parent_group ) {
+		//var_dump($each_cat_parent_group);
+		$parent_term = get_term_by('id', $each_cat_parent_group['parent_term_id'], SF_Taxonomies::JOB_TYPE_TAXONOMY);
+		$references = $each_cat_parent_group['references'];
+		$each_categories = $each_cat_parent_group['categories'];
+		?>
+    <div class="skillset clearfix">
+    	<h3><?php echo $parent_term->name; ?> <a class="show-references" href="#"><i class="fa fa-plus-circle"></i> show references</a>
         <div class="reference-popup">
-      <p>References</p>
-      <ul>
-        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
-        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
-        <li>Jane Doe | 555-555-5555 | <a href="#">email@address.com</a> | Tacoma, Washington</li>
-      </ul>
-    </div>
-  </h3>
-  <ul class="col-md-4">
-      <li><a href="#">Sub Category 1</a></li>
-      <li><a href="#">-- Sub Category 2</a></li>
-      <li><a href="#">-- Sub Category 3</a></li>
-  </ul>
-  <ul class="col-md-4">
-      <li><a href="#">Sub Category 1</a></li>
-      <li><a href="#">-- Sub Category 2</a></li>
-      <li><a href="#">-- Sub Category 3</a></li>
-  </ul>
-  <ul class="col-md-4">
-      <li><a href="#">Sub Category 1</a></li>
-      <li><a href="#">-- Sub Category 2</a></li>
-      <li><a href="#">-- Sub Category 3</a></li>
-  </ul>
-</div>
+          <p>References</p>
+          <ul>
+          <?php foreach ( $references as $ref ) : ?>
+            <li><?php echo $ref['name_company']; ?> <?php echo ($ref['phone']) ? ' | '.$ref['phone'] : ''; ?> <?php echo ($ref['email_address']) ? ' | <a href="'.$ref['email_address'].'">'.$ref['email_address'].'</a>' : ''; ?> <?php echo ($ref['work_location']) ? ' | '.$ref['work_location'] : ''; ?></li>
+          <?php endforeach; ?>
+          </ul>
+        </div>
+        </h3>
+    	<?php 
+		foreach ( $each_categories as $each_cat ) : ?>
+         <ul class="col-md-4">
+         <?php 
+		 	$each_ancestors = array_reverse($each_cat['ancestors']);
+		 	$each_ancestor_indent = '';
+			foreach ($each_ancestors as $each_ancestor_ii => $each_ancestor ) : 
+				if ( $each_ancestor_ii > 0 ) { //skip the first one
+					$each_ancestor_term = get_term_by('id', $each_ancestor, SF_Taxonomies::JOB_TYPE_TAXONOMY);
+					if ( $each_ancestor_term && !is_wp_error($each_ancestor_term)) {
+						$each_ancestor_indent = '';
+						?>
+						 <li><a href="<?php echo get_term_link($each_ancestor_term->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY); ?>"><?php echo $each_ancestor_indent.$each_ancestor_term->name; ?></a></li>
+						<?php
+						$each_ancestor_indent = '-- ';
+					}
+				}
+		   	endforeach;
+			?>
+            <li><a href="<?php echo get_term_link($each_cat['term_object']->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY); ?>"><?php echo $each_ancestor_indent.$each_cat['term_object']->name; ?></a></li>
+          </ul>
+       <?php endforeach; ?>
+    </div> 
+        <?php
+		
+	}
+}
+?>
+
 </div>
 
 <?php endif; //end which page to show else ?>

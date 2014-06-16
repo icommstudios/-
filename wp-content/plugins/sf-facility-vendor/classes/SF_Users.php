@@ -548,6 +548,22 @@ class SF_Users extends SF_FV {
 			$errors['empty_agree_terms'] = self::__( 'You must agree to our Terms of Use to continue.' );
 		}
 		
+		//Validate promo code if set
+		$is_promo_code_register = (isset($_GET['promo_code'])) ? TRUE : FALSE;
+		$valid_promo_code_applied = false;
+		if ( $is_promo_code_register ) {
+			$promo_code_arr = SF_Users::lookup_register_promo_code($_GET['promo_code']);
+			if ( $promo_code_arr != FALSE) {
+				if ( !empty($promo_code_arr['email']) && strtolower($promo_code_arr['email']) == strtolower($email_address)) {
+					$valid_promo_code_applied = $promo_code_arr['key'];
+				} else {
+					$errors['invalid_promo_code'] = self::__( 'The promo code applied at registration must be used with the email address you received it at.' );	
+				}
+			} else {
+				$errors['invalid_promo_code'] = self::__( 'The promo code applied at registration is invalid.' );
+			}
+		}
+		
 		//Validate based on type of registration
 		if ( $is_claim_listing ) {
 			
@@ -599,7 +615,8 @@ class SF_Users extends SF_FV {
 						'user_password' => $password,
 						'remember' => true
 					), false );
-					
+				
+				
 				//Send email
 				$email_replace_keys = array('user_email' => $user->user_email, 'site_name' => get_option('blogname'), 'site_url' => home_url() );
 				$email_data = array(
@@ -612,6 +629,13 @@ class SF_Users extends SF_FV {
 				);
 				
 				$result = SF_FV::send_email($email_data);
+				
+				//Apply any promo codes?
+				if ( $valid_promo_code_applied ) {
+					if ( $valid_promo_code_applied == '1yearfree' ) {
+						$promo_apply_result = self::create_membership_for_promo_code( $valid_promo_code_applied, $user_id );
+					}
+				}
 				
 				//Set success message
 				self::set_message( self::__('Thank you for registering! You are now logged in to your account!'), self::MESSAGE_STATUS_SUCCESS );
@@ -732,6 +756,12 @@ class SF_Users extends SF_FV {
 				$facility_id = SF_Facility::get_facility_id_for_user();
 				
 				if ( $facility_id ) {
+					
+					//Handle any profile form submissions
+					self::handle_profile_edit();
+					self::handle_profile_edit_upload_file();
+					self::handle_profile_category_references();
+					
 					$fields = SF_Facility::load_form_fields($facility_id);
 					$user_fields = get_userdata( get_current_user_id() );
 				} else {
@@ -750,6 +780,12 @@ class SF_Users extends SF_FV {
 			if ( is_user_logged_in() ) {
 				$contractor_id = SF_Contractor::get_contractor_id_for_user();
 				if ( $contractor_id ) {
+					
+					//Handle any profile form submissions
+					self::handle_profile_edit();
+					self::handle_profile_edit_upload_file();
+					self::handle_profile_category_references();
+					
 					$fields = SF_Contractor::load_form_fields($contractor_id);
 					$user_fields = get_userdata( get_current_user_id() );
 				} else {
@@ -764,9 +800,7 @@ class SF_Users extends SF_FV {
 			}
 		}
 		
-		//Handle any profile form submissions
-		self::handle_profile_edit();
-		self::handle_profile_edit_upload_file();
+		
 	}
 	
 	public static function is_facility_profile_edit_page() {
@@ -887,6 +921,80 @@ class SF_Users extends SF_FV {
 		}
 		
 	}
+	
+	public static function handle_profile_category_references() {
+		global $fields;
+		
+		//Category reference form
+		if ( !empty( $_POST['fv_profile_edit_category_reference'] ) && wp_verify_nonce( $_POST['fv_profile_edit_category_reference_nonce'], 'fv_profile_edit_category_reference_nonce' ) && is_user_logged_in() ) {
+			
+			//Get type
+			$user_id =  get_current_user_id();
+			$user_type = get_user_meta( $user_id, self::USER_TYPE_META_KEY, true);
+			
+			if ( $_POST['fv_profile_edit_category_reference'] == self::USER_TYPE_FACILITY && $_POST['fv_profile_edit_category_reference'] == $user_type ) {
+				//not used
+				
+			} elseif ( $_POST['fv_profile_edit_category_reference'] == self::USER_TYPE_CONTRACTOR && $_POST['fv_profile_edit_category_reference'] == $user_type ) {
+				$contractor_id = get_user_meta( $user_id, self::USER_TYPE_ID_META_KEY, true);
+				
+				//Get existing reference data
+				$references = SF_Contractor::get_field($contractor_id, 'category_references');
+				
+				//Category field index
+				$category_data_index = ( (int)$_POST['category_data_index'] >= 0 ) ? (int)$category_data_index : 0;
+				
+				//Reference for term id
+				$reference_term_id = $_POST['reference_term_id'];
+				
+				//Get the top most parent term (we use the top level term for the reference term)
+				$ancestors = get_ancestors( $reference_term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+				$top_most_ancestor_term_id = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $reference_term_id; //highest is last
+				
+				if ( !empty($top_most_ancestor_term_id)) {
+				
+					//Gather references from posted values
+					foreach ( $_POST['name_company'] as $postkey => $postval) {
+						$new_references[$postkey]['name_company'] = $postval;
+					}
+					foreach ( $_POST['phone'] as $postkey => $postval) {
+						$new_references[$postkey]['phone'] = $postval;
+					}
+					foreach ( $_POST['email_address'] as $postkey => $postval) {
+						$new_references[$postkey]['email_address'] = $postval;
+					}
+					foreach ( $_POST['work_location'] as $postkey => $postval) {
+						$new_references[$postkey]['work_location'] = $postval;
+					}
+					
+					//Update existing array
+					$references[$top_most_ancestor_term_id] = $new_references; //replace term_id array with changed
+					
+					//Save references
+					SF_Contractor::save_field($contractor_id, 'category_references', $references);
+					$new_reference_review_wrapper = array('time' => time(), 'term_id' => $reference_term_id, 'top_parent_term_id' => $top_most_ancestor_term_id, 'references' => $new_references);
+					SF_Contractor::save_field_multiple($contractor_id, 'category_references_admin_review', $new_reference_review_wrapper); //Save the new references as needing review
+					
+					
+					//Save category to category data
+					SF_Contractor::append_category_field($contractor_id, $reference_term_id, $category_data_index);
+					
+					//Run enable to enable any validated categories based on these references 
+					SF_Contractor::enable_valid_categories($contractor_id);
+					
+					self::set_message( 'Your category references have been saved.', self::MESSAGE_STATUS_SUCCESS );	
+					
+				} else {
+					self::set_message( self::__( 'Could not process your request. Missing category information.' ), self::MESSAGE_STATUS_ERROR );
+				}
+				
+				
+			} else {
+				self::set_message( self::__( 'Could not process your request.' ), self::MESSAGE_STATUS_ERROR );
+			}
+		}
+	}
+	
 	
 	public static function handle_facility_profile_edit($user_id, $facility_id) {
 		$errors = array();
@@ -1161,7 +1269,7 @@ class SF_Users extends SF_FV {
 				//Validate membership ( check if matches a local membership type )
 				$membership_type = $code['membership_type'];
 				if ( !isset(self::$contractor_membership_types[$membership_type]['type']) ) {
-					if (self::DEBUG) error_log('setup_membership - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - IPN: '.print_r($ipn, true));
+					error_log('setup_membership - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - IPN: '.print_r($ipn, true));
 					return; //Dont go any further
 				}
 				
@@ -1237,7 +1345,7 @@ class SF_Users extends SF_FV {
 				//Validate membership ( check if matches a local membership type )
 				$membership_type = $code['membership_type'];
 				if ( !isset(self::$facility_membership_types[$membership_type]['type']) ) {
-					if (self::DEBUG) error_log('setup_membership - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - IPN: '.print_r($ipn, true));
+					error_log('setup_membership - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - IPN: '.print_r($ipn, true));
 					return; //Dont go any further
 				}
 				
@@ -1422,6 +1530,135 @@ class SF_Users extends SF_FV {
 			$parsed['code_string'] = $code_string; //store complete original string code
 		}
 		return $parsed;
+	}
+	
+	
+	/* Validate Promo code */
+	public static function lookup_register_promo_code($code) {
+		$promo_code = json_decode(base64_decode($code), true); 
+		if ( empty($promo_code['key']) || empty($promo_code['email'])) {
+			return FALSE;
+		}
+		if ( $promo_code['key'] != '1yearfree' ) {
+			return FALSE;
+		}
+		return $promo_code;
+	}
+	
+	public static function validate_register_promo_code($code, $register_email) {
+		$promo_code = json_decode(base64_decode($code), true); 
+		if ( empty($promo_code['key']) || empty($promo_code['email'])) {
+			return FALSE;
+		}
+		if ( $promo_code['key'] != '1yearfree' ) {
+			return FALSE;
+		}
+		$register_email = trim($register_email);
+		if ( strtolower($promo_code['email']) != strtolower($register_email) ) {
+			return FALSE;
+		}
+		return $promo_code['key'];
+	}
+	
+	public static function generate_register_promo_code( $email, $codetype = '' ) {
+		$code_array = array();
+		$code_array['email'] = $email;
+		$code_array['date'] = time();
+		$code_array['key'] = ($codetype) ? $codetype : '1yearfree';
+		$promo_code = base64_encode(json_encode($code_array)); 
+		return $promo_code;
+	}
+	
+	public static function create_membership_for_promo_code( $promo_code_key, $user_id ) {
+		
+		//Setup membership code
+		$code = array();
+		$user_type = fv_get_current_user_type_id($user_id);
+		if ( $promo_code_key == '1yearfree' ) {
+			
+			//Create invoice code string
+			if ( $user_type['user_type'] == SF_Users::USER_TYPE_CONTRACTOR ) {
+				$contractor_id = $user_type['user_type_id'];
+				$membership_type = 'C1';
+				$code_string = $user_id.'-C'.$contractor_id.'-M'.$membership_type.'-'.time();
+				
+				$code = self::parse_membership_invoice_code($code_string);
+				
+				//Validate membership ( check if matches a local membership type )
+				$membership_type = $code['membership_type'];
+				if ( !isset(self::$contractor_membership_types[$membership_type]['type']) ) {
+					error_log('setup_membership with promo_code - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - promo_code: '.$promo_code_key);
+					return; //Dont go any further
+				}
+				
+				//Valid
+				$item_name = self::$contractor_membership_types[$membership_type]['label']; 
+				$item_amount = self::$contractor_membership_types[$membership_type]['cost'];
+				$item_type = self::$contractor_membership_types[$membership_type]['type'];
+				
+				//Membership expires
+				$item_expiration = strtotime('+1 year');
+				
+				//Prepare data log
+				$save_data = array( 'promo_code' => $promo_code_key, 'invoice' => $ipn['invoice'], 'code_string' => $code_string , 'code' => $code, 'date' => time());
+				
+				//Save based on type of item
+			
+				//Main item type
+				SF_Contractor::save_field($code['contractor_id'], 'membership_type', $code['membership_type']);
+				SF_Contractor::save_field($code['contractor_id'], 'membership_expiration', $item_expiration);
+				SF_Contractor::save_field($code['contractor_id'], 'membership_data', $save_data);	//Save data
+				
+				//Save transaction history
+				SF_Contractor::save_field_multiple($code['contractor_id'], 'membership_history', $save_data); //Also save to history log
+				
+				return TRUE;
+
+			} elseif ( $user_type['user_type'] == SF_Users::USER_TYPE_FACILITY ) {
+				
+				$facility_id = $user_type['user_type_id'];
+				$membership_type = 'F1';
+				$code_string = $user_id.'-F'.$facility_id.'-M'.$membership_type.'-'.time();
+				
+				$code = self::parse_membership_invoice_code($code_string);
+				
+				//Validate membership ( check if matches a local membership type )
+				$membership_type = $code['membership_type'];
+				if ( !isset(self::$facility_membership_types[$membership_type]['type']) ) {
+					error_log('setup_membership with promo_code - FAIL - invalid membership type: '.$membership_type.' - code: '.print_r($code, true).' - promo_code: '.$promo_code_key);
+					return; //Dont go any further
+				}
+				
+				//Valid
+				$item_name = self::$facility_membership_types[$membership_type]['label']; 
+				$item_amount = self::$facility_membership_types[$membership_type]['cost'];
+				$item_type = self::$facility_membership_types[$membership_type]['type'];
+				
+				//Membership expires
+				$item_expiration = strtotime('+1 year');
+				
+				//Prepare data log
+				$save_data = array( 'promo_code' => $promo_code_key, 'invoice' => $ipn['invoice'], 'code_string' => $code_string , 'code' => $code, 'date' => time());
+				
+				//Save based on type of item
+			
+				//Main item type
+				SF_Facility::save_field($code['facility_id'], 'membership_type', $code['membership_type']);
+				SF_Facility::save_field($code['facility_id'], 'membership_expiration', $item_expiration);
+				SF_Facility::save_field($code['facility_id'], 'membership_data', $save_data);	//Save data
+				
+				//Save transaction history
+				SF_Facility::save_field_multiple($code['facility_id'], 'membership_history', $save_data); //Also save to history log
+				
+				return TRUE;
+
+			}
+			
+		}
+		
+		//Still here? return false
+		return FALSE;
+
 	}
 	
 	
