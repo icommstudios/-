@@ -713,10 +713,13 @@ class SF_Settings extends SF_FV {
 													if ( $existing_term && isset($existing_term->term_id) ) {
 														$selected_cats[] = $existing_term->term_id;
 													} else {
+														//MODIFICATION - Disable create term 
+														/*
 														$create_term = wp_insert_term($each_term, SF_Taxonomies::JOB_TYPE_TAXONOMY);
 														if ( isset($create_term['term_id']) ) {
 															$selected_cats[] = $create_term['term_id'];
 														}
+														*/
 													}
 												}
 											}
@@ -756,10 +759,13 @@ class SF_Settings extends SF_FV {
 													if ( $existing_term && isset($existing_term->term_id) ) {
 														$selected_cats[] = $existing_term->term_id;
 													} else {
+														//MODIFICATION - Disable create term 
+														/*
 														$create_term = wp_insert_term($each_term, SF_Taxonomies::JOB_TYPE_TAXONOMY);
 														if ( isset($create_term['term_id']) ) {
 															$selected_cats[] = $create_term['term_id'];
 														}
+														*/
 													}
 												}
 											}

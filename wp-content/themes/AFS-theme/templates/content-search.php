@@ -2,19 +2,20 @@
   <div class="alert alert-warning">
     <?php _e('Type a search term above or choose a category below.', 'roots'); ?>
   </div>
-<?php endif; ?>
-
-<?php if ( is_search()) : ?>
-
-	<?php
+  
+  <?php
 	$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
 		'orderby'    => 'name',
 		'hide_empty' => 0,
 		'parent' => 0
 	 ) );
+	 
+	 $search_keyword = ($_GET['s']) ? $_GET['s'] : ' ';
+	 $search_link = add_query_arg( array('s' => $search_keyword ), site_url()); 
+	 
 	 ?>
-
-    <div class="search-by-category">
+  
+   <div class="search-by-category">
         <h3>Search by Category</h3>
         <div class="row">
         	<?php
@@ -22,7 +23,7 @@
 		 		foreach ( $top_categories as $top_c ) {
 					?>
               <ul class="col-md-3">
-                <li class="main-cat"><a href="<?php echo add_query_arg( array('category' => $top_c->slug)); ?>"><?php echo $top_c->name; ?></a></li>
+                <li class="main-cat"><a href="<?php echo add_query_arg( array('category' => $top_c->slug), $search_link); ?>"><?php echo $top_c->name; ?></a></li>
                 <?php
 					$sub_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
 						'orderby'    => 'name',
@@ -35,7 +36,7 @@
 						 <?php
 		 			 	foreach ( $sub_categories as $sub_c ) {
 							?>
-                			<li><a href="<?php echo add_query_arg( array('category' => $sub_c->slug)); ?>"><?php echo $sub_c->name; ?></a>
+                			<li><a href="<?php echo add_query_arg( array('category' => $sub_c->slug), $search_link); ?>"><?php echo substr($sub_c->name, strpos($sub_c->name, ':') + 2); ?></a>
                             <?php
 							$sub_categories_1 = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
 								'orderby'    => 'name',
@@ -48,7 +49,7 @@
                                <?php
 		 			 			foreach ( $sub_categories_1 as $sub_c_1 ) {
 									?>
-                                    <li><a href="<?php echo add_query_arg( array('category' => $sub_c_1->slug)); ?>"><?php echo $sub_c_1->name; ?></a>
+                                    <li><a href="<?php echo add_query_arg( array('category' => $sub_c_1->slug), $search_link); ?>"><?php echo substr($sub_c_1->name, strpos($sub_c_1->name, ':') + 2); ?></a>
                                    <?php
 									$sub_categories_2 = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
 										'orderby'    => 'name',
@@ -61,7 +62,7 @@
 									   <?php
 										foreach ( $sub_categories_2 as $sub_c_2 ) {
 											?>
-											<li><a href="<?php echo add_query_arg( array('category' => $sub_c_2->slug)); ?>"><?php echo $sub_c_2->name; ?></a></li>
+											<li><a href="<?php echo add_query_arg( array('category' => $sub_c_2->slug), $search_link); ?>"><?php echo substr($sub_c_2->name, strpos($sub_c_2->name, ':') + 2); ?></a></li>
 											<?php
 										} 
 										?>
@@ -91,6 +92,12 @@
     </div>
 
     <hr>
+
+  
+  
+<?php endif; ?>
+
+<?php if ( is_search()) : ?>
 
 	<?php if (!have_posts()) : ?>
       <div class="alert alert-warning">
