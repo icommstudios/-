@@ -161,78 +161,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
          <div class="form-group">
           <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
         </div>
-    </div>
-    
-   <div style="clear: both;"></div>
-   
-   <div class="col-lg-12">
-     	<div class="form-group">
-        
-        <h4>Core Skills: Industries & Vendor Categories</h4>
-    	<?php
-		//taxonomy is type category (so use ids for field value) 
-		$types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-		
-		$post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
-			
-		//selected categories ( merge term categories with the selected category data )
-		$selected_categories = $fields['category_data']; //set category_data as first
-		//merge with post terms
-		if ( !empty( $post_terms ) ) {
-			foreach ( $post_terms as $catkey => $cat_term_id) {
-				if ( !in_array($cat_term_id, $fields['category_data']) ) {
-					$selected_categories[] = $cat_term_id;
-				}
-			}
-		} 
-		?>
-        <?php 
-		//Number of categories
-		if ( $categories_permitted ) :
-			
-			$cat_ii = 1;
-			while ($cat_ii <= $categories_permitted ) :
-			?>
-           <div class="skillset">
-            <div>
-              <p>Industry Type & Vendor Categories (<?php echo $cat_ii; ?> of <?php echo $categories_permitted; ?>) </p>
-                    <div class="form-group">
-                        <label class="custom-select" for="industry_type">
-                        <?php 
-						  $select_name = SF_Taxonomies::JOB_TYPE_TAXONOMY.'[]';
-						  $select_id = 'reference-selectid-'.$cat_ii;
-						  $select_cat_index = $cat_ii-1;
-						  $selected_term = $selected_categories[$select_cat_index];
-						  $none_option = ( $cat_ii == 1 ) ? '-- select primary contractor category --' : '-- select another contractor category --';
-						  wp_dropdown_categories( array( 'taxonomy' => SF_Taxonomies::JOB_TYPE_TAXONOMY, 'name' => $select_name, 'id' => $select_id, 'selected' => $selected_term, 'class' => 'full-width', 'show_option_none' => $none_option, 'hierarchical' => true, 'hide_empty' => false )); 
-						  ?>
-                      </label>
-                     
-                      <?php
-					  //Verfied category? (is it in the terms)
-					  if ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] && in_array($selected_term, $post_terms) ) {
-					  ?>
-                          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
-                     <?php
-					  } else {
-					  ?>
-                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">Please provide 3 references to be listed in this category!</a></span>
-					  <?php
-					  } 
-					  ?>
-                      </div>
-            </div>
-           </div>
-            <?php 
-			$cat_ii++;
-			endwhile;
-		endif;
-		?>
-      
-      </div> 
-    </div>
-    
-    
+    </div>    
   </div>
   <div class="tab-pane clearfix" id="project-photos">
     <div class="photo-group">
@@ -288,7 +217,73 @@ $is_membership_active = ( $membership_type ) ? true : false;
   </div>
 </div>
 </article>
-
+<hr>
+<article>
+      <div class="form-group">
+        
+        <h4>Core Skills: Industries & Vendor Categories</h4>
+      <?php
+    //taxonomy is type category (so use ids for field value) 
+    $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+    
+    $post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
+      
+    //selected categories ( merge term categories with the selected category data )
+    $selected_categories = $fields['category_data']; //set category_data as first
+    //merge with post terms
+    if ( !empty( $post_terms ) ) {
+      foreach ( $post_terms as $catkey => $cat_term_id) {
+        if ( !in_array($cat_term_id, $fields['category_data']) ) {
+          $selected_categories[] = $cat_term_id;
+        }
+      }
+    } 
+    ?>
+        <?php 
+    //Number of categories
+    if ( $categories_permitted ) :
+      
+      $cat_ii = 1;
+      while ($cat_ii <= $categories_permitted ) :
+      ?>
+           <div class="skillset">
+            <div>
+              <p>Industry Type & Vendor Categories (<?php echo $cat_ii; ?> of <?php echo $categories_permitted; ?>) </p>
+                    <div class="form-group">
+                        <label class="custom-select" for="industry_type">
+                        <?php 
+              $select_name = SF_Taxonomies::JOB_TYPE_TAXONOMY.'[]';
+              $select_id = 'reference-selectid-'.$cat_ii;
+              $select_cat_index = $cat_ii-1;
+              $selected_term = $selected_categories[$select_cat_index];
+              $none_option = ( $cat_ii == 1 ) ? '-- select primary contractor category --' : '-- select another contractor category --';
+              wp_dropdown_categories( array( 'taxonomy' => SF_Taxonomies::JOB_TYPE_TAXONOMY, 'name' => $select_name, 'id' => $select_id, 'selected' => $selected_term, 'class' => 'full-width', 'show_option_none' => $none_option, 'hierarchical' => true, 'hide_empty' => false )); 
+              ?>
+                      </label>
+                     
+                      <?php
+            //Verfied category? (is it in the terms)
+            if ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] && in_array($selected_term, $post_terms) ) {
+            ?>
+                          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
+                     <?php
+            } else {
+            ?>
+                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">Please provide 3 references to be listed in this category!</a></span>
+            <?php
+            } 
+            ?>
+                      </div>
+            </div>
+           </div>
+            <?php 
+      $cat_ii++;
+      endwhile;
+    endif;
+    ?>
+      
+      </div> 
+</article>
 
 </form>
 
