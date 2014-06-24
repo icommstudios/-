@@ -24,7 +24,7 @@
 					?>
               <ul class="col-md-3">
                 <li class="main-cat"><a href="<?php echo add_query_arg( array('category' => $top_c->slug), $search_link); ?>"><?php echo $top_c->name; ?></a></li>
-                <?php
+                <?php /*
 					$sub_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
 						'orderby'    => 'name',
 						'hide_empty' => 0,
@@ -82,7 +82,7 @@
                        
                        <?php 
 					 }
-					 ?>
+					 */ ?>
                 </ul>    
                  <?php
 				} //end foreach top_categories
