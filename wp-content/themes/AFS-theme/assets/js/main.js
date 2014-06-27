@@ -35,3 +35,16 @@ $('.show-references').on('click', function() {
     $(this).next('div.reference-popup').slideToggle();
     return false
 });
+
+// toggle category
+$('.show-subcategories').on('click', function() {
+
+	var children = $(this).closest('ul').children('.sub-cat');
+	if ( $(children).first().is(":visible") ) {
+		$(this).children('.show-subcategories-indicator').html('+');
+	} else {
+		$(this).children('.show-subcategories-indicator').html('&ndash;');
+	}
+    $(this).closest('ul').children('.sub-cat').toggle(); 
+    return false;
+});
