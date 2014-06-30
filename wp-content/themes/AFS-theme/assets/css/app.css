@@ -6509,16 +6509,46 @@ a.round-icon-blocks p {
 /* ==========================================================================
    Search by Category
    ========================================================================== */
+
+.search-by-category .show-subcategories-indicator {
+  cursor: pointer;
+  position: absolute;
+  right: 2px;
+  top: 0;
+  width: 30px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: center;
+  z-index: 2;
+}
+.search-by-category .show-subcatchildren-indicator {
+  cursor: pointer;
+  position: absolute;
+  right: 2px;
+  top: 0;
+  width: 30px;
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+  text-align: center;
+  z-index: 2;
+}
+
 .search-by-category ul.col-md-3 {
   margin-bottom: 30px;
 }
 .search-by-category ul {
   list-style: none;
 }
+.search-by-category ul li {
+  position: relative;
+}
 .search-by-category ul li a {
   color: #5b5b5b;
   display: block;
   padding: 2px 2px 2px 8px;
+  position: relative;
 }
 .search-by-category ul li a:hover {
   background: #f1f1f1;

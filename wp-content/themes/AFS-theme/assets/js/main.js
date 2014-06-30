@@ -37,14 +37,29 @@ $('.show-references').on('click', function() {
 });
 
 // toggle category
-$('.show-subcategories').on('click', function() {
+$('.show-subcategories-indicator').on('click', function() {
 
 	var children = $(this).closest('ul').children('.sub-cat');
 	if ( $(children).first().is(":visible") ) {
-		$(this).children('.show-subcategories-indicator').html('+');
+		$(this).html('+');
 	} else {
-		$(this).children('.show-subcategories-indicator').html('&ndash;');
+		$(this).html('&ndash;');
 	}
     $(this).closest('ul').children('.sub-cat').toggle(); 
+    return false;
+});
+// toggle subcategory children
+$('.sub-cat .show-subcatchildren-indicator').on('click', function() {
+
+	var child_ul = $(this).closest('li').children('ul');
+	if ( $(child_ul).is(":visible") ) {
+		$(this).html('+');
+	} else {
+		$(this).html('&ndash;');
+	}
+	//toggle
+	if ( child_ul.length > 0 ) {
+		child_ul.toggle(); 
+	}
     return false;
 });
