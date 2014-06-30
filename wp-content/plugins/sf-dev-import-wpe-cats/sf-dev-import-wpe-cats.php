@@ -32,6 +32,8 @@ abstract class SF_dev_import_wpe_cats {
 		}
 		
 	}
+	
+	
 
 	public function insert_term($this_term, $this_parent_term = false) {
 		global $cached_created_terms;
@@ -44,6 +46,8 @@ abstract class SF_dev_import_wpe_cats {
 				$parent_term = $cached_created_terms[$this_parent_term];
 			}
 			$parent_term = (isset($parent_term->term_id)) ? $parent_term : get_term_by('name', $this_parent_term, 'fv_job_type' );
+			//if not exist, now try using sanitized title
+			$parent_term = ( $parent_term && isset($parent_term->term_id) ) ? $parent_term : get_term_by('slug', sanitize_title($this_parent_term), 'fv_job_type' );
 			if ( $parent_term && isset($parent_term->term_id) ) {
 				//success
 				$parent = $parent_term->term_id;
@@ -62,6 +66,8 @@ abstract class SF_dev_import_wpe_cats {
 			$existing_term = $cached_created_terms[$this_term];
 		}
 		$existing_term = (isset($existing_term->term_id)) ? $existing_term : get_term_by('name', $this_term, 'fv_job_type' );
+		//if not exist, now try using sanitized title
+		$existing_term = ( $existing_term && isset($existing_term->term_id) ) ? $existing_term : get_term_by('slug', sanitize_title($this_term), 'fv_job_type' );
 		
 		if ( $existing_term && isset($existing_term->term_id) ) {
 			//wp_set_post_terms( $id, $existing_term->term_id, 'wpsc_product_category', TRUE );
@@ -134,9 +140,47 @@ abstract class SF_dev_import_wpe_cats {
 			
 			$cached_created_terms = array();
 			
-			self::run_import_cat_level($csv, 1);
-			self::run_import_cat_level($csv, 2);
-			self::run_import_cat_level($csv, 3);
+			//If cleanup
+			if ($_GET['cleanup'] ) {
+				$toplevelcats = array();
+				$level = 1;
+				foreach ($csv as $line) {
+					
+					foreach ( $line as $lk => $l ) {
+						$l = trim($l);
+						$l = trim($l);
+						$line[$lk] = html_entity_decode($l);
+					}
+					$val = $line['level'.$level];
+					if ( !in_array($val, $toplevelcats) ) {
+						$toplevelcats[$val] = $val;
+					}
+					
+		
+				}
+				
+				
+				$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					'parent' => 0
+				 ) );
+		
+				 if ( $top_categories && !is_wp_error($top_categories) ) {
+					foreach ( $top_categories as $top_c ) {
+						
+						if ( strpos($top_c->name, ':') && !in_array($top_c->name, $toplevelcats) ) {
+							echo '<br>found unknown cat: '.$top_c->name;
+							wp_delete_term( $top_c->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+						}
+					}
+				 }
+				 return;
+			}
+			
+			//self::run_import_cat_level($csv, 1);
+			//self::run_import_cat_level($csv, 2);
+			//self::run_import_cat_level($csv, 3);
 			self::run_import_cat_level($csv, 4);
 			
 			
