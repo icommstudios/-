@@ -39,8 +39,14 @@ class SF_Search extends SF_FV {
 			
 			//$query->set('search_term', $query->query_vars['s'] ); //set our custom search term
 			$query->set('search_location', $_REQUEST['location'] );
-			$query->set('search_job_postings_filter', (bool)$_REQUEST['job_postings_filter'] );
-			$query->set('search_contractors_filter', (bool)$_REQUEST['contractors_filter'] );
+			if ( isset($_REQUEST['job_postings_filter']) || isset($_REQUEST['contractors_filter']) ) {
+				$query->set('search_job_postings_filter', (bool)$_REQUEST['job_postings_filter'] );
+				$query->set('search_contractors_filter', (bool)$_REQUEST['contractors_filter'] );
+			} else {
+				//job posts and contractor type search missing, so set both
+				$query->set('search_job_postings_filter', TRUE );
+				$query->set('search_contractors_filter', TRUE );
+			}
 			$query->set('search_distance', $_REQUEST['distance'] );
 			$query->set('search_category', $_REQUEST['category'] );
 			
