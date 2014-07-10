@@ -45,8 +45,14 @@ class SF_Users extends SF_FV {
 		self::$url_paypal_ipn = add_query_arg(array('fv_ipn_listener' => 1), trailingslashit(home_url()) );
 		self::$url_paypal_return = add_query_arg(array('fv_pay_return' => 1), trailingslashit(home_url()) );
 		self::$url_paypal_cancel = add_query_arg(array('fv_pay_cancel' => 1), trailingslashit(home_url()) );
-		//self::$url_paypal_api_endpoint = 'https://www.paypal.com/cgi-bin/webscr'; //Live
-		self::$url_paypal_api_endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //Sandbox
+		
+		//Paypal mode
+		$fv_paypal_api_mode = get_option('fv_paypal_api_mode');
+		if ( $fv_paypal_api_mode == 'sandbox') {
+			self::$url_paypal_api_endpoint = 'https://www.sandbox.paypal.com/cgi-bin/webscr'; //Sandbox
+		} else {
+			self::$url_paypal_api_endpoint = 'https://www.paypal.com/cgi-bin/webscr'; //Live
+		}
 		
 		//Handle actions
 		
@@ -326,10 +332,12 @@ class SF_Users extends SF_FV {
 	}
 	
 	// Profile url
-	public function user_profile_url($user_id = null) {
-		if ( is_user_logged_in() || $user_id ) {
-			$lookup_user_id = ( $user_id ) ? $user_id : get_current_user_id();
-			$user_type = get_user_meta( $lookup_user_id, self::USER_TYPE_META_KEY, true);
+	public function user_profile_url($user_id = NULL) {
+		if ( !$user_id && is_user_logged_in() ) {
+			$user_id = get_current_user_id();
+		}
+		if ( $user_id ) {
+			$user_type = get_user_meta( $user_id, self::USER_TYPE_META_KEY, true);
 			
 			if ( $user_type == self::USER_TYPE_FACILITY) {
 				return home_url(self::PROFILE_PATH_FACILITY);
@@ -638,7 +646,7 @@ class SF_Users extends SF_FV {
 				}
 				
 				//Set success message
-				self::set_message( self::__('Thank you for registering! You are now logged in to your account!'), self::MESSAGE_STATUS_SUCCESS );
+				self::set_message( self::__('Thank you for registering! You are now logged in to your account!'), self::MESSAGE_STATUS_SUCCESS, $user_id );
 					
 				//Redirect newly registered logged in user
 				if ( isset( $_REQUEST['redirect_to'] ) && !empty( $_REQUEST['redirect_to'] ) ) {
@@ -691,7 +699,7 @@ class SF_Users extends SF_FV {
 					update_user_meta( $user_id, self::USER_TYPE_ID_META_KEY, $contractor_id );
 					
 					//Update listing with user id
-					SF_Contractor::save_field($facility_id, 'user_id', $user_id);
+					SF_Contractor::save_field($contractor_id, 'user_id', $user_id);
 					
 				}
 			}
@@ -833,6 +841,8 @@ class SF_Users extends SF_FV {
 	}
 	
 	public static function handle_profile_edit_upload_file() {
+		
+		
 		//Upload files
 		if ( !empty( $_POST['fv_profile_edit_upload_file'] ) && wp_verify_nonce( $_POST['fv_profile_edit_upload_file_nonce'], 'fv_profile_edit_upload_file_nonce' ) && is_user_logged_in() ) {
 			

@@ -354,6 +354,7 @@ class SF_Settings extends SF_FV {
 		//register other settings
 		register_setting( 'fv-settings', 'fv_search_radius_api' );
 		register_setting( 'fv-settings', 'fv_paypal_id' );
+		register_setting( 'fv-settings', 'fv_paypal_api_mode' );
 		/*
 		//NOT Used
 		register_setting( 'fv-settings', 'fv_paypal_api_key' );
@@ -451,10 +452,17 @@ class SF_Settings extends SF_FV {
             <h3>PayPal Settings</h3>
             
             <table class="form-table">
-            <tr valign="top">
+            	<tr valign="top">
                     <th scope="row">PayPal ID (Email)</th>
                     <td><input type="text" width="100" style="width: 300px;" name="fv_paypal_id" value="<?php echo get_option('fv_paypal_id'); ?>" /><br><em>The email address you use to log into your Paypal account with.</em></td>
 				</tr>
+                <tr valign="top">
+                    <th scope="row">PayPal Mode (Live or Testing/Sandbox)</th>
+                    <td><?php
+                    $fv_paypal_api_mode = get_option('fv_paypal_api_mode', 'live');
+					?><label><input type="radio" <?php echo ($fv_paypal_api_mode == 'live') ? 'checked="checked"' : ''; ?> name="fv_paypal_api_mode" value="live" /> Live</label> &nbsp; <label><input type="radio" <?php echo ($fv_paypal_api_mode == 'sandbox') ? 'checked="checked"' : ''; ?> name="fv_paypal_api_mode" value="sandbox" /> Testing/Sandbox</label><br><em>Choose whether to use the Sandbox Paypal API, or the Production/Live API.</em></td>
+				</tr>
+                
                 <?php
 				//NOT Used
 				/*
@@ -710,6 +718,8 @@ class SF_Settings extends SF_FV {
 												$each_term = trim($each_term);
 												if ( !empty($each_term)) {
 													$existing_term = get_term_by('name', $each_term, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+													//If not found, try by looking up by slug (bug fixes)
+													$existing_term = ( $existing_term && isset($existing_term->term_id) ) ? $existing_term : get_term_by('slug', sanitize_title($each_term), SF_Taxonomies::JOB_TYPE_TAXONOMY );
 													if ( $existing_term && isset($existing_term->term_id) ) {
 														$selected_cats[] = $existing_term->term_id;
 													} else {
@@ -756,6 +766,8 @@ class SF_Settings extends SF_FV {
 												$each_term = trim($each_term);
 												if ( !empty($each_term)) {
 													$existing_term = get_term_by('name', $each_term, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+													//If not found, try by looking up by slug (bug fix)
+													$existing_term = ( $existing_term && isset($existing_term->term_id) ) ? $existing_term : get_term_by('slug', sanitize_title($each_term), SF_Taxonomies::JOB_TYPE_TAXONOMY );
 													if ( $existing_term && isset($existing_term->term_id) ) {
 														$selected_cats[] = $existing_term->term_id;
 													} else {
@@ -1169,7 +1181,7 @@ class SF_Settings extends SF_FV {
                 <tr class="import_type_listing"> 
                     <td align="right"><label><strong>Listing Type</strong></label></td>
                     <td align="left">
-                        <label for="listing_type_facility"><input type="radio" name="listing_type" id="listing_type_facility" <?php if ($_POST['listing_type'] == SF_Facility::POST_TYPE || $_POST['listing_type'] == '') echo 'checked="checked"'; ?> value="<?php echo SF_Facility::POST_TYPE; ?>"> Facilities</label> &nbsp; &nbsp; <label for="listing_type_contractor"><input type="radio" name="listing_type" id="listing_type_contractor" <?php if ($_POST['listing_type'] == SF_Contractor::POST_TYPE) echo 'checked="checked"'; ?> value="<?php echo SF_Contractor::POST_TYPE; ?>"> Contractors</label> &nbsp;
+                         <label for="listing_type_contractor"><input type="radio" name="listing_type" id="listing_type_contractor" <?php if ($_POST['listing_type'] == SF_Contractor::POST_TYPE || $_POST['listing_type'] == '') echo 'checked="checked"'; ?> value="<?php echo SF_Contractor::POST_TYPE; ?>"> Contractors</label> &nbsp; &nbsp; <label for="listing_type_facility"><input type="radio" name="listing_type" id="listing_type_facility" <?php if ($_POST['listing_type'] == SF_Facility::POST_TYPE) echo 'checked="checked"'; ?> value="<?php echo SF_Facility::POST_TYPE; ?>"> Facilities</label> 
                     </td>  
                 </tr>
                 <tr> 

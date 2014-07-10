@@ -235,47 +235,54 @@ abstract class SF_FV {
 	}
 	
 	// Messages 
-	public static function has_messages() {
-		$msgs = self::get_messages();
+	public static function has_messages($user_id = NULL) {
+		$msgs = self::get_messages($user_id);
 		return !empty( $msgs );
 	}
 
-	public static function set_message( $message, $status = self::MESSAGE_STATUS_INFO ) {
+	public static function set_message( $message, $status = self::MESSAGE_STATUS_INFO, $user_id = NULL ) {
 		if ( !isset( self::$messages ) ) {
-			self::load_messages();
+			self::load_messages($user_id);
 		}
 		$message = self::__( $message );
 		if ( !isset( self::$messages[$status] ) ) {
 			self::$messages[$status] = array();
 		}
 		self::$messages[$status][] = $message;
-		self::save_messages();
+		self::save_messages($user_id);
 	}
 
-	public static function clear_messages() {
+	public static function clear_messages($user_id = NULL) {
 		self::$messages = array();
-		self::save_messages();
+		self::save_messages($user_id);
 	}
 
-	private static function save_messages() {
+	private static function save_messages($user_id = NULL) {
 		global $blog_id;
-		$user_id = get_current_user_id();
-		if ( !is_user_logged_in() ) {
-			set_transient( 'fv_messaging_for_'.$_SERVER['REMOTE_ADDR'], self::$messages, 300 );
+		if ( !$user_id ) {
+			$user_id = get_current_user_id();
 		}
-		update_user_meta( $user_id, $blog_id.'_'.self::MESSAGE_META_KEY, self::$messages );
+		if ( !$user_id ) {
+			set_transient( 'fv_messaging_for_'.$_SERVER['REMOTE_ADDR'], self::$messages, 300 );
+		} else {
+			delete_transient( 'fv_messaging_for_'.$_SERVER['REMOTE_ADDR'] );	
+			update_user_meta( $user_id, $blog_id.'_'.self::MESSAGE_META_KEY, self::$messages );
+		}
+		
 	}
 
-	public static function get_messages( $type = NULL ) {
+	public static function get_messages( $type = NULL, $user_id = NULL ) {
 		if ( !isset( self::$messages ) ) {
-			self::load_messages();
+			self::load_messages($user_id);
 		}
 		return self::$messages;
 	}
 
-	public static function load_messages() {
-		$user_id = get_current_user_id();
-		if ( !is_user_logged_in() ) {
+	public static function load_messages($user_id = NULL) {
+		if ( !$user_id ) {
+			$user_id = get_current_user_id();
+		}
+		if ( !$user_id ) {
 			$messages = get_transient( 'fv_messaging_for_'.$_SERVER['REMOTE_ADDR'] );
 		} else {
 			global $blog_id;

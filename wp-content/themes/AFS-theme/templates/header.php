@@ -26,7 +26,7 @@
         <div class="username">
         	<i class="fa fa-user"></i>hello <?php echo $current_user->user_email; ?>
         </div>
-        <span class="text-center"><a href="<?php echo SF_Users::user_profile_url(); ?>">my account</a> | <a href="<?php echo wp_logout_url(); ?>">logout</a></span>
+        <span class="text-center"><a href="<?php echo SF_Users::user_profile_url( get_current_user_id() ); ?>">my account</a> | <a href="<?php echo wp_logout_url(); ?>">logout</a></span>
       </div>
       
       <?php else : ?>

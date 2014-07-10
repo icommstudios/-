@@ -166,7 +166,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
   <div class="tab-pane clearfix" id="project-photos">
     <div class="photo-group">
 <?php
-  //Loop photos
+  //Loop photos (loops again at bottom of this template for modal dialogs)
   $photo_attachments = SF_Contractor::load_attachments($contractor_id);
   if ( $photo_attachments ) {
   foreach ($photo_attachments  as $attachment) : 
@@ -174,38 +174,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
     <div class="col-sm-6 col-md-3">
       <a href="#" title="Click to edit" class="" data-toggle="modal" data-target="#photoEditModal<?php echo $attachment->ID; ?>"><img class="img-thumbnail" width="180" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" /></a>
    </div>
-   <!-- Modal -->
-    <div class="modal fade" id="photoEditModal<?php echo $attachment->ID; ?>" tabindex="-1" role="dialog" aria-labelledby="photoEditModalLabel<?php echo $attachment->ID; ?>" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-         <form class="fv_profile_edit_modify_file" role="form" method="post">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="photoUploadModalLabel<?php echo $attachment->ID; ?>">Edit Photo</h4>
-          </div>
-          <div class="modal-body">
-          
-           <input type="hidden" name="fv_profile_edit_modify_file" value="contractor" />
-           <input type="hidden" name="upload_attachment_id" value="<?php echo $attachment->ID; ?>" />
-           <input type="hidden" name="upload_action" value="edit" />
-           <?php wp_nonce_field( 'fv_profile_edit_modify_file_nonce', 'fv_profile_edit_modify_file_nonce' ); ?> 
-           
-           <div><strong>Photo:</strong></div>
-           <img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" />
-           
-           <p><strong>File description:</strong>
-           <input placeholder="type a description" name="upload_file_label" value="<?php echo esc_attr($attachment->post_content); ?>" class="full-width">
-           </p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger pull-left">Delete this File</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </div>
-         </form>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+   
 <?php endforeach; 
   } ?>
     
@@ -594,6 +563,47 @@ $(document).ready(function(){
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<?php
+  //Loop photos (AGAIN) - Modal dialgs
+  $photo_attachments = SF_Contractor::load_attachments($contractor_id);
+  if ( $photo_attachments ) {
+  foreach ($photo_attachments  as $attachment) : 
+  ?>
+   <!-- Modal -->
+    <div class="modal fade" id="photoEditModal<?php echo $attachment->ID; ?>" tabindex="-1" role="dialog" aria-labelledby="photoEditModalLabel<?php echo $attachment->ID; ?>" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+         <form class="fv_profile_edit_modify_file" role="form" method="post">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="photoUploadModalLabel<?php echo $attachment->ID; ?>">Edit Photo</h4>
+          </div>
+          <div class="modal-body">
+          
+           <input type="hidden" name="fv_profile_edit_modify_file" value="contractor" />
+           <input type="hidden" name="upload_attachment_id" value="<?php echo $attachment->ID; ?>" />
+           <input type="hidden" name="upload_action" value="edit" />
+           <?php wp_nonce_field( 'fv_profile_edit_modify_file_nonce', 'fv_profile_edit_modify_file_nonce' ); ?> 
+           
+           <div><strong>Photo:</strong></div>
+           <img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" />
+           
+           <p><strong>File description:</strong>
+           <input placeholder="type a description" name="upload_file_label" value="<?php echo esc_attr($attachment->post_content); ?>" class="full-width">
+           </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger pull-left">Delete this File</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+         </form>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+<?php endforeach; 
+  } ?>
 
 
 <!-- Handle form submit -->
