@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-sm-4"><a href="<?php echo home_url('search'); //.'?s=&contractors_filter=1&distance=50' add_query_arg (array('precheck_contractor' => 1), home_url('search')); ?>" class="btn x-large white blue-text centered">Search for Vendors</a></div>
 		<div class="col-sm-4"><img class="centered handshake-icon" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/handshake.png" /></div>
-		<div class="col-sm-4"><a href="<?php echo home_url('search'); //.'?s=&job_postings_filter=1&distance=50' add_query_arg (array('precheck_job' => 1), home_url('search')); ?>" class="btn x-large white purple-text centered">Search for Facility Jobs</a></div>
+		<div class="col-sm-4"><a href="<?php echo home_url('search').'?s=&job_postings_filter=1&distance=50'; //add_query_arg (array('precheck_job' => 1), home_url('search')); ?>" class="btn x-large white purple-text centered">Search for Facility Jobs</a></div>
 	</div>
 	</div>
 </div>
