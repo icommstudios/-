@@ -6509,9 +6509,6 @@ a.round-icon-blocks p {
 /* ==========================================================================
    Search by Category
    ========================================================================== */
-/* ==========================================================================
-   Search by Category
-   ========================================================================== */
 .search-by-category .show-subcategories-indicator {
   cursor: pointer;
   position: absolute;
@@ -6548,7 +6545,7 @@ a.round-icon-blocks p {
 .search-by-category ul li a {
   color: #5b5b5b;
   display: block;
-  padding: 2px 15px 2px 8px;
+  padding: 2px 2px 2px 8px;
   position: relative;
 }
 .search-by-category ul li a:hover {
@@ -6561,16 +6558,18 @@ a.round-icon-blocks p {
   padding-right: 4px;
 }
 .search-by-category ul li.main-cat {
-  background: #343434;
+  background: #08a4f2;
   color: white;
   padding: 8px 8px 8px 14px;
+}
+.search-by-category ul li.main-cat:hover {
+  background: #2980b9;
 }
 .search-by-category ul li.main-cat a {
   color: white;
 }
 .search-by-category ul li.main-cat a:hover {
-  text-decoration: underline;
-  background: #343434;
+  background: #2980b9;
 }
 /* ==========================================================================
    Contractor & Job Posts

@@ -819,9 +819,30 @@ a.round-icon-blocks {
 
 .search-by-category {
 
+   .show-subcategories-indicator {
+     cursor: pointer;
+     position: absolute;
+     right: 2px;
+     top: 0;
+     width: 30px;
+     height: 40px;
+     line-height: 40px;
+     display: inline-block;
+     text-align: center;
+     z-index: 2;
+   }
+
 .show-subcatchildren-indicator {
-      cursor: pointer;
-      padding: 2px 0px 0px 20px; 
+        cursor: pointer;
+  position: absolute;
+  right: 2px;
+  top: 0;
+  width: 30px;
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+  text-align: center;
+  z-index: 2;
 }
 
 ul.col-md-3{
@@ -832,11 +853,13 @@ ul.col-md-3{
       list-style: none;
 
       li {
+         position: relative;
 
          a {
             color:#5b5b5b;
             display: block;
             padding: 2px 2px 2px 8px;
+            position: relative;
 
             &:hover {
                background: #f1f1f1;
@@ -855,16 +878,19 @@ ul.col-md-3{
       }
 
       li.main-cat {
-         background: #343434;
+         background: #08a4f2;
          color: white;
          padding: 8px 8px 8px 14px;
+
+         &:hover {
+            background:#2980b9;
+         }
 
          a {
             color: white;
 
             &:hover {
-               text-decoration: underline;
-               background: #343434;
+               background: #2980b9;
             }
          }
       }
