@@ -1,4 +1,3 @@
-
 <?php
 $contractor_id = get_the_ID();
 $membership_type = fv_get_contractor_membership_type($contractor_id);
@@ -297,7 +296,7 @@ if ( !empty($categories ) ) {
         <?php wp_nonce_field( 'fv_message_send_nonce', 'fv_message_send_nonce' ); ?> 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="contactModalLabel">How to proceed with <?php echo ($facility_name) ? $facility_name : $facility_listing; ?></h4>
+        <h4 class="modal-title" id="contactModalLabel">Send a Message <?php /* echo ($facility_name) ? $facility_name : $facility_listing; */ ?></h4>
       </div>
       <div class="modal-body">
          <input placeholder="message title" name="post_title" value="<?php echo esc_attr(stripslashes($_POST['post_title'])); ?>" class="full-width">
