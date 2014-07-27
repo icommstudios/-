@@ -1,9 +1,17 @@
 <?php 
 $contractor_id = get_the_ID();
-$categories_permitted = fv_get_contractor_membership_addon_categories($contractor_id); 
+$categories_permitted = fv_get_contractor_membership_addon_categories($contractor_id);
+$featured_thumb = get_the_post_thumbnail($contractor_id, array(200,200), array('class' => 'img-thumbnail'));
+$fields = fv_get_contractor_fields($contractor_id);
 ?>
-<div class="hero blue-hero">
+<div class="hero blue-hero contractor">
 	<div class="container">
+        <?php if ( $featured_thumb ) : ?> 
+        <div class="featured-img logo pull-left">
+            <?php echo $featured_thumb; ?>
+        </div>
+        <?php endif; ?>
+        <div class="pull-left">
 		<h1><?php echo get_the_title($contractor_id); ?></h1><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
         <?php
 		$star_rating = fv_get_contractor_star_rating($contractor_id);
@@ -18,30 +26,26 @@ $categories_permitted = fv_get_contractor_membership_addon_categories($contracto
 		}
 		?>
         </span>
-		<div class="posting-tags">
-			<?php
-            $types = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'all' ));
-            if ( $types ) {
-               	 $cat_count = 0;
-                foreach ($types as $type) {
-                    //$link = get_term_link( $type, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-					$cat_count++;
-					if ( $cat_count <= $categories_permitted ) {
-                    ?>
-                    <span class="label label-primary"><?php echo $type->name; ?></span>
-                    <?php
-					}
-                }
-            }
-            //If location
-            $location = get_post_meta($contractor_id, '_location', true); 
-            if ( $location ) {
-            ?>
-            <span class="label label-primary label-location"><?php echo $location; ?></span>
-            <?php 
-            }
-            ?>
+        </div>
 
-  		</div>
+            <div class="business-basics pull-left">
+                <div class="col-md-6" >
+                    <ul class="fa-ul">
+                        <?php if ( $fields['name'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['name']; ?></li><?php endif; ?>
+                        <?php if ( $fields['company'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['company']; ?></li><?php endif; ?>
+                        <?php if ( $fields['location'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['location']; ?></li><?php endif; ?>
+                        <?php if ( $fields['phone'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['phone']; ?></li><?php endif; ?>
+                    </ul>
+                </div>
+                <div class="col-md-6" >
+                    <ul class="fa-ul">
+                        <?php if ( $fields['email'] ) : ?><li><i class="fa-li fa fa-square"></i><a href="mailto:<?php echo $fields['email']; ?>"><?php echo $fields['email']; ?></a></li><?php endif; ?>
+                        <?php if ( $fields['hours'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['hours']; ?></li><?php endif; ?>
+                        <?php if ( $fields['years_of_experience'] ) : ?><li><i class="fa-li fa fa-square"></i> Established in <?php echo $fields['years_of_experience']; ?></li><?php endif; ?>
+                        <?php if ( !empty($membership_type) && $fields['website']) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['website']; ?></li><?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+
     </div>
 </div>

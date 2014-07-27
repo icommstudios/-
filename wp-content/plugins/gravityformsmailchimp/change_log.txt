@@ -1,4 +1,12 @@
 ------------------------------------------------------------------------------------------------------------------
+Version 2.4
+	- Updated code to assign subscribers to groups correctly when subscription was dependent on payment.
+    - Updated files to not have the closing php tag and blank lines at the end.
+
+	- Fixed issue with entry not being sent to MailChimp when "only send when payment is received" is enabled and payment ends up being $0.
+    - Fixed issue causing issues with opt-in condition when configured to send to MailChimp only when payment is received.
+
+------------------------------------------------------------------------------------------------------------------
 Version 2.3
     - Updated tooltip script from qTip to jQuery UI
 	- Fixed typo "unsubscrbed" in debug statement

@@ -1,15 +1,15 @@
 <?php
 /*
 	Plugin Name: Easy Pricing Tables
-	Plugin URI: http://easypricingtables.com/
+	Plugin URI: http://fatcatapps.com/easypricingtables
 	Description: Create a Beautiful, Responsive and Highly Converting Pricing Table in Less Than 5 Minutes with Easy Pricing Tables for WordPress. No Coding Required.
 	Author: David Hehenberger
-	Version: 1.5.2
-	Author URI: http://davidhehenberger.com
+	Version: 1.5.4.1
+	Author URI: http://fatcatapps.com
 */
 
 // define plugin version for update nag
-define('PTP_PLUGIN_VERSION', '1.5.2');
+define('PTP_PLUGIN_VERSION', '1.5.4.1');
 
 // Define a constant to always include the absolute path
 define('PTP_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
@@ -59,7 +59,7 @@ function dh_ptp_plugin_settings_link($links)
   // Add Easy Pricing Tables links
   $add_new_link = '<a href="post-new.php?post_type=easy-pricing-table">' . __('Add New', PTP_LOC) . '</a>'; 
   $forum_link   = '<a href="http://wordpress.org/support/plugin/easy-pricing-tables">' . __('Support', PTP_LOC) . '</a>';
-  $premium_link = '<a href="http://easypricingtables.com/?utm_source=free-plugin&utm_medium=link&utm_campaign=link-in-installed-plugins">' . __('Purchase Premium', PTP_LOC) . '</a>';
+  $premium_link = '<a href="http://fatcatapps.com/easypricingtables/?utm_campaign=ept-plugins.php&utm_source=free-plugin&utm_medium=link&utm_content=v1">' . __('Purchase Premium', PTP_LOC) . '</a>';
   
   array_push($links, $add_new_link);
   array_push($links, $forum_link);

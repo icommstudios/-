@@ -178,9 +178,9 @@ abstract class SF_dev_import_wpe_cats {
 				 return;
 			}
 			
-			//self::run_import_cat_level($csv, 1);
-			//self::run_import_cat_level($csv, 2);
-			//self::run_import_cat_level($csv, 3);
+			self::run_import_cat_level($csv, 1);
+			self::run_import_cat_level($csv, 2);
+			self::run_import_cat_level($csv, 3);
 			self::run_import_cat_level($csv, 4);
 			
 			
@@ -202,7 +202,7 @@ abstract class SF_dev_import_wpe_cats {
 		
 		if ( $level ) {
 				$level = intval($level);
-				foreach ($csv as $line) {
+				foreach ($csv as $lineii => $line) {
 					
 					foreach ( $line as $lk => $l ) {
 						$l = trim($l);

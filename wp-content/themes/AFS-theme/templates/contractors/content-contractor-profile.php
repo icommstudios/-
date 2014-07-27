@@ -5,60 +5,39 @@ $categories_permitted = fv_get_contractor_membership_addon_categories($contracto
 $is_membership_active = ( $membership_type ) ? true : false;
 
 ?>
-<form id="fv_profile_edit" role="form" method="post">
+<form id="fv_profile_edit" class="contractor-edit" role="form" method="post">
 <input type="hidden" name="fv_profile_edit" value="contractor" />
 <?php wp_nonce_field( 'fv_profile_edit_nonce', 'fv_profile_edit_nonce' ); ?> 
-<article class="clearfix">
-	<?php 
-    $featured_thumb = get_the_post_thumbnail($contractor_id, 'img_400', array('class' => 'img-thumbnail'));
-    if ($featured_thumb ) {
-        ?>
-        <a href="#" title="Click to edit" data-toggle="modal" data-target="#photoEditModalFeatured"><?php echo $featured_thumb; ?></a>
-        <?php
-    } else {
-        ?>
-        
-      <div class="img-thumbnail">
-        <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModalFeatured"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
-      </div>
-     
-    <?php } ?>
-</article>
-<article class="clearfix">
-<h4>Description</h4>
-<textarea class="full-width" placeholder="description" name="post_content" rows="10"><?php echo esc_textarea($fields['post_content']); ?></textarea>
-</article>
-<article>
-<h4>Profile Info</h4>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#afs-account" data-toggle="tab">Username/Password</a></li>
-  <li><a href="#personal-profile" data-toggle="tab">Business Basics</a></li>
-  <li><a href="#contractor-profile" data-toggle="tab">Vendor Profile</a></li>
-  <li><a href="#project-photos" data-toggle="tab">Project Photos</a></li>
-</ul>
-<div class="tab-content">
-  <div class="tab-pane active clearfix" id="afs-account">
-    <div class="col-lg-6">
-         <div class="form-group">
-        <input type="email" placeholder="email/username" name="user_email" value="<?php echo (isset($_POST['user_email'])) ? $_POST['user_email'] : $user_fields->user_email; ?>" class="full-width">
-        </div>
-        <div class="form-group">
-        <input type="password" name="password" placeholder="enter password" value="" class="full-width">
-        </div>
-        <div class="form-group">
-        <input type="password" name="confirm-password" placeholder="confirm password" value="" class="full-width">
-        </div>
+<section class="photos clearfix">
+  <h3>Photos</h3>
+  <div class="photo-group">
+<?php
+  //Loop photos (loops again at bottom of this template for modal dialogs)
+  $photo_attachments = SF_Contractor::load_attachments($contractor_id);
+  if ( $photo_attachments ) {
+  foreach ($photo_attachments  as $attachment) : 
+  ?>
+    <div class="col-sm-6 col-md-3">
+      <a href="#" title="Click to edit" class="" data-toggle="modal" data-target="#photoEditModal<?php echo $attachment->ID; ?>"><img class="img-thumbnail" width="180" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" /></a>
+   </div>
    
-        <div class="form-group">
-        <div class="custom-checkbox">
-                <input type="checkbox" value="None" name="_hide_profile" id="hide_profile" <?php echo ((bool)$fields['hide_profile']) ? 'checked="checked"' : ''; ?> />
-                <label for="hide_profile"></label><span class="field-meta">hide my profile</span>
-        </div>
-        </div>
-      </div>
+<?php endforeach; 
+  } ?>
+    
+  <div class="col-sm-6 col-md-3">
+    <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModal"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
   </div>
-  <div class="tab-pane clearfix" id="personal-profile">
-    <div class="col-lg-6">
+</div>
+</section>
+<hr>
+<section class="overview clearfix">
+<h3>Company Overview</h3>
+<textarea class="full-width" placeholder="description" name="post_content" rows="10"><?php echo esc_textarea($fields['post_content']); ?></textarea>
+</section>
+<hr>
+<section class="business-basics clearfix">
+<h3>Business Basics</h3>
+<div class="col-lg-6">
         <div class="form-group">
           <input placeholder="name" name="_name" value="<?php echo $fields['name']; ?>" class="full-width">
         </div>
@@ -98,99 +77,27 @@ $is_membership_active = ( $membership_type ) ? true : false;
         </div> */
         ?>
     </div>
-
-  </div>
-  <div class="tab-pane clearfix" id="contractor-profile">
-  	<div class="form-group">
-       <p><strong>Contractor Name (Listing name):</strong></p>
-              <input placeholder="listing name" name="post_title" value="<?php echo $fields['post_title']; ?>"class="full-width">
-    </div>
-    <?php
-	/*
-    <div class="form-group">
-         <p><strong>Do you have prior facility experience in any of these fields?</strong></p>
+</section>
+<hr>
+<section class="products-services clearfix">
+<h3>Products &amp Services</h3>
+        <div class="form-group">
+          <h4>New Checkboxes (Going to Need Daniels Assistance)</h4>
+          <p><strong>Note:</strong> You may select <?php echo $categories_permitted; ?> based on your membership.</p>
           <?php
            //taxonomy is type category (so use ids for field value) 
-            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> 0 ) );
             foreach ( $types as $type ) : ?>
             <div class="custom-checkbox">
                   <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
                   <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
             </div>
           <?php endforeach; ?>
-            
-    </div>
-	*/
-	?>
-    
-    <div class="col-lg-6">
-    	<div class="form-group">
-            <label class="custom-select" for="_years_of_experience">
-            <select name="_years_of_experience" class="full-width">
-                <option value="" <?php echo ($fields['years_of_experience'] == '') ? 'selected="selected"' : ''; ?>>years of experience</option>
-                <option value="1" <?php echo ($fields['years_of_experience'] == '1') ? 'selected="selected"' : ''; ?>>1 year</option>
-                <option value="2" <?php echo ($fields['years_of_experience'] == '2') ? 'selected="selected"' : ''; ?>>2 years</option>
-                <option value="3" <?php echo ($fields['years_of_experience'] == '3') ? 'selected="selected"' : ''; ?>>3 years</option>
-                <option value="4" <?php echo ($fields['years_of_experience'] == '4') ? 'selected="selected"' : ''; ?>>4 years</option>
-                <option value="5" <?php echo ($fields['years_of_experience'] == '5') ? 'selected="selected"' : ''; ?>>5 years</option>
-                <option value="6" <?php echo ($fields['years_of_experience'] == '6') ? 'selected="selected"' : ''; ?>>6 years</option>
-                <option value="7" <?php echo ($fields['years_of_experience'] == '7') ? 'selected="selected"' : ''; ?>>7 years</option>
-                <option value="8" <?php echo ($fields['years_of_experience'] == '8') ? 'selected="selected"' : ''; ?>>8 years</option>
-                <option value="9" <?php echo ($fields['years_of_experience'] == '9') ? 'selected="selected"' : ''; ?>>9 years</option>
-                <option value="10-15" <?php echo ($fields['years_of_experience'] == '10-15') ? 'selected="selected"' : ''; ?>>10-15 years</option>
-                <option value="16-20" <?php echo ($fields['years_of_experience'] == '16-20') ? 'selected="selected"' : ''; ?>>16-20 years</option>
-                <option value="20-30" <?php echo ($fields['years_of_experience'] == '20-30') ? 'selected="selected"' : ''; ?>>20-30 years</option>
-                <option value="30+" <?php echo ($fields['years_of_experience'] == '30+') ? 'selected="selected"' : ''; ?>>30+ years</option>
-             </select>
-          </label>
+           
           </div>
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="contractor license & state" name="_contractor_license" value="<?php echo $fields['contractor_license']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="insurance name & account #" name="_insurance_account" value="<?php echo $fields['insurance_account']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-        
-    </div>
-
-    <div class="col-lg-6">
-    	
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="website url" name="_website" value="<?php echo $fields['website']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-         <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-    </div>    
-  </div>
-  <div class="tab-pane clearfix" id="project-photos">
-    <div class="photo-group">
-<?php
-  //Loop photos (loops again at bottom of this template for modal dialogs)
-  $photo_attachments = SF_Contractor::load_attachments($contractor_id);
-  if ( $photo_attachments ) {
-  foreach ($photo_attachments  as $attachment) : 
-  ?>
-    <div class="col-sm-6 col-md-3">
-      <a href="#" title="Click to edit" class="" data-toggle="modal" data-target="#photoEditModal<?php echo $attachment->ID; ?>"><img class="img-thumbnail" width="180" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" /></a>
-   </div>
-   
-<?php endforeach; 
-  } ?>
-    
-  <div class="col-sm-6 col-md-3">
-    <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModal"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
-  </div>
-</div>
-
-  </div>
-</div>
-</article>
-<hr>
-<article>
-      <div class="form-group">
-        
-        <h4>Core Skills: Industries & Vendor Categories</h4>
+          <hr>
+     <div class="form-group">
+      <h4>Old Dropdowns</h4>
       <?php
     //taxonomy is type category (so use ids for field value) 
     $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
@@ -234,11 +141,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
             //Verfied category? (is it in the terms)
             if ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] && in_array($selected_term, $post_terms) ) {
             ?>
-                          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
+                          <span class="verified"><i class="fa fa-thumbs-up"></i> References verified, good job.</span>
                      <?php
             } else {
             ?>
-                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">Please provide 3 references to be listed in this category!</a></span>
+                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">3 industry specific references are required to be found in search results for each industry listed!</a></span>
             <?php
             } 
             ?>
@@ -251,9 +158,77 @@ $is_membership_active = ( $membership_type ) ? true : false;
     endif;
     ?>
       
-      </div> 
-</article>
+      </div>
+</section>
+<hr>
+<section class="vendor-profile clearfix">
+<h3>Vendor Profile</h3>
+<div class="form-group">
+              <input placeholder="listing name" name="post_title" value="<?php echo $fields['post_title']; ?>"class="full-width">
+    </div>
+    <?php
+  /*
+    <div class="form-group">
+         <p><strong>Do you have prior facility experience in any of these fields?</strong></p>
+          <?php
+           //taxonomy is type category (so use ids for field value) 
+            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+            foreach ( $types as $type ) : ?>
+            <div class="custom-checkbox">
+                  <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
+                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
+            </div>
+          <?php endforeach; ?>
+            
+    </div>
+  */
+  ?>
+    
+    <div class="col-lg-6">
+      <div class="form-group">
+          <input placeholder="Year Established?" name="_years_of_experience" value="<?php echo $fields['years_of_experience']; ?>"class="full-width">
+          </div>
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="contractor license & state" name="_contractor_license" value="<?php echo $fields['contractor_license']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="insurance name & account #" name="_insurance_account" value="<?php echo $fields['insurance_account']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+        
+    </div>
 
+    <div class="col-lg-6">
+      
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="website url" name="_website" value="<?php echo $fields['website']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+         <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+    </div>
+</section>
+<hr>
+<section class="afs-account clearfix">
+<h3>AFS Account</h3>
+    <div class="col-lg-6">
+         <div class="form-group">
+        <input type="email" placeholder="email/username" name="user_email" value="<?php echo (isset($_POST['user_email'])) ? $_POST['user_email'] : $user_fields->user_email; ?>" class="full-width">
+        </div>
+        <div class="form-group">
+        <input type="password" name="password" placeholder="enter password" value="" class="full-width" autocomplete="off" readonly onfocus="$(this).removeAttr('readonly');">
+        </div>
+        <div class="form-group">
+        <input type="password" name="confirm-password" placeholder="confirm password" value="" class="full-width" autocomplete="off" readonly onfocus="$(this).removeAttr('readonly');">
+        </div>
+   
+        <div class="form-group">
+        <div class="custom-checkbox">
+                <input type="checkbox" value="None" name="_hide_profile" id="hide_profile" <?php echo ((bool)$fields['hide_profile']) ? 'checked="checked"' : ''; ?> />
+                <label for="hide_profile"></label><span class="field-meta">hide my profile</span>
+        </div>
+        </div>
+      </div>
+</section>
 </form>
 
 <!-- References Modal (NEW) -->
@@ -510,7 +485,7 @@ $(document).ready(function(){
      <form id="fv_profile_edit_upload_file" role="form" method="post" enctype="multipart/form-data">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="photoUploadModalFeaturedLabel">Upload Primary Photo</h4>
+        <h4 class="modal-title" id="photoUploadModalFeaturedLabel">Upload Logo</h4>
       </div>
       <div class="modal-body">
        <input type="hidden" name="fv_profile_edit_upload_file" value="contractor" />
@@ -538,7 +513,7 @@ $(document).ready(function(){
      <form class="fv_profile_edit_modify_file" role="form" method="post">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="photoEditModalLabelFeatured">Edit Primary Photo</h4>
+        <h4 class="modal-title" id="photoEditModalLabelFeatured">Edit Logo</h4>
       </div>
       <div class="modal-body">
        <input type="hidden" name="fv_profile_edit_modify_file" value="contractor" />

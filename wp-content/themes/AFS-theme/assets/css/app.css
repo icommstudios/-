@@ -5932,6 +5932,9 @@ a.purple:hover {
   font-family: 'Roboto', sans-serif;
   color: white;
 }
+.square-ul {
+  list-style: square;
+}
 /* Form Elements */
 input,
 select,
@@ -6236,7 +6239,10 @@ ul.social-nav li a i {
    Content
    ========================================================================== */
 .wrap {
-  margin-top: 20px;
+  margin-top: 40px;
+}
+.single-fv_contractor .wrap {
+  margin-top: 80px;
 }
 .login .wrap,
 .register .wrap,
@@ -6244,7 +6250,10 @@ ul.social-nav li a i {
   margin-top: 0px;
 }
 .main section {
-  margin: 60px 0;
+  margin: 40px 0;
+}
+.main section:first-of-type {
+  margin: 0px 0px 40px 0px;
 }
 .container-full {
   padding: 0 15px;
@@ -6307,31 +6316,6 @@ figure.alignnone {
 .img-hero-bar {
   background-position: center 30%;
   background-image: url('../img/img-hero-bar.jpg');
-}
-/* Orange Hero */
-.hero {
-  padding: 20px 0;
-}
-.hero .handshake-icon {
-  display: none;
-}
-.hero h1,
-.hero small {
-  color: white;
-  margin: 0;
-}
-.hero .col-md-3 {
-  margin-top: 40px;
-}
-/* Hero Color Variations */
-.orange-hero {
-  background: url('../img/orange-hex-pattern.jpg');
-}
-.blue-hero {
-  background: url('../img/blue-hex-pattern.jpg');
-}
-.purple-hero {
-  background: url('../img/purple-hex-pattern.jpg');
 }
 /* News Ticker */
 .news-ticker {
@@ -6572,7 +6556,7 @@ a.round-icon-blocks p {
   background: #2980b9;
 }
 /* ==========================================================================
-   Contractor & Job Posts
+   Contractor & Job Posts Previews/Teasers
    ========================================================================== */
 /* Posting Preview */
 .content-item {
@@ -6641,26 +6625,74 @@ a.round-icon-blocks p {
 .rating-stars span.fa-star {
   padding-right: 5px;
   display: inline-block;
-  color: #666;
+  color: white;
 }
-/* Contractor & Job Posting Details */
-.details-meta {
-  font-size: 18px;
+/* Main Hero */
+.hero {
+  padding: 20px 0;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
-.details-meta li {
-  margin-right: 10px;
-  display: inline-block;
+.hero .handshake-icon {
+  display: none;
 }
-.details-meta li > a {
-  color: #5f5f5f;
+.hero h1,
+.hero small {
+  color: white;
+  margin: 0;
+}
+.hero .col-md-3 {
+  margin-top: 40px;
+}
+/* Hero Color Variations */
+.orange-hero {
+  background: url('../img/orange-hex-pattern.jpg');
+}
+.blue-hero {
+  background: url('../img/blue-hex-pattern.jpg');
+}
+.purple-hero {
+  background: url('../img/purple-hex-pattern.jpg');
+}
+/* ==========================================================================
+   Contractor & Job Posting Details
+   ========================================================================== */
+/* header */
+.contractor {
+  margin-top: 60px;
+}
+.contractor .container {
+  position: relative;
+  padding-left: 270px;
+}
+.business-basics {
+  width: 400px;
+  margin-left: 30px;
+}
+.business-basics ul {
+  color: white;
+}
+.business-basics ul .fa-li {
+  color: #1479cc;
+  text-shadow: none;
+}
+.business-basics a {
+  color: white;
+  text-decoration: underline;
+}
+.business-basics a:hover {
+  text-decoration: none;
+}
+.contractor-edit .business-basics {
+  width: 100%;
 }
 .featured-img {
   border: 1px solid #bdbdbd;
+  background: white;
   padding: 8px;
   display: inline-block;
-}
-.tab-content i.fa-square {
-  color: #bababa !important;
+  position: absolute;
+  top: -50px;
+  left: 15px;
 }
 .skillsets {
   list-style: none;
@@ -6705,9 +6737,97 @@ a.round-icon-blocks p {
   font-size: 15px;
   margin: 0;
 }
-.photo-group .col-sm-6,
-.photo-group .col-md-3 {
+.single-fv_contractor .main h1,
+.vendor-profile .main h1,
+.single-fv_contractor .main h2,
+.vendor-profile .main h2,
+.single-fv_contractor .main h3,
+.vendor-profile .main h3 {
+  color: #08a4f2;
+}
+.photo-group > div {
   margin-bottom: 20px;
+}
+/* Photo Carousel */
+/*
+This is the visible area of you carousel.
+Set a width here to define how much items are visible.
+The width can be either fixed in px or flexible in %.
+Position must be relative!
+*/
+.photos {
+  position: relative;
+}
+.jcarousel {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*
+This is the container of the carousel items.
+You must ensure that the position is relative or absolute and
+that the width is big enough to contain all items.
+*/
+.jcarousel ul {
+  width: 20000em;
+  position: relative;
+  /* Optional, required in this case since it's a <ul> element */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/*
+These are the item elements. jCarousel works best, if the items
+have a fixed width and height (but it's not required).
+*/
+.jcarousel li {
+  /* Required only for block elements like <li>'s */
+  float: left;
+  width: 170px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.jcarousel li a {
+  display: block;
+  width: 160px;
+  margin: 0px auto;
+}
+.jcarousel-prev,
+.jcarousel-next {
+  color: #919191;
+  position: absolute;
+  top: 54%;
+}
+.jcarousel-prev:hover,
+.jcarousel-next:hover {
+  color: #222;
+}
+.jcarousel-prev i,
+.jcarousel-next i {
+  font-size: 34px;
+}
+.jcarousel-prev {
+  left: 0%;
+}
+.jcarousel-next {
+  right: 0%;
+}
+.details-meta {
+  font-size: 18px;
+}
+.details-meta li {
+  margin-right: 10px;
+  display: inline-block;
+}
+.details-meta li > a {
+  color: #5f5f5f;
+}
+.tab-content i.fa-square {
+  color: #bababa !important;
 }
 /* Contractor & Job Posting Sidebar */
 .certified-badge {
@@ -6744,6 +6864,10 @@ a.round-icon-blocks p {
 /* ==========================================================================
    Contractor & Facility Profiles
    ========================================================================== */
+/* header */
+.contractor.contractor-edit .container {
+  padding-left: 200px;
+}
 .profile-nav {
   background: #343434;
   padding: 12px 0px;
@@ -6787,7 +6911,8 @@ a.round-icon-blocks p {
   background: #ccc;
   min-height: 100%;
   position: relative;
-  color: #c9c9c9;
+  color: #444;
+  text-shadow: none;
 }
 .click-upload span {
   position: absolute;
@@ -6803,8 +6928,12 @@ a.round-icon-blocks p {
   display: block;
   font-size: 24px;
 }
+.blue-hero.contractor-edit .click-upload {
+  width: 130px;
+  height: 130px;
+}
 .skillset {
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px dashed #dddddd;
   padding-bottom: 20px;
   margin-bottom: 20px;
   position: relative;

@@ -1,0 +1,1 @@
+[25-Apr-2014 13:59:54 America/Denver] PHP Fatal error:  Call to undefined function get_header() in /home/alliedfa/public_html/wp-content/themes/twentyeleven/404.php on line 10

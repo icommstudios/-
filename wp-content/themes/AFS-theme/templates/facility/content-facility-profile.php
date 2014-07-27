@@ -111,7 +111,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
           <p><strong>Type of Facility Managed? (you may select <?php echo $categories_permitted; ?> based on your membership)</strong></p>
           <?php
            //taxonomy is type category (so use ids for field value) 
-            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> 0 ) );
             foreach ( $types as $type ) : ?>
             <div class="custom-checkbox">
                   <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />

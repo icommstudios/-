@@ -1,3 +1,4 @@
+
 <?php global $contractor_id; 
 $categories_permitted = fv_get_contractor_membership_addon_categories($contractor_id); 
 //Message count
@@ -5,10 +6,28 @@ if ( $contractor_id ) {
 	$message_count = SF_Message::get_message_ids_sent_to($contractor_id);
 	$project_count = SF_Project::get_project_ids_for_contractor($contractor_id);
 }
+$author_link = get_the_permalink($contractor_id);
 ?>
-<div class="hero blue-hero">
+<div class="hero blue-hero contractor contractor-edit">
 	<div class="container">
-		<h1><?php echo get_the_title($contractor_id); ?></h1><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
+			<?php 
+    $featured_thumb = get_the_post_thumbnail($contractor_id, array(130,130), array('class' => 'img-thumbnail'));
+    if ($featured_thumb ) {
+        ?>
+        <div class="featured-img logo pull-left">
+        <a href="#" title="Click to edit logo" data-toggle="modal" data-target="#photoEditModalFeatured"><?php echo $featured_thumb; ?></a>
+    	</div>
+        <?php
+    } else {
+        ?>
+        
+      <div class="featured-img logo pull-left">
+        <a href="#" title="Click to upload logo" class="click-upload" data-toggle="modal" data-target="#photoUploadModalFeatured"><span><i class="fa fa-camera"></i>upload logo</span></a>
+      </div>
+     
+    <?php } ?>
+
+		<a href="<?php echo $author_link; ?>"><h1><?php echo get_the_title($contractor_id); ?></h1></a><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
         <?php
 		$star_rating = fv_get_contractor_star_rating($contractor_id);
 		if ( $star_rating ) {
@@ -22,31 +41,6 @@ if ( $contractor_id ) {
 		}
 		?>
         </span>
-		<div class="posting-tags">
-			<?php
-            $types = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'all' ));
-            if ( $types ) {
-                 $cat_count = 0;
-                foreach ($types as $type) {
-                    //$link = get_term_link( $type, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-					$cat_count++;
-					if ( $cat_count <= $categories_permitted ) {
-                    ?>
-                    <span class="label label-primary"><?php echo $type->name; ?></span>
-                    <?php
-					}
-                }
-            }
-            //If location
-            $location = get_post_meta($contractor_id, '_location', true); 
-            if ( $location ) {
-            ?>
-            <span class="label label-primary label-location"><?php echo $location; ?></span>
-            <?php 
-            }
-            ?>
-
-  		</div>
     </div>
 </div>
 <div class="profile-nav">

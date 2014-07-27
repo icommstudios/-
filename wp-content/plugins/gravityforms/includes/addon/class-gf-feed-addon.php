@@ -191,11 +191,6 @@ abstract class GFFeedAddOn extends GFAddOn {
     public function get_feeds( $form_id = null ){
         global $wpdb;
 
-        $cache_key = implode( '_', array_filter( array( $this->_slug, 'get_feeds', $form_id ) ) );
-        $feeds = GFCache::get( $cache_key );
-        if( is_array( $feeds ) )
-            return $feeds;
-
         $form_filter = is_numeric($form_id) ? $wpdb->prepare("AND form_id=%d", absint($form_id)) : "";
 
         $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}gf_addon_feed
@@ -205,8 +200,6 @@ abstract class GFFeedAddOn extends GFAddOn {
         foreach($results as &$result){
             $result["meta"] = json_decode($result["meta"], true);
         }
-
-        GFCache::set( $cache_key, $results );
 
         return $results;
     }

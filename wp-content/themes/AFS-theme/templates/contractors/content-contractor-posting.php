@@ -1,3 +1,4 @@
+
 <?php
 $contractor_id = get_the_ID();
 $membership_type = fv_get_contractor_membership_type($contractor_id);
@@ -27,7 +28,8 @@ $user_type_data = fv_get_current_user_type_id();
 <?php
 //Which page to show
 if ( isset( $_GET['endorsements'] ) ) : ?>
-	<h3>endorsements & ratings</h3>
+<section class="ratings clearfix">
+	<h3>Endorsements &amp Ratings</h3>
     <?php
 	//Get endorsements (comments)
 	$args = array(
@@ -90,12 +92,14 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
         <?php	
 	}
 	?>
-
+</section>
+<hr>
 </div>
 
 <?php else : //show content ?>
 
 
+<?php /*
 <ul class="list-inline details-meta">
 	<?php if ( $fields['years_of_experience'] ) : ?><li><?php echo $fields['years_of_experience']; ?> yrs. experience</li><?php endif; ?>
 	<?php if ( $fields['email'] ) : ?><li><i class="fa fa-envelope-o"></i> <a href="mailto:<?php echo $fields['email']; ?>"><?php echo $fields['email']; ?></a></li><?php endif; ?>
@@ -103,175 +107,62 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
 	<?php if ( $fields['hours'] ) : ?><li><i class="fa fa-clock-o"></i><?php echo $fields['hours']; ?></li><?php endif; ?>
 </ul>
 
-<?php if ( $featured_thumb ) : ?> 
-<div class="featured-img">
-	<?php echo $featured_thumb; ?>
-</div>
-<?php endif; ?>
+*/ ?>
 
-<?php the_content(); ?>
-<hr>
-<h4>Contractor Details</h4>
-<ul class="nav nav-tabs" id="myTab">
-  <li class="active"><a href="#general" data-toggle="tab">General</a></li>
-  <?php if (!empty($membership_type)) : ?><li><a href="#licenses" data-toggle="tab">Licenses & Accreditations</a></li><?php endif; ?>
-  <?php if (!empty($membership_type)) : ?><li><a href="#ratings" data-toggle="tab">Ratings & Referrals</a></li><?php endif; ?>
-  <li><a href="#photos" data-toggle="tab">Photos</a></li>
-</ul>
-<div class="tab-content">
-  <div class="tab-pane active" id="general">
-  	<ul class="col-lg-3 fa-ul">
-  		<?php if ( $fields['name'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['name']; ?></li><?php endif; ?>
-  		<?php if ( $fields['company'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['company']; ?></li><?php endif; ?>
-  		<?php if ( $fields['phone'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['phone']; ?></li><?php endif; ?>
-  		<?php if ( $fields['email'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['email']; ?></li><?php endif; ?>
-  		<?php if ( $fields['location'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['location']; ?></li><?php endif; ?>
-  	</ul>
-  	<ul class="col-lg-3 fa-ul">
-  		<?php if ( $fields['hours'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['hours']; ?></li><?php endif; ?>
-  		<?php if ( $fields['years_of_experience'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['years_of_experience']; ?> yrs. experience</li><?php endif; ?>
-  		<?php if ( !empty($membership_type) && $fields['website']) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['website']; ?></li><?php endif; ?>
-  	</ul>
-  	<ul class="col-lg-5 skillsets">
-  		<li class="head">Core skills</li>
-        <?php
-            $types = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'all' ));
-            if ( $types ) {
-				$cat_count = 0;
-                foreach ($types as $type) {
-                    //$link = get_term_link( $type, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-					$cat_count++;
-					if ( $cat_count <= $categories_permitted ) {
-                    ?>
-                    <li><span class="label label-primary"><?php echo $type->name; ?></span></li>
-                    <?php
-					}
-                }
-            }
-		?>
-  	</ul>
-  </div>
-  <?php if ( !empty($membership_type) ) : ?>
-  <div class="tab-pane" id="licenses">
-  	<?php if ( $fields['contractor_license'] ) : ?>
-    <div class="col-lg-4 text-center">
-         <i class="fa fa-credit-card"></i>
-        <a href="#"><?php echo $fields['contractor_license']; ?></a>
-      <span>General Contractors License & State</span>
-      
-    	</li>
-    </div>
-    <?php endif; ?>
-    <?php if ( $fields['bbb_url'] ) : ?>
-    <div class="col-lg-4 text-center">
-      
-        <i class="fa fa-check-square-o"></i>
-        <a href="<?php echo $fields['bbb_url']; ?>" target="_blank">View BBB Profile</a>
-      <span>Better Business Bureau Accredited</span>
-      
-    	</li>
-    </div>
-    <?php endif; ?>
-    <?php if ( $fields['insurance_account'] ) : ?>
-    <div class="col-lg-4 text-center">
-         <i class="fa fa-clipboard"></i>
-         <a href="#"><?php echo $fields['insurance_account']; ?></a>
-      <span>Insurance Name & Account Number</span>
-      
-    	</li>
-    </div>
-    <?php endif; ?>
-  </div>
-  <?php endif; ?>
-  
-  <?php if ( !empty($membership_type) ) : ?>
-  
-  	<div class="tab-pane" id="ratings">
-    <?php
-	//Get endorsements (comments)
-	$args = array(
-		'status' => 'approve',
-		'number' => '2',
-		'post_id' => $contractor_id, 
-	);
-	$comments = get_comments($args);
-	if ( $comments ) {
-		echo '<ul>';
-		foreach($comments as $comment) :
-			//Get commenter's name
-			$commentor_name = $comment->comment_author;
-			if ( $comment->user_id ) {
-				$user_type_data = fv_get_current_user_type_id($comment->user_id);
-				if ( $user_type_data['user_type_id'] ) {
-					$commentor_name = get_the_title( $user_type_data['user_type_id'] );
-				}
-			}
-			//Get rating
-			$rating = get_comment_meta($comment->comment_ID, '_rating', true);
-			$rating = ( intval($rating) > 0 ) ? intval($rating) : 1;
-			//Get project
-			$related_project_id = get_comment_meta($comment->comment_ID, '_related_project_id', true);
-			$related_project_link = ( $related_project_id ) ? get_permalink( $related_project_id ) : '';
-			?>
-		 <li>
-			<span class="rating-stars">
-			<?php 
-			//Rating
-			$rating_ii = 1;
-			while($rating_ii <= $rating ) {
-				?>
-				<span class="fa fa-star white-star"></span>
-				<?php
-				$rating_ii++;
-			}
-			?>
-			</span>
-			<h4 class="content-title"><a href="#"><?php echo $commentor_name; ?></a></h4>
-			<p class="content-summary"><?php echo $comment->comment_content; ?></p>
-			<?php if ( $related_project_link) : ?>
-				<div class="content-meta">
-					<p class="author">related to project <a href="<?php echo $related_project_link; ?>" rel="author" class="fn"><?php echo get_the_title( $related_project_id ); ?></a>
-					</p>
-				</div>
-			<?php endif; ?>
-		</li>
-			<?php
-		endforeach;
-		echo '</ul>';
-		echo '<a href="'.add_query_arg(array('endorsements' => '1'), get_permalink($contractor_id)).'">Read all</a>';
-	} else {
-		?>
-        <p>No endorsements available.</p>
-        <?php	
-	}
-	?>
-    </div>
-  <?php endif; ?>
-
-    <div class="tab-pane" id="photos">
-          <div class="photo-group">
-    <?php
-        //Loop photos
-        $photo_attachments = SF_Contractor::load_attachments($contractor_id);
-        if ( $photo_attachments ) {
-        foreach ($photo_attachments as $attachment) : 
-            $attachment_name_array = explode('/',wp_get_attachment_url($attachment->ID));
-            $attachment_name = $attachment_name_array[sizeof($attachment_name_array) - 1];
-            $attachment_name = ( $attachment_name ) ? $attachment_name : $attachment->post_title;
-        ?>
-      <div class="col-sm-6 col-md-3">
-        <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" rel="prettyPhoto" title="<?php echo $attachment_name; ?>"><img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="<?php echo $attachment_name; ?>" /></a>
-      </div>
-      <?php endforeach;
+<section class="photos clearfix">
+<h3>Photo Gallery</h3>
+<div class="jcarousel">
+    <ul>
+    	<?php
+	        //Loop photos
+	        $photo_attachments = SF_Contractor::load_attachments($contractor_id);
+	        if ( $photo_attachments ) {
+	        foreach ($photo_attachments as $attachment) : 
+	            $attachment_name_array = explode('/',wp_get_attachment_url($attachment->ID));
+	            $attachment_name = $attachment_name_array[sizeof($attachment_name_array) - 1];
+	            $attachment_name = ( $attachment_name ) ? $attachment_name : $attachment->post_title;
+	        ?>
+	        <li>
+	        <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" rel="prettyPhoto" title="<?php echo $attachment_name; ?>"><img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="<?php echo $attachment_name; ?>" /></a>
+	        </li>
+	      <?php endforeach;
         } ?>
-    </div>
-  </div>
-  
+    </ul>
 </div>
-<div class="clearfix"></div>
+<!-- Controls -->
+    <a class="jcarousel-prev" href="#"><i class="fa fa-chevron-circle-left"></i></a>
+    <a class="jcarousel-next" href="#"><i class="fa fa-chevron-circle-right"></i></a>
+</section>
 <hr>
-<h4>Core Skills & Services</h4>
-<?php 
+<section class="overview clearfix">
+<h3>Company Overview</h3>
+<?php the_content(); ?>
+</section>
+<hr>
+<section class="products-services clearfix">
+<h3>Products &amp Services</h3>
+	<div class="posting-tags">
+		<?php
+        $types = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'all' ));
+        if ( $types ) {
+             $cat_count = 0;
+            foreach ($types as $type) {
+                //$link = get_term_link( $type, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+				$cat_count++;
+				if ( $cat_count <= $categories_permitted ) {
+                ?>
+                <span class="label label-primary"><?php echo $type->name; ?></span>
+                <?php
+				}
+            }
+        } ?>
+
+		</div>
+</section>
+<hr>
+<section class="references clearfix">
+	<h3>References</h3>
+	<?php 
 //Loop each by parent group
 if ( !empty($categories ) ) {
 	foreach ( $categories as $cat_parent_term_id => $each_cat_parent_group ) {
@@ -280,45 +171,50 @@ if ( !empty($categories ) ) {
 		$references = $each_cat_parent_group['references'];
 		$each_categories = $each_cat_parent_group['categories'];
 		?>
-    <div class="skillset clearfix">
-    	<h3><?php echo $parent_term->name; ?> <a class="show-references" href="#"><i class="fa fa-plus-circle"></i> show references</a>
-        <div class="reference-popup">
-          <p>References</p>
-          <ul>
+
+		<h4><?php echo $parent_term->name; ?> References</h4>
+          <ul class="square-ul">
           <?php foreach ( $references as $ref ) : ?>
             <li><?php echo $ref['name_company']; ?> <?php echo ($ref['phone']) ? ' | '.$ref['phone'] : ''; ?> <?php echo ($ref['email_address']) ? ' | <a href="'.$ref['email_address'].'">'.$ref['email_address'].'</a>' : ''; ?> <?php echo ($ref['work_location']) ? ' | '.$ref['work_location'] : ''; ?></li>
           <?php endforeach; ?>
           </ul>
-        </div>
-        </h3>
-    	<?php 
-		foreach ( $each_categories as $each_cat ) : ?>
-         <ul class="col-md-4">
-         <?php 
-		 	$each_ancestors = array_reverse($each_cat['ancestors']);
-		 	$each_ancestor_indent = '';
-			foreach ($each_ancestors as $each_ancestor_ii => $each_ancestor ) : 
-				if ( $each_ancestor_ii > 0 ) { //skip the first one
-					$each_ancestor_term = get_term_by('id', $each_ancestor, SF_Taxonomies::JOB_TYPE_TAXONOMY);
-					if ( $each_ancestor_term && !is_wp_error($each_ancestor_term)) {
-						$each_ancestor_indent = '';
-						?>
-						 <li><a href="<?php echo get_term_link($each_ancestor_term->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY); ?>"><?php echo $each_ancestor_indent.$each_ancestor_term->name; ?></a></li>
-						<?php
-						$each_ancestor_indent = '-- ';
-					}
-				}
-		   	endforeach;
-			?>
-            <li><a href="<?php echo get_term_link($each_cat['term_object']->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY); ?>"><?php echo $each_ancestor_indent.$each_cat['term_object']->name; ?></a></li>
-          </ul>
-       <?php endforeach; ?>
-    </div> 
-        <?php
+         <?php
 		
 	}
 }
 ?>
+
+</section>
+  <?php if ( !empty($membership_type) ) : ?>
+  <hr>
+  <section class="licenses clearfix">
+  	<h3>Licenses</h3>
+  	<?php if ( $fields['contractor_license'] ) : ?>
+         <i class="fa fa-credit-card"></i>
+        <a href="#"><?php echo $fields['contractor_license']; ?></a>
+      <?php endif; ?>
+    	</li>
+  </section>
+  <hr>
+  <?php endif; ?>
+
+<section class="misc_info clearfix">
+	<div class="row">
+		<?php if ( $fields['bbb_url'] ) : ?>
+		<div class="col-md-6">
+		<h3>Better Business Bureau</h3>
+		        <a class="btn large" href="<?php echo $fields['bbb_url']; ?>" target="_blank"><i class="fa fa-check-square-o"></i> View BBB Profile</a>
+		</div>
+		<?php endif; ?>
+		<?php if ( $fields['insurance_account'] ) : ?>
+		<div class="col-md-6">
+		<h3>Insurance Information</h3>
+         <i class="fa fa-clipboard"></i>
+         <?php echo $fields['insurance_account']; ?>
+		</div>
+	<?php endif; ?>
+	</div>
+</section>
 
 </div>
 

@@ -674,18 +674,25 @@ class SF_Settings extends SF_FV {
 							$address_country = $line["Country"];
 							
 							$data = array();
+							$build_cat = '';
 							$data['name'] = trim($line["Name"]);
 							$data['company'] = trim($line["Company"]);
 							$data['location'] = trim($line["City"].' '.$line["State"]);
 							$data['location_zip'] = trim($line["Zip"]);
 							$data['phone'] = trim($line["Phone"]);
+							//Merge industry with type to make the full category
 							if ( !empty($line["Industry"]) ) {
-								$data['taxonomy_type'][] = trim($line["Industry"]);
+								$build_cat = trim($line["Industry"]);
 							}
 							if ( !empty($line["Type"]) ) {
-								$data['taxonomy_type'][] = trim($line["Type"]);
+								if ( !empty($build_cat) ) {
+									$build_cat .= ': ';	
+								}
+								$build_cat .= trim($line["Type"]);
 							}
-							 
+							if ( !empty($build_cat) ) {
+								$data['taxonomy_type'][] = $build_cat;
+							}
 							
 							//If not a test
 							$id = false; //reset id

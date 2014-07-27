@@ -585,6 +585,9 @@ class GFFormsModel {
     }
 
     public static function update_lead($lead){
+
+        _deprecated_function("GFFormsModel::update_lead()", "1.8.8", "GFAPI::update_entry()");
+
         global $wpdb;
         $lead_table = self::get_lead_table_name();
 
@@ -816,10 +819,14 @@ class GFFormsModel {
 
     }
 
-    public static function update_form_meta($form_id, $form_meta, $meta_name="display_meta"){
+    public static function update_form_meta( $form_id, $form_meta, $meta_name = 'display_meta' ) {
         global $wpdb;
+
+        $form_meta = apply_filters( 'gform_form_update_meta', $form_meta, $form_id, $meta_name );
+        $form_meta = apply_filters( "gform_form_update_meta_{$form_id}", $form_meta, $form_id, $meta_name );
+
         $meta_table_name = self::get_meta_table_name();
-        $form_meta = json_encode($form_meta);
+        $form_meta = json_encode( $form_meta );
 
         if(intval($wpdb->get_var($wpdb->prepare("SELECT count(0) FROM $meta_table_name WHERE form_id=%d", $form_id))) > 0)
             $result = $wpdb->query( $wpdb->prepare("UPDATE $meta_table_name SET $meta_name=%s WHERE form_id=%d", $form_meta, $form_id) );
@@ -828,8 +835,8 @@ class GFFormsModel {
 
         self::$_current_forms[$form_id] = null;
 
-        add_action( 'gform_after_update_form_meta', $form_meta, $form_id, $meta_name );
-        add_action( "gform_after_update_form_meta_{$form_id}", $form_meta, $form_id, $meta_name );
+        do_action( 'gform_post_update_form_meta', $form_meta, $form_id, $meta_name );
+        do_action( "gform_post_update_form_meta_{$form_id}", $form_meta, $form_id, $meta_name );
 
         return $result;
     }
@@ -1624,7 +1631,7 @@ class GFFormsModel {
                 $value[$field["id"] . ".7"] = self::get_input_value($field, "input_" . $field["id"] . "_7", $get_from_post);
             break;
             case "checkbox" :
-                $parameter_values = self::get_parameter_value($field["inputName"], $field_values, $field);
+                $parameter_values = self::get_parameter_value( rgar( $field, 'inputName' ), $field_values, $field);
                 if(!empty($parameter_values) && !is_array($parameter_values)){
                     $parameter_values = explode(",", $parameter_values);
                 }
@@ -2532,7 +2539,7 @@ class GFFormsModel {
         //update post_id field if a post was created
         $lead["post_id"] = $post_id;
         GFCommon::log_debug("Updating entry.");
-        self::update_lead($lead);
+        self::update_lead_property($lead["id"], "post_id", $post_id);
 
         do_action( 'gform_after_create_post', $post_id );
 
@@ -3598,7 +3605,8 @@ class GFFormsModel {
             return false;
 
         if(!self::$_current_lead) {
-            $form = self::get_form_meta(rgpost('gform_submit'));
+            $form_id = absint(rgpost('gform_submit'));
+            $form = self::get_form_meta($form_id);
             self::$_current_lead = self::create_lead($form);
         }
 

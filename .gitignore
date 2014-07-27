@@ -1,8 +1,5 @@
 wp-content/.DS_Store
 wp-content/themes/.DS_Store
-working-files/
-working-files/layout/AFS_layout.psd
+working-files/*
 wp-config.php
 sftp-config.json
-
-wp-config.php

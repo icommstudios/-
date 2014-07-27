@@ -3,7 +3,7 @@
 Plugin Name: Gravity Forms MailChimp Add-On
 Plugin URI: http://www.gravityforms.com
 Description: Integrates Gravity Forms with MailChimp allowing form submissions to be automatically sent to your MailChimp account
-Version: 2.3
+Version: 2.4
 Author: rocketgenius
 Author URI: http://www.rocketgenius.com
 
@@ -33,7 +33,7 @@ class GFMailChimp {
     private static $path = "gravityformsmailchimp/mailchimp.php";
     private static $url = "http://www.gravityforms.com";
     private static $slug = "gravityformsmailchimp";
-    private static $version = "2.3";
+    private static $version = "2.4";
     private static $min_gravityforms_version = "1.7.6.11";
     private static $supported_fields = array("checkbox", "radio", "select", "text", "website", "textarea", "email", "hidden", "number", "phone", "multiselect", "post_title",
 		                            "post_tags", "post_custom_field", "post_content", "post_excerpt");
@@ -1479,7 +1479,6 @@ class GFMailChimp {
         <?php
     }
 
-
     public static function save_paypal_settings($config) {
         $config["meta"]["delay_mailchimp_subscription"] = rgpost("gf_paypal_delay_mailchimp_subscription");
         return $config;
@@ -1505,8 +1504,10 @@ class GFMailChimp {
 
         $paypal_config = self::get_paypal_config($form["id"], $entry);
 
+        $has_payment = self::get_payment_amount($form, $entry, $paypal_config) > 0;
+
         //if configured to only subscribe users when payment is received, delay subscription until the payment is received.
-        if($paypal_config && rgar($paypal_config["meta"], "delay_mailchimp_subscription") && !$is_fulfilled){
+        if($paypal_config && rgar($paypal_config["meta"], "delay_mailchimp_subscription") && $has_payment && !$is_fulfilled){
             self::log_debug("Subscription delayed pending PayPal payment received for entry " . $entry["id"]);
             return;
         }
@@ -1535,6 +1536,31 @@ class GFMailChimp {
 				self::log_debug("Opt-in condition not met; not subscribing entry " . $entry["id"] . " to list");
 			}
         }
+    }
+
+    public static function get_payment_amount($form, $entry, $paypal_config){
+
+        $products = GFCommon::get_product_fields($form, $entry, true);
+        $recurring_field = rgar($paypal_config["meta"], "recurring_amount_field");
+        $total = 0;
+        foreach($products["products"] as $id => $product){
+
+            if($paypal_config["meta"]["type"] != "subscription" || $recurring_field == $id || $recurring_field == "all"){
+                $price = GFCommon::to_number($product["price"]);
+                if(is_array(rgar($product,"options"))){
+                    foreach($product["options"] as $option){
+                        $price += GFCommon::to_number($option["price"]);
+                    }
+                }
+
+                $total += $price * $product['quantity'];
+            }
+        }
+
+        if($recurring_field == "all" && !empty($products["shipping"]["price"]))
+            $total += floatval($products["shipping"]["price"]);
+        return $total;
+
     }
 
     public static function has_mailchimp($form_id){
@@ -1621,7 +1647,7 @@ class GFMailChimp {
                     $group_label = str_replace(",","\,",$group["group_label"]);
                     $grouping_label = $group["grouping_label"];
 
-                    if(self::assign_group_allowed($form, $feed, $grouping_name, $group_name))
+                    if(self::assign_group_allowed($form, $feed, $grouping_name, $group_name,$entry))
                         $group_list .= $group_label . ",";
                 }
 
@@ -1722,14 +1748,14 @@ class GFMailChimp {
         update_option('recently_activated', array($plugin => time()) + (array)get_option('recently_activated'));
     }
 
-    public static function assign_group_allowed($form, $settings, $grouping, $group){
+    public static function assign_group_allowed($form, $settings, $grouping, $group, $entry){
         $config = $settings["meta"];
         $operator = $config["groups"][$grouping][$group]["operator"];
         $decision = $config["groups"][$grouping][$group]["decision"];
 
 
         $field = RGFormsModel::get_field($form, $config["groups"][$grouping][$group]["field_id"]);
-        $field_value = RGFormsModel::get_field_value($field, array());
+        $field_value = RGFormsModel::get_lead_field_value($entry,$field);
         $is_value_match = RGFormsModel::is_value_match($field_value, $config["groups"][$grouping][$group]["value"], $operator, $field);
 
         if(!$config["groups"][$grouping][$group]["enabled"]){
@@ -1753,7 +1779,7 @@ class GFMailChimp {
             return true;
 
         $operator = isset($config["optin_operator"]) ? $config["optin_operator"] : "";
-        $field_value = RGFormsModel::get_field_value($field, array());
+        $field_value = RGFormsModel::get_lead_field_value($entry, $field);
         $is_value_match = RGFormsModel::is_value_match($field_value, $config["optin_value"], $operator);
         $is_visible = !RGFormsModel::is_field_hidden($form, $field, array(), $entry);
 
@@ -1787,16 +1813,17 @@ class GFMailChimp {
     }
 
     //Returns the url of the plugin's root folder
-    protected function get_base_url(){
+    protected static function get_base_url(){
         return plugins_url(null, __FILE__);
     }
 
     //Returns the physical path of the plugin's root folder
-    protected function get_base_path(){
+    protected static function get_base_path(){
         $folder = basename(dirname(__FILE__));
         return WP_PLUGIN_DIR . "/" . $folder;
     }
-    function set_logging_supported($plugins)
+
+    public static function set_logging_supported($plugins)
 	{
 		$plugins[self::$slug] = "MailChimp";
 		return $plugins;
@@ -1866,5 +1893,3 @@ function rgblank($text){
     return empty($text) && strval($text) != "0";
 }
 }
-
-?>

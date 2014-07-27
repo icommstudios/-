@@ -100,6 +100,7 @@ function dh_ptp_generate_simple_flat_pricing_table_html ($id)
     $meta = get_post_meta($id, $features_metabox->get_the_id(), TRUE);
 
     $loop_index = 0;
+    $pricing_table_css = dh_ptp_easy_pricing_table_dynamic_css( $id );
     $pricing_table_html = '<div id="ptp-'. $id .'" class="ptp-pricing-table">';
     
     foreach ($meta['column'] as $column) {
@@ -109,15 +110,18 @@ function dh_ptp_generate_simple_flat_pricing_table_html ($id)
         $plan_price = isset($column['planprice'])?$column['planprice']:'';
         $plan_features = isset($column['planfeatures'])?$column['planfeatures']:'';
         $button_text = isset($column['buttontext'])?$column['buttontext']:'';
-        
-        // Get button url / custom shortcode button
-        $custom_button = false;
         $button_url = isset($column['buttonurl'])?$column['buttonurl']:'';
-        $btn_url_trim = trim($button_url);
-        if (substr($btn_url_trim, 0, 11) == '[shortcode]') {
-            $shortcode = substr($btn_url_trim, 11);
-            $shortcode = substr($shortcode, 0, -12);
-            $custom_button = $shortcode; 
+        $button_url = trim($button_url);
+        
+        // Get custom shortcode if any
+        $custom_button = false;
+        $shortcode_pattern = '|^\[shortcode\](?P<custom_button>.*)\[/shortcode\]$|';
+        if ( 
+            preg_match( $shortcode_pattern, $button_text, $matches) 
+            ||
+            preg_match( $shortcode_pattern, $button_url, $matches) 
+        ) {
+            $custom_button = $matches[ 'custom_button' ];
         }
 
         // Featured column
@@ -148,7 +152,7 @@ function dh_ptp_generate_simple_flat_pricing_table_html ($id)
 
     $pricing_table_html .= '</div>';
 
-    return $pricing_table_html;
+    return $pricing_table_css . $pricing_table_html;
 }
 
 /**

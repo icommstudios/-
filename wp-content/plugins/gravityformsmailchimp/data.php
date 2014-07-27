@@ -104,4 +104,3 @@ class GFMailChimpData{
         $wpdb->query("DROP TABLE IF EXISTS " . self::get_mailchimp_table_name());
     }
 }
-?>

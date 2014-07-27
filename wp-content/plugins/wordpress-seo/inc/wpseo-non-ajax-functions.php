@@ -284,7 +284,7 @@ function wpseo_admin_bar_menu() {
 		$calc_score = wpseo_calc( $perc_score, '/', 10, true );
 		$txtscore   = wpseo_translate_score( $calc_score );
 		$title      = wpseo_translate_score( $calc_score, false );
-		$score      = '<div title="' . esc_attr( $title ) . '" class="' . esc_attr( 'wpseo_score_img ' . $txtscore . ' ' . $perc_score ) . '"></div>';
+		$score      = '<div title="' . esc_attr( $title ) . '" class="' . esc_attr( 'wpseo-score-icon ' . $txtscore . ' ' . $perc_score ) . '"></div>';
 
 		$seo_url = get_edit_post_link( $post->ID );
 		if ( $txtscore !== 'na' ) {
@@ -425,7 +425,7 @@ function wpseo_disable_robots_meta() {
 		add_action( 'admin_notices', 'wpseo_deactivate_robots_meta_notice' );
 		
 		// Clean up the referrer url for later use
-		if( isset( $_SERVER['REQUEST_URI'] ) ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 			$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'deactivate_robots_meta' ), $_SERVER['REQUEST_URI'] );
 		}
 	}
@@ -459,7 +459,7 @@ function wpseo_disable_aioseo() {
 		add_action( 'admin_notices', 'wpseo_deactivate_aioseo_notice' );
 		
 		// Clean up the referrer url for later use
-		if( isset( $_SERVER['REQUEST_URI'] ) ) {
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
 			$_SERVER['REQUEST_URI'] = remove_query_arg( array( 'deactivate_aioseo' ), $_SERVER['REQUEST_URI'] );
 		}
 	}
