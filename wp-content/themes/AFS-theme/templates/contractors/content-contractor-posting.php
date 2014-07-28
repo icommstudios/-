@@ -120,9 +120,11 @@ if ( isset( $_GET['endorsements'] ) ) : ?>
 	            $attachment_name_array = explode('/',wp_get_attachment_url($attachment->ID));
 	            $attachment_name = $attachment_name_array[sizeof($attachment_name_array) - 1];
 	            $attachment_name = ( $attachment_name ) ? $attachment_name : $attachment->post_title;
+				//Get description and pass in title
+				$attachment_description = esc_attr($attachment->post_content);
 	        ?>
 	        <li>
-	        <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" rel="prettyPhoto" title="<?php echo $attachment_name; ?>"><img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="<?php echo $attachment_name; ?>" /></a>
+	        <a href="<?php echo wp_get_attachment_url($attachment->ID); ?>" rel="prettyPhoto" title="<?php echo $attachment_description; ?>"><img class="img-thumbnail" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="<?php echo $attachment_name; ?>" /></a>
 	        </li>
 	      <?php endforeach;
         } ?>
@@ -174,7 +176,7 @@ if ( !empty($categories ) ) {
 		<h4><?php echo $parent_term->name; ?> References</h4>
           <ul class="square-ul">
           <?php foreach ( $references as $ref ) : ?>
-            <li><?php echo $ref['name_company']; ?> <?php echo ($ref['phone']) ? ' | '.$ref['phone'] : ''; ?> <?php echo ($ref['email_address']) ? ' | <a href="'.$ref['email_address'].'">'.$ref['email_address'].'</a>' : ''; ?> <?php echo ($ref['work_location']) ? ' | '.$ref['work_location'] : ''; ?></li>
+            <li><?php echo $ref['name_company']; ?> <?php echo ($ref['name_contact']) ? ' | '.$ref['name_contact'] : ''; ?>  <?php echo ($ref['email_address']) ? ' | <a href="'.$ref['email_address'].'">'.$ref['email_address'].'</a>' : ''; ?> <?php echo ($ref['phone']) ? ' | '.$ref['phone'] : ''; ?> <?php echo ($ref['work_type']) ? ' | '.$ref['work_type'] : ''; ?> <?php echo ($ref['industry_type']) ? ' | '.$ref['industry_type'] : ''; ?></li>
           <?php endforeach; ?>
           </ul>
          <?php
