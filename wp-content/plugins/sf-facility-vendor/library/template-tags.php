@@ -116,7 +116,7 @@ function fv_get_facility_membership_addon_categories( $id = null ) {
 	//if has valid membership
 	$membership = fv_get_facility_membership_type($id);
 	if ( $membership ) {
-		$number_categories = 3; //start with categories
+		$number_categories = SF_Users::$facility_membership_types['F1']['data']; //start with categories
 	} else {
 		return 1; //all are permitted 1
 	}
@@ -137,7 +137,7 @@ function fv_get_contractor_membership_addon_categories( $id = null ) {
 	//if has valid membership
 	$membership = fv_get_contractor_membership_type($id);
 	if ( $membership ) {
-		$number_categories = 3; //start with categories
+		$number_categories = SF_Users::$contractor_membership_types['C1']['data']; //start with categories
 	} else {
 		return 1; //all are permitted 1
 	}

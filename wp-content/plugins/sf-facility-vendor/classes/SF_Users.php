@@ -20,7 +20,7 @@ class SF_Users extends SF_FV {
 	static $url_paypal_api_endpoint;
 	
 	static $facility_membership_types = array(
-		'F1' => array('cost' => '199.00', 'label' => 'AFS Facility Vendor Membership', 'type' => 'main', 'description' => 'Facility Vendor Membership'),
+		'F1' => array('cost' => '199.00', 'label' => 'AFS Facility Vendor Membership', 'type' => 'main', 'description' => 'Facility Vendor Membership', 'data' => 30),
 		'FC1' => array('cost' => '25.00', 'label' => 'AFS - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
 		'FC2' => array('cost' => '50.00', 'label' => 'AFS - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
 		'FC3' => array('cost' => '75.00', 'label' => 'AFS - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
@@ -29,7 +29,7 @@ class SF_Users extends SF_FV {
 	);
 	
 	static $contractor_membership_types = array(
-		'C1' => array('cost' => '199.00', 'label' => 'AFS Contractor Membership', 'type' => 'main', 'description' => 'Contractor Membership'),
+		'C1' => array('cost' => '199.00', 'label' => 'AFS Contractor Membership', 'type' => 'main', 'description' => 'Contractor Membership', 'data' => 30),
 		'CC1' => array('cost' => '25.00', 'label' => 'AFS - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
 		'CC2' => array('cost' => '50.00', 'label' => 'AFS - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
 		'CC3' => array('cost' => '75.00', 'label' => 'AFS - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
