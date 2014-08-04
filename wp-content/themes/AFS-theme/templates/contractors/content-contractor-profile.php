@@ -5,7 +5,7 @@ $categories_permitted = fv_get_contractor_membership_addon_categories($contracto
 $is_membership_active = ( $membership_type ) ? true : false;
 
 ?>
-<form id="fv_profile_edit" class="contractor-edit" role="form" method="post">
+<form id="fv_profile_edit" class="edit-profile" role="form" method="post">
 <input type="hidden" name="fv_profile_edit" value="contractor" />
 <?php wp_nonce_field( 'fv_profile_edit_nonce', 'fv_profile_edit_nonce' ); ?> 
 <section class="photos clearfix">
@@ -60,10 +60,10 @@ $is_membership_active = ( $membership_type ) ? true : false;
           <input placeholder="phone" name="_phone" value="<?php echo $fields['phone']; ?>" class="full-width">
         </div>
         <div class="form-group">
-          <input placeholder="location zip code" name="_location_zip" value="<?php echo $fields['location_zip']; ?>" class="full-width">
+          <input placeholder="location (city,state)" name="_location" value="<?php echo $fields['location']; ?>" class="full-width">
         </div>
         <div class="form-group">
-          <input placeholder="location (city,state)" name="_location" value="<?php echo $fields['location']; ?>" class="full-width">
+          <input placeholder="location zip code" name="_location_zip" value="<?php echo $fields['location_zip']; ?>" class="full-width">
         </div>
         <?php
       /*  <div class="form-group">
@@ -81,22 +81,113 @@ $is_membership_active = ( $membership_type ) ? true : false;
 <hr>
 <section class="products-services clearfix">
 <h3>Products &amp Services</h3>
-        <div class="form-group">
-          <h4>New Checkboxes (Going to Need Daniels Assistance)</h4>
-          <p><strong>Note:</strong> You may select <?php echo $categories_permitted; ?> based on your membership.</p>
+<p><strong>Note:</strong> You may select <?php echo $categories_permitted; ?> based on your membership.</p>
+<?php
+	//taxonomy is type category (so use ids for field value) 
+    $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+    
+	$validated_parent_terms = array();
+    $post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
+	if ( !empty($post_terms) ) {
+		foreach ( $post_terms as $pt )  {
+			$ancestors = get_ancestors( $pt, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+			$top_most_post_term = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $reference_term_id;
+			$validated_parent_terms[] = $top_most_post_term;
+		}
+	}
+	
+      
+    //selected categories ( merge term categories with the selected category data )
+    $selected_categories = $fields['category_data']; //set category_data as first
+    //merge with post terms
+    if ( !empty( $post_terms ) ) {
+      foreach ( $post_terms as $catkey => $cat_term_id) {
+        if ( !in_array($cat_term_id, $fields['category_data']) ) {
+          $selected_categories[] = $cat_term_id;
+        }
+      }
+    } 
+	
+	//Create array 
+	$hierarchy_types = array();
+	foreach ($types as $t ) {
+		$type_parent = (int)$t->parent;
+		$hierarchy_types[$type_parent][$t->term_id] = $t;
+	}
+	
+	//Helper function walk
+	function fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_term_id, $level = 0, $parent_prefix_remove = '') {
+		$level++;
+		//taxonomy is type category (so use ids for field value) 
+		$child_types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> $parent_term_id ) );
+		foreach ( $child_types as $type ) : ?>
+        <div style="margin-left: <?php echo $level.'0px';  ?>">
+            <div class="custom-checkbox">
+                  <input type="checkbox" data-label="<?php echo esc_attr($type->name); ?>" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $selected_categories)) ? 'checked="checked"' : ''; ?> />
+                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo str_replace($parent_prefix_remove.': ', '', $type->name); ?></span>
+            </div>
+        	<?php
+            if ( isset($hierarchy_types[$type->term_id]) ) {
+				fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $type->term_id, $level, $parent_prefix_remove);
+			}
+			?>
+        </div>
+	  <?php endforeach; ?>
+      
+      <?php
+    } //end fv_custom_walk_profile_terms
+	?>
+<div class="panel-group" id="accordion">
+	<?php
+	//For each with parent = 0 (top)
+	foreach ( $hierarchy_types[0] as $parent_type ) {
+	?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+      <?php
+	  /*
+      	 <div class="custom-checkbox">
+         <input type="checkbox" data-label="<?php echo esc_attr($parent_type->name); ?>" value="<?php echo $parent_type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$parent_type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($parent_type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> /> <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta">&nbsp; <?php //echo $parent_type->name; ?></span>
+        </div>
+		<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
+         <?php echo $parent_type->name; ?>
+        </a>
+	*/
+	?>
+         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
+         	<?php echo $parent_type->name; ?>
+         </a>
+            <?php
+            //Verfied category? (is it in the terms)
+            if ( $validated_parent_terms && in_array($parent_type->term_id, $validated_parent_terms) ) {
+             ?>
+               <div class="verified"><small><i class="fa fa-thumbs-up"></i> References verified, good job.</small></div>
+             <?php
+            } else {
+             ?>
+               <div class="un-verified"><small><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $parent_type->term_id; ?>" data-label="<?php echo esc_attr($parent_type->name); ?>">3 industry specific references are required to be found in search results for each industry listed!</a></small></div>
+            <?php
+            } 
+            ?>
+      </h4>
+    </div>
+    <div id="collapse<?php echo $parent_type->term_id; ?>" class="panel-collapse collapse">
+      <div class="panel-body">
+          <div class="form-group">
           <?php
            //taxonomy is type category (so use ids for field value) 
-            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> 0 ) );
-            foreach ( $types as $type ) : ?>
-            <div class="custom-checkbox">
-                  <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
-                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
-            </div>
-          <?php endforeach; ?>
-           
+		   fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_type->term_id, $level, $parent_type->name);
+		   ?>
           </div>
-          <hr>
-     <div class="form-group">
+      </div>
+    </div>
+  </div>
+  <?php
+	}
+	?>
+</div>
+ <?php /*    <div class="form-group">
       <h4>Old Dropdowns</h4>
       <?php
     //taxonomy is type category (so use ids for field value) 
@@ -158,7 +249,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
     endif;
     ?>
       
-      </div>
+      </div> */ ?>
 </section>
 <hr>
 <section class="vendor-profile clearfix">
@@ -208,8 +299,8 @@ $is_membership_active = ( $membership_type ) ? true : false;
     </div>
 </section>
 <hr>
-<section class="afs-account clearfix">
-<h3>AFS Account</h3>
+<section class="nafva-account clearfix">
+<h3>NAFVA Account</h3>
     <div class="col-lg-6">
          <div class="form-group">
         <input type="email" placeholder="email/username" name="user_email" value="<?php echo (isset($_POST['user_email'])) ? $_POST['user_email'] : $user_fields->user_email; ?>" class="full-width">
@@ -420,14 +511,28 @@ $is_membership_active = ( $membership_type ) ? true : false;
 
 <script type="text/javascript">
 $(document).ready(function(){
+	var max_cats_check = <?php echo (int)$categories_permitted; ?>;
+	$(document).on("change", "#accordion input[type=checkbox]", function (e) {
+		//if checking box
+		if ( $(this).is(':checked') ) {
+			if ( $('#accordion input:checked').length > max_cats_check ) {
+				alert('You have reached your maximum amount of categories permitted.'); 
+				$(this).attr('checked', false); //set unchecked
+				return false;
+			}
+		}
+	});
+	 
+	 
 	//Set the term_id on reference modal open
 	$(document).on("click", ".open-ReferenceModal", function (e) {
 		e.preventDefault();
 		
 		 var select_id = $(this).data('select_id');
 		 //Get selected
-		 var term_id = $('#' + select_id +' :selected').val();
+		 var term_id = $('#collapse' + select_id +' :checked').val();
 		 var category_data_index = $(this).data('select_cat_index');
+		 var term_title = $(this).data('label');
 		 //Get the modal to open
 		 var open_ref_modal = '#referenceModal-term' + term_id;
 		 if ( $(open_ref_modal).length > 0 ) {
@@ -437,7 +542,7 @@ $(document).ready(function(){
 			open_ref_modal =  '#referenceModal';
 		 }
 		 if ( term_id > 0 ) {
-			var term_title = $('#' + select_id +' :selected').text();
+			//var term_title = $('#collapse' + select_id +' :checked').data('label');
 			$(open_ref_modal + " .field_reference_term_id").val( term_id );
 			$(open_ref_modal + " .category_data_index").val( category_data_index );
 			//set the title for the modal
