@@ -22,7 +22,7 @@
       <?php if ( is_user_logged_in() ) : 
 	  	$current_user = get_userdata(get_current_user_id());
 	  	?>
-      <div class="pull-right second-nav-logged">
+      <div class="second-nav-logged clearfix">
         <div class="username">
         	<i class="fa fa-user"></i>hello <?php echo $current_user->user_email; ?>
         </div>
@@ -30,7 +30,7 @@
       </div>
       
       <?php else : ?>
-       <div class="pull-right second-nav">
+       <div class="pull-right second-nav clearfix">
         <a href="<?php echo home_url(SF_Users::LOGIN_PATH); ?>">Login</a> | <a href="<?php echo home_url(SF_Users::REGISTER_PATH); ?>">Register</a> | <a href="<?php echo home_url('search'); ?>">Search</a>
       </div>
       <?php endif; ?>

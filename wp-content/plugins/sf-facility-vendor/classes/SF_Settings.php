@@ -85,10 +85,12 @@ class SF_Settings extends SF_FV {
 				'cat' => 'Industry Category', 
 				'subcat' => 'Sub Category', 
 				'date' => 'Date Submitted',
-				'ref_name' => 'Reference Name',
+				'ref_name' => 'Reference Company Name',
+				'ref_contact' => 'Reference Contact Person',
 				'ref_email' => 'Reference Email',
 				'ref_phone' => 'Reference Phone',
-				'ref_location' => 'Reference Work Location',
+				'ref_work_type' => 'Reference Work Type',
+				'ref_industry_type' => 'Reference Industry Type',
 				);
 	
 			if ( !empty( $result ) ) {
@@ -122,9 +124,12 @@ class SF_Settings extends SF_FV {
 									'subcat' => (isset($subterm->name)) ? $subterm->name : $reference_term_id,
 									'date' => date('m-d-Y H:i:s', $refgroup['time']),
 									'ref_name' => $ref['name_company'],
+									'ref_contact' => $ref['name_contact'],
 									'ref_email' => $ref['email_address'],
 									'ref_phone' => $ref['phone'],
-									'ref_location' => $ref['work_location'],
+									'ref_work_type' => $ref['work_type'],
+									'ref_industry_type' => $ref['industry_type'],
+				
 								);
 								
 								

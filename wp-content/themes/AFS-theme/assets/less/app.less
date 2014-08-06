@@ -1,4 +1,3 @@
-
 /*!
  * Roots 6.5.0
  */
@@ -148,10 +147,6 @@ input.white, select.white {
    font-size: 34px;
    font-family: 'Roboto', sans-serif;
    color: white;
-}
-
-.square-ul {
-   list-style: square;
 }
 
 /* Form Elements */
@@ -493,11 +488,7 @@ ul.social-nav {
    ========================================================================== */
 
 .wrap {
-   margin-top: 40px;
-}
-
-.single-fv_contractor .wrap {
-   margin-top: 80px;
+   margin-top: 20px;
 }
 
 .login .wrap, .register .wrap, .password-reminder .wrap {
@@ -505,11 +496,7 @@ ul.social-nav {
 }
 
 .main section {
-   margin: 40px 0;
-
-   &:first-of-type {
-      margin: 0px 0px 40px 0px;
-   }
+   margin: 60px 0;
 }
 
 .container-full {
@@ -588,6 +575,37 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 .img-hero-bar {
    background-position: center 30%;
    background-image: url('../img/img-hero-bar.jpg');
+}
+
+
+/* Orange Hero */
+.hero {
+   padding:20px 0;
+
+   .handshake-icon {
+      display:none;
+   }
+
+   h1, small {
+     color: white; 
+     margin: 0;
+   }
+
+   .col-md-3 {
+      margin-top: 40px;
+   }
+
+}
+
+/* Hero Color Variations */
+.orange-hero {
+background: url('../img/orange-hex-pattern.jpg');
+}
+.blue-hero {
+ background: url('../img/blue-hex-pattern.jpg');
+}
+.purple-hero {
+ background: url('../img/purple-hex-pattern.jpg');
 }
 
 
@@ -801,30 +819,9 @@ a.round-icon-blocks {
 
 .search-by-category {
 
-   .show-subcategories-indicator {
-     cursor: pointer;
-     position: absolute;
-     right: 2px;
-     top: 0;
-     width: 30px;
-     height: 40px;
-     line-height: 40px;
-     display: inline-block;
-     text-align: center;
-     z-index: 2;
-   }
-
 .show-subcatchildren-indicator {
-        cursor: pointer;
-  position: absolute;
-  right: 2px;
-  top: 0;
-  width: 30px;
-  height: 24px;
-  line-height: 24px;
-  display: inline-block;
-  text-align: center;
-  z-index: 2;
+      cursor: pointer;
+      padding: 2px 0px 0px 20px; 
 }
 
 ul.col-md-3{
@@ -835,13 +832,11 @@ ul.col-md-3{
       list-style: none;
 
       li {
-         position: relative;
 
          a {
             color:#5b5b5b;
             display: block;
             padding: 2px 2px 2px 8px;
-            position: relative;
 
             &:hover {
                background: #f1f1f1;
@@ -860,19 +855,16 @@ ul.col-md-3{
       }
 
       li.main-cat {
-         background: #08a4f2;
+         background: #343434;
          color: white;
          padding: 8px 8px 8px 14px;
-
-         &:hover {
-            background:#2980b9;
-         }
 
          a {
             color: white;
 
             &:hover {
-               background: #2980b9;
+               text-decoration: underline;
+               background: #343434;
             }
          }
       }
@@ -880,7 +872,7 @@ ul.col-md-3{
 }
 
 /* ==========================================================================
-   Contractor & Job Posts Previews/Teasers
+   Contractor & Job Posts
    ========================================================================== */
 
 /* Posting Preview */
@@ -963,91 +955,34 @@ margin-left: .8928rem;
    span.fa-star {
       padding-right: 5px;
       display: inline-block;
-      color: white;
+      color: #666;
    }
 
 }
 
-/* Main Hero */
-.hero {
-   padding:20px 0;
-   text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+/* Contractor & Job Posting Details */
 
-   .handshake-icon {
-      display:none;
-   }
+.details-meta {
+   font-size: 18px;
 
-   h1, small {
-     color: white; 
-     margin: 0;
-   }
+   li {
+      margin-right: 10px;
+      display: inline-block;
 
-   .col-md-3 {
-      margin-top: 40px;
-   }
-
-}
-
-/* Hero Color Variations */
-.orange-hero {
-background: url('../img/orange-hex-pattern.jpg');
-}
-.blue-hero {
- background: url('../img/blue-hex-pattern.jpg');
-}
-.purple-hero {
- background: url('../img/purple-hex-pattern.jpg');
-}
-
-/* ==========================================================================
-   Contractor & Job Posting Details
-   ========================================================================== */
-
-/* header */
-
-.contractor {
-   margin-top: 60px;
-   .container {
-   position: relative;
-   padding-left: 270px;
-   }
-}
-
-.business-basics {
-   width: 400px;
-   margin-left: 30px;
-
-   ul {
-      color:white;
-
-      .fa-li {
-         color:#1479cc;
-         text-shadow:none;
+      > a {
+         color:@text-color;
       }
    }
-
-   a {
-      color: white;
-      text-decoration: underline;
-
-      &:hover {
-         text-decoration: none;
-      }
-   }
-}
-
-.contractor-edit .business-basics {
-   width: 100%;
 }
 
 .featured-img {
    border:1px solid #bdbdbd;
-   background: white;
    padding: 8px;
    display: inline-block;
-   position: absolute;
-   top: -50px;
-   left: 15px;
+}
+
+.tab-content i.fa-square {
+   color:#bababa !important;
 }
 
 .skillsets {
@@ -1107,106 +1042,8 @@ background: url('../img/orange-hex-pattern.jpg');
    }
 }
 
-.single-fv_contractor .main, .vendor-profile .main {
-      h1,h2,h3 {
-      color: #08a4f2;
-      }
-   }
-
-   .photo-group {
-   > div {
-      margin-bottom: 20px;
-   }
-}
-
-/* Photo Carousel */
-
-/*
-This is the visible area of you carousel.
-Set a width here to define how much items are visible.
-The width can be either fixed in px or flexible in %.
-Position must be relative!
-*/
-.photos { position: relative; }
-.jcarousel {
-    position: relative;
-    overflow: hidden;
-    display: block;
-    width: 680px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/*
-This is the container of the carousel items.
-You must ensure that the position is relative or absolute and
-that the width is big enough to contain all items.
-*/
-.jcarousel ul {
-    width: 20000em;
-    position: relative;
-
-    /* Optional, required in this case since it's a <ul> element */
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-/*
-These are the item elements. jCarousel works best, if the items
-have a fixed width and height (but it's not required).
-*/
-.jcarousel li {
-    /* Required only for block elements like <li>'s */
-    float: left;
-    width: 170px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-    a {
-      display: block;
-      width: 160px;
-      margin: 0px auto;
-    }
-}
-
-.jcarousel-prev, .jcarousel-next {
-   color: #919191;
-   position: absolute;
-   top: 54%;
-
-   &:hover {
-      color:#222;
-   }
-
-   i {
-      font-size: 34px;
-   }
-}
-
-.jcarousel-prev {
-   left: 0%;
-} 
-.jcarousel-next {
-   right: 0%;
-}
-
-.details-meta {
-   font-size: 18px;
-
-   li {
-      margin-right: 10px;
-      display: inline-block;
-
-      > a {
-         color:@text-color;
-      }
-   }
-}
-
-.tab-content i.fa-square {
-   color:#bababa !important;
+.photo-group .col-sm-6, .photo-group .col-md-3 {
+ margin-bottom: 20px;
 }
 
 
@@ -1258,14 +1095,6 @@ have a fixed width and height (but it's not required).
    Contractor & Facility Profiles
    ========================================================================== */
 
-/* header */
-
-.contractor.contractor-edit {
-   .container {
-   padding-left: 200px;
-   }
-}
-
 .profile-nav {
    background: #343434;
    padding: 12px 0px;
@@ -1310,8 +1139,7 @@ have a fixed width and height (but it's not required).
    background: #ccc;
    min-height: 100%;
    position: relative;
-   color: #444;
-   text-shadow:none;
+   color: #c9c9c9;
 
    span {
       position: absolute;
@@ -1328,13 +1156,8 @@ have a fixed width and height (but it's not required).
    }
 }
 
-.blue-hero.contractor-edit .click-upload {
-   width: 130px;
-   height: 130px;
-}
-
 .skillset {
-   border-bottom: 1px dashed #dddddd;
+   border-bottom: 1px solid #dddddd;
    padding-bottom: 20px;
    margin-bottom: 20px;
    position: relative;
@@ -1610,9 +1433,7 @@ input[type=submit] {
    Contractor & Facility Profiles
    ========================================================================== */
 
-   .profile-nav {
-
-      nav {
+   .profile-nav nav {
 
       li.save-btn-li {
          float:right;
@@ -1632,9 +1453,8 @@ input[type=submit] {
             }
 
          }
-      }
-
    }
+
 }
 
 

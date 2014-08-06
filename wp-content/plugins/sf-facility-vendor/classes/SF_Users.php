@@ -20,21 +20,21 @@ class SF_Users extends SF_FV {
 	static $url_paypal_api_endpoint;
 	
 	static $facility_membership_types = array(
-		'F1' => array('cost' => '199.00', 'label' => 'AFS Facility Vendor Membership', 'type' => 'main', 'description' => 'Facility Vendor Membership', 'data' => 30),
-		'FC1' => array('cost' => '25.00', 'label' => 'AFS - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
-		'FC2' => array('cost' => '50.00', 'label' => 'AFS - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
-		'FC3' => array('cost' => '75.00', 'label' => 'AFS - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
-		'FC4' => array('cost' => '100.00', 'label' => 'AFS - 4 Additional Categories', 'type' => 'addon', 'description' => '4 Additional Categories', 'data' => 4),
-		'FC5' => array('cost' => '125.00', 'label' => 'AFS - 5 Additional Categories', 'type' => 'addon', 'description' => '5 Additional Categories', 'data' => 5),
+		'F1' => array('cost' => '199.00', 'label' => 'NAFVA Facility Vendor Membership', 'type' => 'main', 'description' => 'Facility Vendor Membership', 'data' => 30),
+		'FC1' => array('cost' => '25.00', 'label' => 'NAFVA - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
+		'FC2' => array('cost' => '50.00', 'label' => 'NAFVA - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
+		'FC3' => array('cost' => '75.00', 'label' => 'NAFVA - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
+		'FC4' => array('cost' => '100.00', 'label' => 'NAFVA - 4 Additional Categories', 'type' => 'addon', 'description' => '4 Additional Categories', 'data' => 4),
+		'FC5' => array('cost' => '125.00', 'label' => 'NAFVA - 5 Additional Categories', 'type' => 'addon', 'description' => '5 Additional Categories', 'data' => 5),
 	);
 	
 	static $contractor_membership_types = array(
-		'C1' => array('cost' => '199.00', 'label' => 'AFS Contractor Membership', 'type' => 'main', 'description' => 'Contractor Membership', 'data' => 30),
-		'CC1' => array('cost' => '25.00', 'label' => 'AFS - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
-		'CC2' => array('cost' => '50.00', 'label' => 'AFS - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
-		'CC3' => array('cost' => '75.00', 'label' => 'AFS - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
-		'CC4' => array('cost' => '100.00', 'label' => 'AFS - 4 Additional Categories', 'type' => 'addon', 'description' => '4 Additional Categories', 'data' => 4),
-		'CC5' => array('cost' => '125.00', 'label' => 'AFS - 5 Additional Categories', 'type' => 'addon', 'description' => '5 Additional Categories', 'data' => 5),
+		'C1' => array('cost' => '199.00', 'label' => 'NAFVA Vendor Membership', 'type' => 'main', 'description' => 'Vendor Membership', 'data' => 30),
+		'CC1' => array('cost' => '25.00', 'label' => 'NAFVA - 1 Additional Category', 'type' => 'addon', 'description' => '1 Additional Category', 'data' => 1),
+		'CC2' => array('cost' => '50.00', 'label' => 'NAFVA - 2 Additional Categories', 'type' => 'addon', 'description' => '2 Additional Categories', 'data' => 2),
+		'CC3' => array('cost' => '75.00', 'label' => 'NAFVA - 3 Additional Categories', 'type' => 'addon', 'description' => '3 Additional Categories', 'data' => 3),
+		'CC4' => array('cost' => '100.00', 'label' => 'NAFVA - 4 Additional Categories', 'type' => 'addon', 'description' => '4 Additional Categories', 'data' => 4),
+		'CC5' => array('cost' => '125.00', 'label' => 'NAFVA - 5 Additional Categories', 'type' => 'addon', 'description' => '5 Additional Categories', 'data' => 5),
 	);
 	
 	private static $instance;
@@ -967,20 +967,14 @@ class SF_Users extends SF_FV {
 					foreach ( $_POST['name_company'] as $postkey => $postval) {
 						$new_references[$postkey]['name_company'] = $postval;
 					}
-					foreach ( $_POST['name_contact'] as $postkey => $postval) {
-						$new_references[$postkey]['name_contact'] = $postval;
-					}
 					foreach ( $_POST['phone'] as $postkey => $postval) {
 						$new_references[$postkey]['phone'] = $postval;
 					}
 					foreach ( $_POST['email_address'] as $postkey => $postval) {
 						$new_references[$postkey]['email_address'] = $postval;
 					}
-					foreach ( $_POST['work_type'] as $postkey => $postval) {
-						$new_references[$postkey]['work_type'] = $postval;
-					}
-					foreach ( $_POST['industry_type'] as $postkey => $postval) {
-						$new_references[$postkey]['industry_type'] = $postval;
+					foreach ( $_POST['work_location'] as $postkey => $postval) {
+						$new_references[$postkey]['work_location'] = $postval;
 					}
 					
 					//Update existing array

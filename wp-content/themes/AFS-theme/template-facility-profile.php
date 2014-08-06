@@ -13,10 +13,4 @@ Template Name: Facility Profile
 <?php if ( isset($_GET['action']) && $_GET['action'] == 'endorsements') get_template_part('templates/facility/content', 'facility-endorsements'); ?>
 <?php if ( isset($_GET['action']) && $_GET['action'] == 'medialibrary') get_template_part('templates/facility/content', 'facility-medialibrary'); ?>
   </div>
-  <div class="col-lg-3">
-  	<div class="alert alert-success">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-<strong>sidebar content or notifications can go here...
-</div>
-  </div>
 </div>

@@ -8,26 +8,27 @@ if ( $contractor_id ) {
 }
 $author_link = get_the_permalink($contractor_id);
 ?>
-<div class="hero blue-hero contractor contractor-edit">
+<div class="hero blue-hero contractor edit-profile">
 	<div class="container">
 			<?php 
     $featured_thumb = get_the_post_thumbnail($contractor_id, array(130,130), array('class' => 'img-thumbnail'));
     if ($featured_thumb ) {
         ?>
-        <div class="featured-img logo pull-left">
+        <div class="featured-img logo">
         <a href="#" title="Click to edit logo" data-toggle="modal" data-target="#photoEditModalFeatured"><?php echo $featured_thumb; ?></a>
     	</div>
         <?php
     } else {
         ?>
         
-      <div class="featured-img logo pull-left">
+      <div class="featured-img logo">
         <a href="#" title="Click to upload logo" class="click-upload" data-toggle="modal" data-target="#photoUploadModalFeatured"><span><i class="fa fa-camera"></i>upload logo</span></a>
       </div>
      
     <?php } ?>
 
-		<a href="<?php echo $author_link; ?>"><h1><?php echo get_the_title($contractor_id); ?></h1></a><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
+    	<div class="title-block">
+		<a href="<?php echo $author_link; ?>" target="_blank"><h1><?php echo get_the_title($contractor_id); ?></h1></a><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
         <?php
 		$star_rating = fv_get_contractor_star_rating($contractor_id);
 		if ( $star_rating ) {
@@ -41,6 +42,7 @@ $author_link = get_the_permalink($contractor_id);
 		}
 		?>
         </span>
+    	</div>
     </div>
 </div>
 <div class="profile-nav">

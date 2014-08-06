@@ -7,11 +7,15 @@ $fields = fv_get_contractor_fields($contractor_id);
 <div class="hero blue-hero contractor">
 	<div class="container">
         <?php if ( $featured_thumb ) : ?> 
-        <div class="featured-img logo pull-left">
+        <div class="featured-img logo">
             <?php echo $featured_thumb; ?>
         </div>
+            <?php else: ?>
+        <div class="featured-img logo">
+        <img src="http://placehold.it/200x200">
+        </div>
         <?php endif; ?>
-        <div class="pull-left">
+        <div class="title-block">
 		<h1><?php echo get_the_title($contractor_id); ?></h1><small><i>posted by <?php echo get_post_meta($contractor_id, '_name', true); ?></i></small><span class="rating-stars">
         <?php
 		$star_rating = fv_get_contractor_star_rating($contractor_id);
@@ -28,7 +32,7 @@ $fields = fv_get_contractor_fields($contractor_id);
         </span>
         </div>
 
-            <div class="business-basics pull-left">
+            <div class="business-basics">
                 <div class="col-md-6" >
                     <ul class="fa-ul">
                         <?php if ( $fields['name'] ) : ?><li><i class="fa-li fa fa-square"></i><?php echo $fields['name']; ?></li><?php endif; ?>
