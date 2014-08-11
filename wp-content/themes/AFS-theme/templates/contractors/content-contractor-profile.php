@@ -343,6 +343,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
               <div class="col-lg-6">
                 <div class="form-group">
                   <input type="text" name="name_company[0]" placeholder="Contact Company Name">
+<<<<<<< HEAD
+                </div>
+                <div class="form-group">
+                  <input type="text" name="name_contact[0]" placeholder="Contact Person">
+=======
                 </div>
                 <div class="form-group">
                   <input type="text" name="name_contact[0]" placeholder="Contact Person">
@@ -350,6 +355,16 @@ $is_membership_active = ( $membership_type ) ? true : false;
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
+                  <input type="text" name="email_address[0]" placeholder="Contact Email Address">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="phone[0]" placeholder="Contact Phone #">
+>>>>>>> FETCH_HEAD
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+<<<<<<< HEAD
                   <input type="text" name="email_address[0]" placeholder="Contact Email Address">
                 </div>
                 <div class="form-group">
@@ -363,6 +378,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
                 </div>
                 <div class="col-lg-6">
                 <div class="form-group">
+=======
+                  <input type="text" name="work_type[0]" placeholder="Type of Work">
+                </div>
+                <div class="form-group">
+>>>>>>> FETCH_HEAD
                   <input type="text" name="industry_type[0]" placeholder="Type of Industry">
                 </div>
               </div>
@@ -391,8 +411,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
                 <div class="form-group">
                   <input type="text" name="work_type[1]" placeholder="Type of Work">
                 </div>
+<<<<<<< HEAD
                 </div>
                 <div class="col-lg-6">
+=======
+>>>>>>> FETCH_HEAD
                 <div class="form-group">
                   <input type="text" name="industry_type[1]" placeholder="Type of Industry">
                 </div>
@@ -472,6 +495,7 @@ $is_membership_active = ( $membership_type ) ? true : false;
               <div class="col-lg-6">
                 <div class="form-group">
                   <input type="text" name="name_company[<?php echo $ref_ii; ?>]" placeholder="Contact Company Name" value="<?php echo ($existing_ref[$ref_ii]['name_company']) ? $existing_ref[$ref_ii]['name_company'] : ''; ?>">
+<<<<<<< HEAD
                 </div>
                 <div class="form-group">
                   <input type="text" name="name_contact[<?php echo $ref_ii; ?>]" placeholder="Contact Person" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['name_contact'] : ''; ?>">
@@ -483,15 +507,35 @@ $is_membership_active = ( $membership_type ) ? true : false;
                 </div>
                 <div class="form-group">
                   <input type="text" name="phone[<?php echo $ref_ii; ?>]" placeholder="Contact Phone #" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['phone'] : ''; ?>">
+=======
+                </div>
+                <div class="form-group">
+                  <input type="text" name="name_contact[<?php echo $ref_ii; ?>]" placeholder="Contact Person" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['name_contact'] : ''; ?>">
+>>>>>>> FETCH_HEAD
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+<<<<<<< HEAD
+                  <input type="text" name="work_type[<?php echo $ref_ii; ?>]" placeholder="Type of Work" value="<?php echo ($existing_ref[$ref_ii]['work_type']) ? $existing_ref[$ref_ii]['work_type'] : ''; ?>">
+=======
+                  <input type="text" name="email_address[<?php echo $ref_ii; ?>]" placeholder="Contact Email Address" value="<?php echo ($existing_ref[$ref_ii]['email_address']) ? $existing_ref[$ref_ii]['email_address'] : ''; ?>">
+>>>>>>> FETCH_HEAD
+                </div>
+                </div>
+                <div class="col-lg-6">
+                <div class="form-group">
+<<<<<<< HEAD
+=======
+                  <input type="text" name="phone[<?php echo $ref_ii; ?>]" placeholder="Contact Phone #" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['phone'] : ''; ?>">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
                   <input type="text" name="work_type[<?php echo $ref_ii; ?>]" placeholder="Type of Work" value="<?php echo ($existing_ref[$ref_ii]['work_type']) ? $existing_ref[$ref_ii]['work_type'] : ''; ?>">
                 </div>
-                </div>
-                <div class="col-lg-6">
                 <div class="form-group">
+>>>>>>> FETCH_HEAD
                   <input type="text" name="industry_type[<?php echo $ref_ii; ?>]" placeholder="Type of Industry" value="<?php echo ($existing_ref[$ref_ii]['industry_type']) ? $existing_ref[$ref_ii]['industry_type'] : ''; ?>">
                 </div>
               </div>
@@ -590,8 +634,11 @@ $(document).ready(function(){
         + '        <div class="form-group">'
         + '          <input type="text" name="work_type[' + countref + ']" placeholder="Type of Work">'
         + '        </div>'
+<<<<<<< HEAD
         + '        </div>'
         + '      <div class="col-lg-6">'
+=======
+>>>>>>> FETCH_HEAD
         + '        <div class="form-group">'
         + '          <input type="text" name="industry_type[' + countref + ']" placeholder="Type of Industry">'
         + '        </div>'

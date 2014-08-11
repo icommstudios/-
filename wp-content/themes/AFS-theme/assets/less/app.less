@@ -1,4 +1,3 @@
-
 /*!
  * Roots 6.5.0
  */
@@ -150,6 +149,7 @@ input.white, select.white {
    color: white;
 }
 
+<<<<<<< HEAD
 .square-ul {
    list-style: square;
 }
@@ -157,6 +157,9 @@ input.white, select.white {
 /* ==========================================================================
    Form Elements
    ========================================================================== */
+=======
+/* Form Elements */
+>>>>>>> FETCH_HEAD
 
 input, select, textarea {
    background: #ececec;
@@ -495,7 +498,11 @@ ul.social-nav {
    ========================================================================== */
 
 .wrap {
+<<<<<<< HEAD
    margin-top: 40px;
+=======
+   margin-top: 20px;
+>>>>>>> FETCH_HEAD
 }
 
 .login .wrap, .register .wrap, .password-reminder .wrap {
@@ -503,11 +510,7 @@ ul.social-nav {
 }
 
 .main section {
-   margin: 40px 0;
-
-   &:first-of-type {
-      margin: 0px 0px 40px 0px;
-   }
+   margin: 60px 0;
 }
 
 .container-full {
@@ -609,6 +612,37 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 
 .home .hero a.x-large {
    text-shadow:none;
+}
+
+/* Hero Color Variations */
+.orange-hero {
+background: url('../img/orange-hex-pattern.jpg');
+}
+.blue-hero {
+ background: url('../img/blue-hex-pattern.jpg');
+}
+.purple-hero {
+ background: url('../img/purple-hex-pattern.jpg');
+}
+
+
+/* Orange Hero */
+.hero {
+   padding:20px 0;
+
+   .handshake-icon {
+      display:none;
+   }
+
+   h1, small {
+     color: white; 
+     margin: 0;
+   }
+
+   .col-md-3 {
+      margin-top: 40px;
+   }
+
 }
 
 /* Hero Color Variations */
@@ -833,30 +867,9 @@ a.round-icon-blocks {
 
 .search-by-category {
 
-   .show-subcategories-indicator {
-     cursor: pointer;
-     position: absolute;
-     right: 2px;
-     top: 0;
-     width: 30px;
-     height: 40px;
-     line-height: 40px;
-     display: inline-block;
-     text-align: center;
-     z-index: 2;
-   }
-
 .show-subcatchildren-indicator {
-        cursor: pointer;
-  position: absolute;
-  right: 2px;
-  top: 0;
-  width: 30px;
-  height: 24px;
-  line-height: 24px;
-  display: inline-block;
-  text-align: center;
-  z-index: 2;
+      cursor: pointer;
+      padding: 2px 0px 0px 20px; 
 }
 
 ul.col-md-3{
@@ -867,13 +880,11 @@ ul.col-md-3{
       list-style: none;
 
       li {
-         position: relative;
 
          a {
             color:#5b5b5b;
             display: block;
             padding: 2px 2px 2px 8px;
-            position: relative;
 
             &:hover {
                background: #f1f1f1;
@@ -892,19 +903,16 @@ ul.col-md-3{
       }
 
       li.main-cat {
-         background: #08a4f2;
+         background: #343434;
          color: white;
          padding: 8px 8px 8px 14px;
-
-         &:hover {
-            background:#2980b9;
-         }
 
          a {
             color: white;
 
             &:hover {
-               background: #2980b9;
+               text-decoration: underline;
+               background: #343434;
             }
          }
       }
@@ -912,7 +920,7 @@ ul.col-md-3{
 }
 
 /* ==========================================================================
-   Contractor & Job Posts Previews/Teasers
+   Contractor & Job Posts
    ========================================================================== */
 
 /* Posting Preview */
@@ -994,11 +1002,12 @@ vertical-align: middle;
    span.fa-star {
       padding-right: 5px;
       display: inline-block;
-      color: white;
+      color: #666;
    }
 
 }
 
+<<<<<<< HEAD
 /* ==========================================================================
    Contractor & Job Public Profiles
    ========================================================================== */
@@ -1025,30 +1034,36 @@ vertical-align: middle;
 
    ul {
       color:white;
+=======
+/* Contractor & Job Posting Details */
+>>>>>>> FETCH_HEAD
 
-      .fa-li {
-         color:#1479cc;
-         text-shadow:none;
-      }
-   }
+.details-meta {
+   font-size: 18px;
 
-   a {
-      color: white;
-      text-decoration: underline;
+   li {
+      margin-right: 10px;
+      display: inline-block;
 
-      &:hover {
-         text-decoration: none;
+      > a {
+         color:@text-color;
       }
    }
 }
 
 .featured-img {
    border:1px solid #bdbdbd;
-   background: white;
    padding: 8px;
    display: inline-block;
+<<<<<<< HEAD
    position: relative;
    margin-bottom: 20px;
+=======
+}
+
+.tab-content i.fa-square {
+   color:#bababa !important;
+>>>>>>> FETCH_HEAD
 }
 
 .skillsets {
@@ -1108,6 +1123,7 @@ vertical-align: middle;
    }
 }
 
+<<<<<<< HEAD
 .single-fv_contractor .main, .vendor-profile .main {
       h1,h2,h3 {
       color: #08a4f2;
@@ -1198,6 +1214,11 @@ vertical-align: middle;
       }
    }
 }*/
+=======
+.photo-group .col-sm-6, .photo-group .col-md-3 {
+ margin-bottom: 20px;
+}
+>>>>>>> FETCH_HEAD
 
 
 /* Contractor & Job Posting Sidebar */
@@ -1248,6 +1269,7 @@ vertical-align: middle;
    Contractor & Facility Edit Profiles
    ========================================================================== */
 
+<<<<<<< HEAD
 /* header */
 
 .edit-profile {
@@ -1263,6 +1285,8 @@ vertical-align: middle;
    }
 }
 
+=======
+>>>>>>> FETCH_HEAD
 .profile-nav {
    background: #343434;
    padding: 12px 0px;
@@ -1307,8 +1331,7 @@ vertical-align: middle;
    background: #ccc;
    min-height: 100%;
    position: relative;
-   color: #444;
-   text-shadow:none;
+   color: #c9c9c9;
 
    span {
       position: absolute;
@@ -1325,14 +1348,17 @@ vertical-align: middle;
    }
 }
 
+<<<<<<< HEAD
 .hero.edit-profile .click-upload {
    display: block;
    width: 130px;
    height: 130px;
 }
 
+=======
+>>>>>>> FETCH_HEAD
 .skillset {
-   border-bottom: 1px dashed #dddddd;
+   border-bottom: 1px solid #dddddd;
    padding-bottom: 20px;
    margin-bottom: 20px;
    position: relative;
@@ -1690,6 +1716,7 @@ a.logo {
    Contractor & Facility Edit Profiles
    ========================================================================== */
 
+<<<<<<< HEAD
    /* header */
 
 .edit-profile {
@@ -1702,6 +1729,9 @@ a.logo {
    .profile-nav {
 
       nav {
+=======
+   .profile-nav nav {
+>>>>>>> FETCH_HEAD
 
       li.save-btn-li {
          float:right;
@@ -1721,9 +1751,8 @@ a.logo {
             }
 
          }
-      }
-
    }
+
 }
 
 
