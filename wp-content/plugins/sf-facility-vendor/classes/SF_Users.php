@@ -967,14 +967,20 @@ class SF_Users extends SF_FV {
 					foreach ( $_POST['name_company'] as $postkey => $postval) {
 						$new_references[$postkey]['name_company'] = $postval;
 					}
+					foreach ( $_POST['name_contact'] as $postkey => $postval) {
+						$new_references[$postkey]['name_contact'] = $postval;
+					}
 					foreach ( $_POST['phone'] as $postkey => $postval) {
 						$new_references[$postkey]['phone'] = $postval;
 					}
 					foreach ( $_POST['email_address'] as $postkey => $postval) {
 						$new_references[$postkey]['email_address'] = $postval;
 					}
-					foreach ( $_POST['work_location'] as $postkey => $postval) {
-						$new_references[$postkey]['work_location'] = $postval;
+					foreach ( $_POST['work_type'] as $postkey => $postval) {
+						$new_references[$postkey]['work_type'] = $postval;
+					}
+					foreach ( $_POST['industry_type'] as $postkey => $postval) {
+						$new_references[$postkey]['industry_type'] = $postval;
 					}
 					
 					//Update existing array

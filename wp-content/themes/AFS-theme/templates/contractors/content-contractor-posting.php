@@ -294,7 +294,7 @@ if ( !empty($categories ) ) {
     <div class="modal-content">
     <form id="fv_message_send" role="form" method="post" action="<?php echo add_query_arg(array('msg_form' => 1), $_SERVER['REQUEST_URI']); ?>">
         <input type="hidden" name="fv_message_send" value="1" />
-        <input type="hidden" name="to" value="<?php echo $facility_id; ?>" />
+        <input type="hidden" name="to" value="<?php echo $contractor_id; ?>" />
         <?php wp_nonce_field( 'fv_message_send_nonce', 'fv_message_send_nonce' ); ?> 
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
