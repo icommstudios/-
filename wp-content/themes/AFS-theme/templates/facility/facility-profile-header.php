@@ -7,10 +7,28 @@ if ( $facility_id ) {
 	//var_dump($project_count);
 }
 ?>
-<div class="hero purple-hero">
+<div class="hero purple-hero edit-profile">
 	<div class="container">
+				<?php 
+    $featured_thumb = get_the_post_thumbnail($facility_id, array(130,130), array('class' => 'img-thumbnail'));
+    if ($featured_thumb ) {
+        ?>
+        <div class="featured-img logo">
+        <a href="#" title="Click to edit logo" data-toggle="modal" data-target="#photoEditModalFeatured"><?php echo $featured_thumb; ?></a>
+    	</div>
+        <?php
+    } else {
+        ?>
+        
+      <div class="featured-img logo">
+        <a href="#" title="Click to upload logo" class="click-upload" data-toggle="modal" data-target="#photoUploadModalFeatured"><span><i class="fa fa-camera"></i>upload logo</span></a>
+      </div>
+     
+    <?php } ?>
+		<div class="title-block">
 		<h1><?php echo get_the_title($facility_id); ?></h1><small><i>posted by <?php echo get_post_meta($facility_id, '_name', true); ?></i></small>
-		<div class="posting-tags">
+		</div>
+<?php /*		<div class="posting-tags">
 			<?php
             $types = wp_get_object_terms( $facility_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'all' ));
             if ( $types ) {
@@ -33,7 +51,7 @@ if ( $facility_id ) {
             <?php 
             }
             ?>
-		</div>
+		</div> */ ?>
 	</div>
 </div>
 <div class="profile-nav">

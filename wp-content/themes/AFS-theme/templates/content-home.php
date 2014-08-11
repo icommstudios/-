@@ -1,5 +1,5 @@
 <div class="img-hero overflow home-hero img-hero-bar">
-	<h1>Welcome to the National Alliance of Facility Vendors Association, where we make it easy for facility owners and managers to find qualified, licensed contractors.</h1>
+	<h1>Welcome to the National Alliance of Facility Vendors Association, where we make it easy for facility professionals to find facility vendors with the right qualifications, skills, and experience.</h1>
 </div>
 <div class="hero orange-hero overflow">
 	<div class="container">

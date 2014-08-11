@@ -122,7 +122,11 @@
       <div class="modal-body">
         <p>Upgrade to our paid annual membership and enjoy the following benefits:</p>
         <ul class="list-group">
-                <li class="list-group-item">3 Listing Categories</li>
+                <li class="list-group-item"><?php 
+				//Show membership categories
+				$number_categories = SF_Users::$contractor_membership_types['C1']['data']; //start with categories
+				echo $number_categories;
+				?> Listing Categories</li>
                 <li class="list-group-item">Increased Exposure</li>
             </ul>
         <?php echo $subscribe_form; ?>

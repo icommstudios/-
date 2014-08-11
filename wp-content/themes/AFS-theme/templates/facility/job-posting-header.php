@@ -5,6 +5,7 @@ $categories_permitted = fv_get_facility_membership_addon_categories($facility_id
 ?>
 <div class="hero purple-hero">
 	<div class="container">
+        <div class="title-block">
 		<h1><?php echo get_the_title($post->ID); ?></h1><small><i><?php 
 			
 			if ( $facility_id ) {
@@ -35,5 +36,6 @@ $categories_permitted = fv_get_facility_membership_addon_categories($facility_id
             }
             ?>
 		</div>
+      </div>
 	</div>
 </div>

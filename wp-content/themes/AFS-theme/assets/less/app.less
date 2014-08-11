@@ -154,7 +154,9 @@ input.white, select.white {
    list-style: square;
 }
 
-/* Form Elements */
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
 
 input, select, textarea {
    background: #ececec;
@@ -324,8 +326,7 @@ input[type=checkbox] {
 a.logo {
    display: block;
    margin: 0px auto;
-   float:left;
-   width: 200px;
+   width: 80%;
 }
 
 
@@ -451,8 +452,9 @@ ul.social-nav {
 }
 
 .second-nav-logged {
-   margin-top: 7px;
+   margin-top: 20px;
    font-size: .9em;
+     clear: both;
 
       .username{
       background: @dark;
@@ -489,15 +491,11 @@ ul.social-nav {
 
 
 /* ==========================================================================
-   Content
+   Content Containers & Wrappers
    ========================================================================== */
 
 .wrap {
    margin-top: 40px;
-}
-
-.single-fv_contractor .wrap {
-   margin-top: 80px;
 }
 
 .login .wrap, .register .wrap, .password-reminder .wrap {
@@ -588,6 +586,40 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 .img-hero-bar {
    background-position: center 30%;
    background-image: url('../img/img-hero-bar.jpg');
+}
+
+/* Main Hero */
+.hero {
+   padding:20px 0;
+   text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+
+   .handshake-icon {
+      display:none;
+   }
+
+   .col-md-3 {
+      margin-top: 40px;
+   }
+
+   .posting-tags {
+      text-shadow:none;
+   }
+
+}
+
+.home .hero a.x-large {
+   text-shadow:none;
+}
+
+/* Hero Color Variations */
+.orange-hero {
+background: url('../img/orange-hex-pattern.jpg');
+}
+.blue-hero {
+ background: url('../img/blue-hex-pattern.jpg');
+}
+.purple-hero {
+ background: url('../img/purple-hex-pattern.jpg');
 }
 
 
@@ -958,7 +990,6 @@ unicode-bidi: bidi-override;
 direction: rtl;
 font-size: 20px;
 vertical-align: middle;
-margin-left: .8928rem;
 
    span.fa-star {
       padding-right: 5px;
@@ -968,54 +999,29 @@ margin-left: .8928rem;
 
 }
 
-/* Main Hero */
-.hero {
-   padding:20px 0;
-   text-shadow: 1px 1px 1px rgba(0,0,0,.5);
-
-   .handshake-icon {
-      display:none;
-   }
-
-   h1, small {
-     color: white; 
-     margin: 0;
-   }
-
-   .col-md-3 {
-      margin-top: 40px;
-   }
-
-}
-
-/* Hero Color Variations */
-.orange-hero {
-background: url('../img/orange-hex-pattern.jpg');
-}
-.blue-hero {
- background: url('../img/blue-hex-pattern.jpg');
-}
-.purple-hero {
- background: url('../img/purple-hex-pattern.jpg');
-}
-
 /* ==========================================================================
-   Contractor & Job Posting Details
+   Contractor & Job Public Profiles
    ========================================================================== */
 
 /* header */
 
 .contractor {
-   margin-top: 60px;
    .container {
    position: relative;
-   padding-left: 270px;
    }
 }
 
+.title-block {
+   margin-bottom: 20px;
+   h1, small {
+     color: white; 
+     margin: 0px 10px 0px 0px;
+   }
+}
+
+
 .business-basics {
-   width: 400px;
-   margin-left: 30px;
+
 
    ul {
       color:white;
@@ -1036,18 +1042,13 @@ background: url('../img/orange-hex-pattern.jpg');
    }
 }
 
-.contractor-edit .business-basics {
-   width: 100%;
-}
-
 .featured-img {
    border:1px solid #bdbdbd;
    background: white;
    padding: 8px;
    display: inline-block;
-   position: absolute;
-   top: -50px;
-   left: 15px;
+   position: relative;
+   margin-bottom: 20px;
 }
 
 .skillsets {
@@ -1113,6 +1114,12 @@ background: url('../img/orange-hex-pattern.jpg');
       }
    }
 
+   .facility-profile .main {
+      h1,h2,h3 {
+      color: @purple;
+      }
+    }
+
    .photo-group {
    > div {
       margin-bottom: 20px;
@@ -1121,27 +1128,16 @@ background: url('../img/orange-hex-pattern.jpg');
 
 /* Photo Carousel */
 
-/*
-This is the visible area of you carousel.
-Set a width here to define how much items are visible.
-The width can be either fixed in px or flexible in %.
-Position must be relative!
-*/
 .photos { position: relative; }
 .jcarousel {
     position: relative;
     overflow: hidden;
     display: block;
-    width: 680px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
-/*
-This is the container of the carousel items.
-You must ensure that the position is relative or absolute and
-that the width is big enough to contain all items.
-*/
 .jcarousel ul {
     width: 20000em;
     position: relative;
@@ -1152,10 +1148,6 @@ that the width is big enough to contain all items.
     padding: 0;
 }
 
-/*
-These are the item elements. jCarousel works best, if the items
-have a fixed width and height (but it's not required).
-*/
 .jcarousel li {
     /* Required only for block elements like <li>'s */
     float: left;
@@ -1192,6 +1184,8 @@ have a fixed width and height (but it's not required).
    right: 0%;
 }
 
+/* Details meta, NOT CURRENTLY USED 
+
 .details-meta {
    font-size: 18px;
 
@@ -1203,11 +1197,7 @@ have a fixed width and height (but it's not required).
          color:@text-color;
       }
    }
-}
-
-.tab-content i.fa-square {
-   color:#bababa !important;
-}
+}*/
 
 
 /* Contractor & Job Posting Sidebar */
@@ -1255,14 +1245,21 @@ have a fixed width and height (but it's not required).
 
 
 /* ==========================================================================
-   Contractor & Facility Profiles
+   Contractor & Facility Edit Profiles
    ========================================================================== */
 
 /* header */
 
-.contractor.contractor-edit {
-   .container {
-   padding-left: 200px;
+.edit-profile {
+   .container { position: relative; }
+
+   .featured-img  {
+      position: relative;
+   }
+
+   .title-block {
+   margin-bottom: 0px;
+   float:none;
    }
 }
 
@@ -1306,7 +1303,7 @@ have a fixed width and height (but it's not required).
 }
 
 .click-upload {
-   display: block;
+   // display: block;
    background: #ccc;
    min-height: 100%;
    position: relative;
@@ -1328,7 +1325,8 @@ have a fixed width and height (but it's not required).
    }
 }
 
-.blue-hero.contractor-edit .click-upload {
+.hero.edit-profile .click-upload {
+   display: block;
    width: 130px;
    height: 130px;
 }
@@ -1428,7 +1426,7 @@ color:#b2461c;
 
 
 /* ==========================================================================
-   Membership & Pricing
+   Membership & Pricing Page
    ========================================================================== */
 .ptp-col-id-2,
 .ptp-col-id-3 {
@@ -1440,8 +1438,62 @@ color:#b2461c;
 
 
 /* ==========================================================================
-   Media Queries
+   Responsive Media Queries
    ========================================================================== */
+
+@media (min-width: 500px) {
+
+   /* ==========================================================================
+      Contractor & Job Public Profiles
+      ========================================================================== */
+
+   /* header */
+
+   .contractor {
+      margin-top: 60px;
+      .container {
+      padding-left: 270px;
+      }
+
+      .title-block {
+      float: left;
+      max-width: 100%;
+      margin-bottom: 0px;
+
+      }
+
+      .business-basics {
+      float: left;
+      max-width: 100%;
+      margin-left: 0px;
+      margin-bottom: 0px;
+      margin-top: 20px;
+      }
+   }
+
+   .edit-profile {
+      margin-top: 60px;
+      .container {
+      padding-left: 200px;
+      }
+
+      .title-block {
+      max-width: 100%;
+
+      }
+   }
+
+   form.edit-profile {
+      margin-top: 0px;
+   }
+
+   .featured-img, .edit-profile .featured-img {
+      position: absolute;
+      top: -50px;
+      left: 15px;
+      }
+
+}
 
 
 @media (min-width: @screen-sm-min) { 
@@ -1480,6 +1532,11 @@ input[type=submit] {
 /* ==========================================================================
    Header
    ========================================================================== */
+          
+a.logo { 
+         float: left;
+         width:250px;
+      }
 
 /* Top Main Navigation */
 
@@ -1504,6 +1561,8 @@ input[type=submit] {
    .second-nav-logged {
    margin-top: 12px;
    font-size: 1.1em;
+   float: right;
+   clear:none;
    }
 
 /* ==========================================================================
@@ -1558,6 +1617,12 @@ input[type=submit] {
    }
 }
 
+/* ==========================================================================
+   Content Containers & Wrappers
+   ========================================================================== */
+.single-fv_contractor .wrap {
+   margin-top: 80px;
+}
 
 
 /* ==========================================================================
@@ -1604,11 +1669,35 @@ input[type=submit] {
       }
    }
 
+/* ==========================================================================
+   Contractor & Job Public Profiles
+   ========================================================================== */
+
+/* header */
+
+   .contractor {
+      .title-block {
+      max-width: 100%;
+      }
+   }
+
+.jcarousel {
+    width: 90%;
+}
 
 
 /* ==========================================================================
-   Contractor & Facility Profiles
+   Contractor & Facility Edit Profiles
    ========================================================================== */
+
+   /* header */
+
+.edit-profile {
+
+   .title-block {
+   float: left;
+   }
+}
 
    .profile-nav {
 
@@ -1627,7 +1716,7 @@ input[type=submit] {
             }
 
             a {
-               font-size: 1.1em;
+               font-size: .9em;
                border-bottom: none;
             }
 
@@ -1639,12 +1728,6 @@ input[type=submit] {
 
 
 @media (min-width: @screen-md-min) { 
- 
-
-/* ==========================================================================
-   Base
-   ========================================================================== */
-
 
  /* ==========================================================================
    Header
@@ -1660,11 +1743,48 @@ input[type=submit] {
       .img-hero h1 {
       font-size: 48px;
       }
+
+/* ==========================================================================
+   Contractor & Facility Edit Profiles
+   ========================================================================== */
+
+   .profile-nav nav li a {
+      font-size: 1.1em;
+   }
+
+
 }
 
-@media (min-width: @screen-lg-min) { }
+@media (min-width: @screen-lg-min) {
 
-/* Pretty Photo */
+/* ==========================================================================
+   Contractor & Job Public Profiles
+   ========================================================================== */
+
+/* header */
+
+.contractor .title-block {
+   float: left;
+   max-width: 45%;
+
+}
+
+.business-basics {
+   float: left;
+   max-width: 400px;
+   margin-left: 30px;
+}
+
+.edit-profile .business-basics {
+   max-width:100%;
+   float: none;
+}
+
+}
+
+/* ==========================================================================
+   Pretty Photo
+   ========================================================================== */
 
 div.pp_default .pp_top,div.pp_default .pp_top .pp_middle,div.pp_default .pp_top .pp_left,div.pp_default .pp_top .pp_right,div.pp_default .pp_bottom,div.pp_default .pp_bottom .pp_left,div.pp_default .pp_bottom .pp_middle,div.pp_default .pp_bottom .pp_right{height:13px}
 div.pp_default .pp_top .pp_left{background:url(../img/prettyPhoto/default/sprite.png) -78px -93px no-repeat}
@@ -1691,7 +1811,7 @@ div.pp_default .pp_content_container .pp_details{margin-top:5px}
 div.pp_default .pp_nav{clear:none;height:30px;width:110px;position:relative}
 div.pp_default .pp_nav .currentTextHolder{font-family:Georgia;font-style:italic;color:#999;font-size:11px;left:75px;line-height:25px;position:absolute;top:2px;margin:0;padding:0 0 0 10px}
 div.pp_default .pp_close:hover,div.pp_default .pp_nav .pp_play:hover,div.pp_default .pp_nav .pp_pause:hover,div.pp_default .pp_arrow_next:hover,div.pp_default .pp_arrow_previous:hover{opacity:0.7}
-div.pp_default .pp_description{font-size:11px;font-weight:700;line-height:14px;margin:5px 50px 5px 0}
+div.pp_default .pp_description{font-size:14px;font-weight:700;line-height:14px;margin:10px 5px;padding:20px; background: #f4f4f4;}
 div.pp_default .pp_bottom .pp_left{background:url(../img/prettyPhoto/default/sprite.png) -78px -127px no-repeat}
 div.pp_default .pp_bottom .pp_middle{background:url(../img/prettyPhoto/default/sprite_x.png) bottom left repeat-x}
 div.pp_default .pp_bottom .pp_right{background:url(../img/prettyPhoto/default/sprite.png) -112px -127px no-repeat}

@@ -35,44 +35,165 @@ abstract class SF_dev_import_wpe_cats {
 	
 	
 
-	public function insert_term($this_term, $this_parent_term = false) {
-		global $cached_created_terms;
+	public function insert_term($this_term, $this_parent_term = false, $parents_parent_cat = 0, $rowkey, $level, $parent_level) {
+		//global $cached_created_terms;
+		
+		$this_term = trim($this_term);
 		
 		$parent = 0;
 		if ( $this_parent_term ) {
 			
 			//if in cached terms
-			if ( $cached_created_terms[$this_parent_term] ) {
-				$parent_term = $cached_created_terms[$this_parent_term];
+			if ( false && $cached_created_terms[$parents_parent_cat][$this_parent_term] ) {
+				$parent_term = $cached_created_terms[$parents_parent_cat][$this_parent_term];
+				echo '<br>getting parent term from cache: '.$this_parent_term.' with parent-parent term : '.$parents_parent_cat.' | parent_level: '.$parent_level; 
+			} else {
+				//if not exist, now try using sanitized title
+				$parent_term = ( $parent_term && isset($parent_term->term_id) ) ? $parent_term : get_term_by('slug', sanitize_title($this_parent_term), 'fv_job_type' );
+				$parent_term = (isset($parent_term->term_id)) ? $parent_term : get_term_by('name', $this_parent_term, 'fv_job_type' );
+				
+				if ( $parents_parent_cat ) {
+					
+					$parent_parent_term = ( isset($parent_parent_term->term_id) ) ? $parent_parent_term : get_term_by('slug', sanitize_title($parents_parent_cat), 'fv_job_type' );
+					$parent_parent_term = (isset($parent_parent_term->term_id)) ? $parent_parent_term : get_term_by('name', $parents_parent_cat, 'fv_job_type' );
+					$parent_parent_term_id = $parent_parent_term->term_id;
+				} else {
+					$parent_parent_term_id = 0;
+				}
+				
+				$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					'parent' => $parent_parent_term_id,
+					//'slug' => sanitize_title($this_parent_term)
+				 ) );
+				 foreach($top_categories as $each_tcat) {
+					 if ( sanitize_title($parents_parent_cat) == $each_tcat->slug ) {
+						 $parent_term = $each_tcat;
+					 }
+					 
+				 }
+				
+				
+				if ( $parent_term && isset($parent_term->term_id) ) {
+					echo '<br>initial cache missed but found - parent term: '.$this_parent_term.' with parent-parent term : '.$parents_parent_cat.' | parent_level: '.$parent_level;
+				} else {
+					echo '<br>ERROR - missed cache - parent term: '.$this_parent_term.' with parent-parent term : '.$parents_parent_cat.' | parent_level: '.$parent_level;
+				}
 			}
-			$parent_term = (isset($parent_term->term_id)) ? $parent_term : get_term_by('name', $this_parent_term, 'fv_job_type' );
+			
+			/*
+			$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+				'orderby'    => 'name',
+				'hide_empty' => 0,
+				//'parent' => 0,
+				'slug' => sanitize_title($this_parent_term)
+			 ) );
+			 foreach($top_categories as $each_tcat) {
+				 //if ( strlen($each_tcat) > 3 ) {
+					$array_top_cats[] =	$each_tcat->name;
+				// }
+			 }
+			 */
+			 
+			 /*
+			 
+			 //if not exist, now try using sanitized title
+			 $parent_parent_term = false;
+			 if ( $parents_parent_cat ) {
+				$parent_parent_term = ( isset($parent_parent_term->term_id) ) ? $parent_parent_term : get_term_by('slug', sanitize_title($parents_parent_cat), 'fv_job_type' );
+				$parent_parent_term = (isset($parent_parent_term->term_id)) ? $parent_parent_term : get_term_by('name', $parents_parent_cat, 'fv_job_type' );
+			 }
+			
 			//if not exist, now try using sanitized title
 			$parent_term = ( $parent_term && isset($parent_term->term_id) ) ? $parent_term : get_term_by('slug', sanitize_title($this_parent_term), 'fv_job_type' );
+			$parent_term = (isset($parent_term->term_id)) ? $parent_term : get_term_by('name', $this_parent_term, 'fv_job_type' );
+			
+			
 			if ( $parent_term && isset($parent_term->term_id) ) {
-				//success
-				$parent = $parent_term->term_id;
 				
-				$cached_created_terms[$this_parent_term] = $parent_term;
+				//If parent matches
+				if ( $parents_parent_cat ) {
+					 if ( $parent_parent_term->term_id == $parent_term->parent ) {
+						 //success
+						$parent = $parent_term->term_id;
+						//$cached_created_terms[$parents_parent_cat][$this_parent_term] = $parent_term;
+						
+					 } else {
+						echo '<br>ERROR parent term: '.$this_parent_term.' doesnt match parent-parent term : '.$parents_parent_cat; 
+						
+						//die();
+					 }
+				} else {
+					//success
+					$parent = $parent_term->term_id;
+					//$cached_created_terms[$parents_parent_cat][$this_parent_term] = $parent_term;
+					
+				}
+				
+				//success
+				//$parent = $parent_term->term_id;
+				
+				//$cached_created_terms[$parents_parent_cat][$this_parent_term] = $parent_term;
 			} else {
 				echo '<br>ERROR no existing parent term : '.$this_parent_term;
 			}
+			*/
 		}
 		
 		
 		//Check cat
 		
 		//if in cached terms
+		/*
 		if ( $cached_created_terms[$this_term] ) {
 			$existing_term = $cached_created_terms[$this_term];
 		}
+		*/
+		
+		//set parent
+		if ( $this_parent_term ) {
+			if ( $parent_term && isset($parent_term->term_id) ) {
+				$parent = $parent_term->term_id;
+			} else {
+				echo '<br>ERROR - missing parent. parent: '.$parent.'  '.$this_parent_term;
+			}
+		}
+		
+		if ( $parent ) {
+			$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+				'orderby'    => 'name',
+				'hide_empty' => 0,
+				'parent' => $parent,
+				//'slug' => sanitize_title($this_parent_term)
+			 ) );
+			 foreach($top_categories as $each_tcat) {
+				 if ( sanitize_title($this_term) == $each_tcat->slug ) {
+					 $existing_term = $each_tcat;
+				 }
+				 
+			 }
+		}
+		
 		$existing_term = (isset($existing_term->term_id)) ? $existing_term : get_term_by('name', $this_term, 'fv_job_type' );
 		//if not exist, now try using sanitized title
 		$existing_term = ( $existing_term && isset($existing_term->term_id) ) ? $existing_term : get_term_by('slug', sanitize_title($this_term), 'fv_job_type' );
 		
-		if ( $existing_term && isset($existing_term->term_id) ) {
+		
+		//Check parent not matched
+		$parent_matched = true;
+		if ( $this_parent_term && $parent && $existing_term && isset($existing_term->term_id) ) {
+			if ( $parent != $existing_term->parent ) {
+				$parent_matched = false;
+				echo '<br>ERROR - existing term, but parent is different. parent: '.$parent.' != '.$existing_term->parent;	
+			}
+		}
+		
+		if ( $existing_term && isset($existing_term->term_id) && $parent_matched ) {
 			//wp_set_post_terms( $id, $existing_term->term_id, 'wpsc_product_category', TRUE );
 			
-			$cached_created_terms[$this_term] = $existing_term;
+			//$cached_created_terms[$rowkey][$this_term] = $existing_term;
+			$cached_created_terms[$parents_parent_cat][$this_parent_term] = $existing_term;
 			
 			return $existing_term;
 			
@@ -80,10 +201,11 @@ abstract class SF_dev_import_wpe_cats {
 			$create_term = wp_insert_term($this_term, 'fv_job_type', array('parent' => $parent));
 			if ( !is_wp_error($create_term) && isset($create_term['term_id']) ) {	
 				$existing_term = get_term_by('id', $create_term['term_id'], 'fv_job_type' );
-				$cached_created_terms[$this_term] = $existing_term;
+				//$cached_created_terms[$rowkey][$level] = $existing_term;
+				$cached_created_terms[$parents_parent_cat][$this_parent_term] = $existing_term;
 				return $existing_term;
 			} else {
-				echo '<br>ERROR creating term "'.$this_term.'" : '.print_r($create_term, true);	
+				echo '<br>ERROR - error creating term "'.$this_term.'" : '.print_r($create_term, true);	
 			}
 		}
 		return false;
@@ -93,7 +215,10 @@ abstract class SF_dev_import_wpe_cats {
 	public static function import_csv($file_path = NULL) {
 		global $cached_created_terms;
 		
-		$file_path = dirname(__FILE__)."/completevendorcategory.csv";
+		set_time_limit(300);
+		
+		//$file_path = dirname(__FILE__)."/completevendorcategory.csv";
+		$file_path = dirname(__FILE__)."/compeltecat3.csv";
 		
 		$file = file_get_contents($file_path );
 		
@@ -103,6 +228,8 @@ abstract class SF_dev_import_wpe_cats {
 		if ($file) {
 			
 			$csv = self::custom_str_getcsv($file, $delimiter = ',', $enclosure = '"', $escape = '\\', $eol = '\n');
+			
+			
 			/*
 			if (!function_exists('str_getcsv')) {  //If not PHP 5.3 +
 				$csv = self::str_getcsv(file_get_contents($file_path), ',', '"');
@@ -116,8 +243,6 @@ abstract class SF_dev_import_wpe_cats {
 				$csv = self::convert_csv_results_to_array( $csv );
 			}
 		}
-		
-		
 		
 		//Do we have data?
 		if ( is_array($csv) && !empty($csv) ) {
@@ -140,8 +265,175 @@ abstract class SF_dev_import_wpe_cats {
 			
 			$cached_created_terms = array();
 			
+			if ( $_GET['deletetypesubs'] ) {
+				
+				$all_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					'name__like' => ': Type Contractors'
+					//'parent' => 0
+				 ) );
+		
+				 if ( $all_categories && !is_wp_error($all_categories) ) {
+					 
+					 $blnwrittengroup = false;
+
+					foreach ( $all_categories as $top_c ) {
+						
+						if ( $blnwrittengroup == true ) {
+							die(' -- write 1 only ');	
+						}
+						
+						$ancestors = get_ancestors( $top_c->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+						$top_most_ancestor_term_id = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : 0;
+						
+						$topmost_term = get_term_by('id', $top_most_ancestor_term_id, 'fv_job_type' );
+						
+						$moveto_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+							'orderby'    => 'name',
+							'hide_empty' => 0,
+							'name__like' => $topmost_term->name.': Repair, Maintenance, and Installation'
+							//'parent' => 0
+						 ) );
+						 
+						 $mov_child_termchildren = array();
+						 foreach ( $moveto_categories as $mov_child ) {
+							 $mov_child_termchildren =  get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+								'orderby'    => 'name',
+								'hide_empty' => 0,
+								'parent' => $mov_child->term_id
+							 ) );
+						 }
+					 
+						
+						
+						echo '<br>cat: '.$top_c->name. 'with parent '. $top_c->parent;
+						//wp_delete_term( $top_c->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+						
+						$termchildren =  get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+								'orderby'    => 'name',
+								'hide_empty' => 0,
+								'parent' => $top_c->term_id
+							 ) );
+						 
+						echo '<ul>';
+						foreach ( $termchildren as $child ) {
+							//$term = get_term_by( 'id', $child, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+							echo '<li>' . $child->name; 
+							$termchildren2 =  get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+								'orderby'    => 'name',
+								'hide_empty' => 0,
+								'parent' => $child->term_id
+							 ) );
+							 if ( !empty($termchildren2) && !is_wp_error($termchildren2) ) {
+								 $blnfoundinmoveto = false;
+								 foreach ( $mov_child_termchildren as $mov_child_term) {
+									 if ( $child->name == $mov_child_term->name ){
+										 echo ' | term id: ' .$child->term_id.' | found in Repair, Maintenance, and Installation moveto_termID'.$mov_child_term->term_id.': '.$mov_child_term->name;
+										 $blnfoundinmoveto = true;
+										 echo ' || deleting';
+										 wp_delete_term( $mov_child_term->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+										 //move it
+										  echo ', moving';
+										 wp_update_term($child->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array('parent' => $mov_child_term->parent));
+										 //recreate moved
+										   echo ', recreating';
+										 $create_term = wp_insert_term( $mov_child_term->name, 'fv_job_type', array('parent' => $child->parent));
+									 	
+										 echo ', finished';
+										 
+										 $blnwrittengroup = true;
+									 }
+								 }
+								  echo '<ul>sub subs:';
+								foreach ( $termchildren2 as $child2 ) {
+										
+									echo '<li>' . $child2->name . '</li>';
+								}
+								echo '</ul>';
+								 if ( $blnfoundinmoveto == false ) {
+									 echo ' | term id: ' .$child->term_id.' | NOT FOUND in Repair, Maintenance, and Installation ';
+								 }
+									 
+							 }
+							echo '</li>';
+							
+							echo '----<br> ';
+						}
+						echo '</ul>';
+						echo '----<br> ';
+					}
+				 }
+				 //return;
+				 die();
+			}
+			
+			if ( $_GET['deleteallcats'] ) {
+				
+				$all_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					//'parent' => 0
+				 ) );
+		
+				 if ( $all_categories && !is_wp_error($all_categories) ) {
+					foreach ( $all_categories as $top_c ) {
+						echo '<br>deleted cat: '.$top_c->name. 'with parent '. $top_c->parent;
+						wp_delete_term( $top_c->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+					}
+				 }
+				 return;
+			}
+			
+			//if cleanup comma terms (bugfix)
+			if ( $_GET['cleanupcommas'] ) {
+				
+				$top_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					'parent' => 0
+				 ) );
+				 foreach($top_categories as $each_tcat) {
+					 //if ( strlen($each_tcat) > 3 ) {
+						$array_top_cats[] =	$each_tcat->name;
+					// }
+				 }
+				
+				$all_categories = get_terms( SF_Taxonomies::JOB_TYPE_TAXONOMY, array(
+					'orderby'    => 'name',
+					'hide_empty' => 0,
+					//'parent' => 0
+				 ) );
+		
+				 if ( $all_categories && !is_wp_error($all_categories) ) {
+					foreach ( $all_categories as $top_c ) {
+						//echo 'testing '.$top_c->name;
+						
+						//Remove prefix
+						$termname = $top_c->name;
+						$termname = html_entity_decode($termname);
+						foreach($array_top_cats as $eachprefix ) {
+							$termname = str_replace($eachprefix.': ', '', $termname);
+							$eachprefix = html_entity_decode($eachprefix);
+							$termname = str_replace($eachprefix.': ', '', $termname);
+						}
+						
+						$termname = trim($termname);
+						
+						//echo '<br>test termname: '.$termname.' & comma cat: '.$top_c->name. 'with parent '. $top_c->parent;
+						
+						if ( $termname == ',' || html_entity_decode($termname) == ',') {
+							echo '<br>found & deleted comma cat: '.$top_c->name. 'with parent '. $top_c->parent;
+							wp_delete_term( $top_c->term_id, SF_Taxonomies::JOB_TYPE_TAXONOMY );
+						}
+					}
+				 }
+				 return;
+					
+			}
+			
 			//If cleanup
-			if ($_GET['cleanup'] ) {
+			if ($_GET['cleanup'] ) { //Temp admin cleanup
 				$toplevelcats = array();
 				$level = 1;
 				foreach ($csv as $line) {
@@ -155,7 +447,6 @@ abstract class SF_dev_import_wpe_cats {
 					if ( !in_array($val, $toplevelcats) ) {
 						$toplevelcats[$val] = $val;
 					}
-					
 		
 				}
 				
@@ -211,27 +502,50 @@ abstract class SF_dev_import_wpe_cats {
 					}
 					
 					$cat = $line['level'.$level];
-					if ( !empty($cat) ) {
+					$cat = trim($cat);
+					if ( !empty($cat)  && strlen($cat) > 2) {
 						
 						$parent_level = $level - 1;
 						$parent_cat = false;
+						$parents_parent_cat = 0;
 						if ( $parent_level > 0 ) {
 							$topmost_parent_prefix = $line['level1'];
 							
-							if ( $parent_level > 1 ) {
-								$parent_cat = trim($topmost_parent_prefix).': '.$line['level'.$parent_level];
+							$parents_parent_level = $level - 2;
+							if ( $parents_parent_level > 1 ) {
+								$parents_parent_cat = trim($topmost_parent_prefix).': '.trim($line['level'.$parents_parent_level]);
 							} else {
-								$parent_cat = $line['level'.$parent_level];
+								if ( $parents_parent_level == 1 ) {
+									$parents_parent_cat = trim($line['level1']);
+								} else {
+									$parents_parent_cat = 0;
+								}
 							}
-							$cat = trim($topmost_parent_prefix).': '.$cat;
+							
+							if ( $parent_level > 1 ) {
+								$parent_cat = trim($topmost_parent_prefix).': '.trim($line['level'.$parent_level]);
+							} else {
+								$parent_cat = trim($line['level'.$parent_level]);
+							}
+							$cat = trim($topmost_parent_prefix).': '.trim($cat);
 						}
 						
-						if ( !in_array($cat, $arrays_duplicate_record_stop) ) {
-							echo '<br>creating cat '.$cat.' with parent cat: '.$parent_cat;
-							$results[] = self::insert_term($cat, $parent_cat);
+						//if ( !in_array($cat, $arrays_duplicate_record_stop[$lineii]) ) {
+						if ( !in_array($cat, $arrays_duplicate_record_stop[$parents_parent_cat][$parent_cat]) ) {
+							echo '<br>creating cat '.$cat.' with parent cat: '.$parents_parent_cat.' '.$parent_cat;
+							$results[] = self::insert_term($cat, $parent_cat, $parents_parent_cat, $lineii, $level, $parent_level);
+							$arrays_duplicate_record_stop[$parents_parent_cat][$parent_cat][] = $cat;
+							
+							//$arrays_duplicate_record_stop[$lineii][] = $cat;
+							
 						}
+						
+						/*
+						echo '<br>creating cat '.$cat.' with parent cat: '.$parents_parent_cat.' '.$parent_cat;
+						$results[] = self::insert_term($cat, $parent_cat, $parents_parent_cat);
 						
 						$arrays_duplicate_record_stop[] = $cat;
+						*/
 					}
 					
 				}
