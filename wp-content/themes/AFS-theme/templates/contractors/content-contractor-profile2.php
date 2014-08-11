@@ -5,39 +5,60 @@ $categories_permitted = fv_get_contractor_membership_addon_categories($contracto
 $is_membership_active = ( $membership_type ) ? true : false;
 
 ?>
-<form id="fv_profile_edit" class="edit-profile" role="form" method="post">
+<form id="fv_profile_edit" role="form" method="post">
 <input type="hidden" name="fv_profile_edit" value="contractor" />
 <?php wp_nonce_field( 'fv_profile_edit_nonce', 'fv_profile_edit_nonce' ); ?> 
-<section class="photos clearfix">
-  <h3>Photos</h3>
-  <div class="photo-group">
-<?php
-  //Loop photos (loops again at bottom of this template for modal dialogs)
-  $photo_attachments = SF_Contractor::load_attachments($contractor_id);
-  if ( $photo_attachments ) {
-  foreach ($photo_attachments  as $attachment) : 
-  ?>
-    <div class="col-sm-6 col-md-3">
-      <a href="#" title="Click to edit" class="" data-toggle="modal" data-target="#photoEditModal<?php echo $attachment->ID; ?>"><img class="img-thumbnail" width="180" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" /></a>
-   </div>
-   
-<?php endforeach; 
-  } ?>
-    
-  <div class="col-sm-6 col-md-3">
-    <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModal"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
-  </div>
-</div>
-</section>
-<hr>
-<section class="overview clearfix">
-<h3>Company Overview</h3>
+<article class="clearfix">
+	<?php 
+    $featured_thumb = get_the_post_thumbnail($contractor_id, 'img_400', array('class' => 'img-thumbnail'));
+    if ($featured_thumb ) {
+        ?>
+        <a href="#" title="Click to edit" data-toggle="modal" data-target="#photoEditModalFeatured"><?php echo $featured_thumb; ?></a>
+        <?php
+    } else {
+        ?>
+        
+      <div class="img-thumbnail">
+        <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModalFeatured"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
+      </div>
+     
+    <?php } ?>
+</article>
+<article class="clearfix">
+<h4>Description</h4>
 <textarea class="full-width" placeholder="description" name="post_content" rows="10"><?php echo esc_textarea($fields['post_content']); ?></textarea>
-</section>
-<hr>
-<section class="business-basics clearfix">
-<h3>Business Basics</h3>
-<div class="col-lg-6">
+</article>
+<article>
+<h4>Profile Info</h4>
+<ul class="nav nav-tabs" id="myTab">
+  <li class="active"><a href="#afs-account" data-toggle="tab">Username/Password</a></li>
+  <li><a href="#personal-profile" data-toggle="tab">Business Basics</a></li>
+  <li><a href="#contractor-profile" data-toggle="tab">Vendor Profile</a></li>
+  <li><a href="#project-photos" data-toggle="tab">Project Photos</a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active clearfix" id="afs-account">
+    <div class="col-lg-6">
+         <div class="form-group">
+        <input type="email" placeholder="email/username" name="user_email" value="<?php echo (isset($_POST['user_email'])) ? $_POST['user_email'] : $user_fields->user_email; ?>" class="full-width">
+        </div>
+        <div class="form-group">
+        <input type="password" name="password" placeholder="enter password" value="" class="full-width">
+        </div>
+        <div class="form-group">
+        <input type="password" name="confirm-password" placeholder="confirm password" value="" class="full-width">
+        </div>
+   
+        <div class="form-group">
+        <div class="custom-checkbox">
+                <input type="checkbox" value="None" name="_hide_profile" id="hide_profile" <?php echo ((bool)$fields['hide_profile']) ? 'checked="checked"' : ''; ?> />
+                <label for="hide_profile"></label><span class="field-meta">hide my profile</span>
+        </div>
+        </div>
+      </div>
+  </div>
+  <div class="tab-pane clearfix" id="personal-profile">
+    <div class="col-lg-6">
         <div class="form-group">
           <input placeholder="name" name="_name" value="<?php echo $fields['name']; ?>" class="full-width">
         </div>
@@ -60,10 +81,10 @@ $is_membership_active = ( $membership_type ) ? true : false;
           <input placeholder="phone" name="_phone" value="<?php echo $fields['phone']; ?>" class="full-width">
         </div>
         <div class="form-group">
-          <input placeholder="location (city,state)" name="_location" value="<?php echo $fields['location']; ?>" class="full-width">
+          <input placeholder="location zip code" name="_location_zip" value="<?php echo $fields['location_zip']; ?>" class="full-width">
         </div>
         <div class="form-group">
-          <input placeholder="location zip code" name="_location_zip" value="<?php echo $fields['location_zip']; ?>" class="full-width">
+          <input placeholder="location (city,state)" name="_location" value="<?php echo $fields['location']; ?>" class="full-width">
         </div>
         <?php
       /*  <div class="form-group">
@@ -77,118 +98,99 @@ $is_membership_active = ( $membership_type ) ? true : false;
         </div> */
         ?>
     </div>
-</section>
-<hr>
-<section class="products-services clearfix">
-<h3>Products &amp Services</h3>
-<p><strong>Note:</strong> You may select <?php echo $categories_permitted; ?> based on your membership.</p>
-<?php
-	//taxonomy is type category (so use ids for field value) 
-    $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-    
-	$validated_parent_terms = array();
-    $post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
-	if ( !empty($post_terms) ) {
-		foreach ( $post_terms as $pt )  {
-			$ancestors = get_ancestors( $pt, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-			$top_most_post_term = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $reference_term_id;
-			$validated_parent_terms[] = $top_most_post_term;
-		}
-	}
-	
-      
-    //selected categories ( merge term categories with the selected category data )
-    $selected_categories = $fields['category_data']; //set category_data as first
-    //merge with post terms
-    if ( !empty( $post_terms ) ) {
-      foreach ( $post_terms as $catkey => $cat_term_id) {
-        if ( !in_array($cat_term_id, $fields['category_data']) ) {
-          $selected_categories[] = $cat_term_id;
-        }
-      }
-    } 
-	
-	//Create array 
-	$hierarchy_types = array();
-	foreach ($types as $t ) {
-		$type_parent = (int)$t->parent;
-		$hierarchy_types[$type_parent][$t->term_id] = $t;
-	}
-	
-	//Helper function walk
-	function fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_term_id, $level = 0, $parent_prefix_remove = '') {
-		$level++;
-		//taxonomy is type category (so use ids for field value) 
-		$child_types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> $parent_term_id ) );
-		foreach ( $child_types as $type ) : ?>
-        <div style="margin-left: <?php echo $level.'0px';  ?>">
-            <div class="custom-checkbox">
-                  <input type="checkbox" data-label="<?php echo esc_attr($type->name); ?>" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $selected_categories)) ? 'checked="checked"' : ''; ?> />
-                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo str_replace($parent_prefix_remove.': ', '', $type->name); ?></span>
-            </div>
-        	<?php
-            if ( isset($hierarchy_types[$type->term_id]) ) {
-				fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $type->term_id, $level, $parent_prefix_remove);
-			}
-			?>
-        </div>
-	  <?php endforeach; ?>
-      
-      <?php
-    } //end fv_custom_walk_profile_terms
-	?>
-<div class="panel-group" id="accordion">
-	<?php
-	//For each with parent = 0 (top)
-	foreach ( $hierarchy_types[0] as $parent_type ) {
-	?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-      <?php
-	  /*
-      	 <div class="custom-checkbox">
-         <input type="checkbox" data-label="<?php echo esc_attr($parent_type->name); ?>" value="<?php echo $parent_type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$parent_type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($parent_type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> /> <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta">&nbsp; <?php //echo $parent_type->name; ?></span>
-        </div>
-		<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
-         <?php echo $parent_type->name; ?>
-        </a>
-	*/
-	?>
-         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
-         	<?php echo $parent_type->name; ?>
-         </a>
-            <?php
-            //Verfied category? (is it in the terms)
-            if ( $validated_parent_terms && in_array($parent_type->term_id, $validated_parent_terms) ) {
-             ?>
-               <div class="verified"><small><i class="fa fa-thumbs-up"></i> References verified, good job.</small></div>
-             <?php
-            } else {
-             ?>
-               <div class="un-verified"><small><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $parent_type->term_id; ?>" data-label="<?php echo esc_attr($parent_type->name); ?>">3 industry specific references are required to be found in search results for each industry listed!</a></small></div>
-            <?php
-            } 
-            ?>
-      </h4>
+
+  </div>
+  <div class="tab-pane clearfix" id="contractor-profile">
+  	<div class="form-group">
+       <p><strong>Contractor Name (Listing name):</strong></p>
+              <input placeholder="listing name" name="post_title" value="<?php echo $fields['post_title']; ?>"class="full-width">
     </div>
-    <div id="collapse<?php echo $parent_type->term_id; ?>" class="panel-collapse collapse">
-      <div class="panel-body">
-          <div class="form-group">
+    <?php
+	/*
+    <div class="form-group">
+         <p><strong>Do you have prior facility experience in any of these fields?</strong></p>
           <?php
            //taxonomy is type category (so use ids for field value) 
-		   fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_type->term_id, $level, $parent_type->name);
-		   ?>
-          </div>
-      </div>
+            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+            foreach ( $types as $type ) : ?>
+            <div class="custom-checkbox">
+                  <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
+                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
+            </div>
+          <?php endforeach; ?>
+            
     </div>
-  </div>
-  <?php
-	}
+	*/
 	?>
+    
+    <div class="col-lg-6">
+    	<div class="form-group">
+            <label class="custom-select" for="_years_of_experience">
+            <select name="_years_of_experience" class="full-width">
+                <option value="" <?php echo ($fields['years_of_experience'] == '') ? 'selected="selected"' : ''; ?>>years of experience</option>
+                <option value="1" <?php echo ($fields['years_of_experience'] == '1') ? 'selected="selected"' : ''; ?>>1 year</option>
+                <option value="2" <?php echo ($fields['years_of_experience'] == '2') ? 'selected="selected"' : ''; ?>>2 years</option>
+                <option value="3" <?php echo ($fields['years_of_experience'] == '3') ? 'selected="selected"' : ''; ?>>3 years</option>
+                <option value="4" <?php echo ($fields['years_of_experience'] == '4') ? 'selected="selected"' : ''; ?>>4 years</option>
+                <option value="5" <?php echo ($fields['years_of_experience'] == '5') ? 'selected="selected"' : ''; ?>>5 years</option>
+                <option value="6" <?php echo ($fields['years_of_experience'] == '6') ? 'selected="selected"' : ''; ?>>6 years</option>
+                <option value="7" <?php echo ($fields['years_of_experience'] == '7') ? 'selected="selected"' : ''; ?>>7 years</option>
+                <option value="8" <?php echo ($fields['years_of_experience'] == '8') ? 'selected="selected"' : ''; ?>>8 years</option>
+                <option value="9" <?php echo ($fields['years_of_experience'] == '9') ? 'selected="selected"' : ''; ?>>9 years</option>
+                <option value="10-15" <?php echo ($fields['years_of_experience'] == '10-15') ? 'selected="selected"' : ''; ?>>10-15 years</option>
+                <option value="16-20" <?php echo ($fields['years_of_experience'] == '16-20') ? 'selected="selected"' : ''; ?>>16-20 years</option>
+                <option value="20-30" <?php echo ($fields['years_of_experience'] == '20-30') ? 'selected="selected"' : ''; ?>>20-30 years</option>
+                <option value="30+" <?php echo ($fields['years_of_experience'] == '30+') ? 'selected="selected"' : ''; ?>>30+ years</option>
+             </select>
+          </label>
+          </div>
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="contractor license & state" name="_contractor_license" value="<?php echo $fields['contractor_license']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="insurance name & account #" name="_insurance_account" value="<?php echo $fields['insurance_account']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+        
+    </div>
+
+    <div class="col-lg-6">
+    	
+        <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="website url" name="_website" value="<?php echo $fields['website']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+         <div class="form-group">
+          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
+        </div>
+    </div>    
+  </div>
+  <div class="tab-pane clearfix" id="project-photos">
+    <div class="photo-group">
+<?php
+  //Loop photos (loops again at bottom of this template for modal dialogs)
+  $photo_attachments = SF_Contractor::load_attachments($contractor_id);
+  if ( $photo_attachments ) {
+  foreach ($photo_attachments  as $attachment) : 
+  ?>
+    <div class="col-sm-6 col-md-3">
+      <a href="#" title="Click to edit" class="" data-toggle="modal" data-target="#photoEditModal<?php echo $attachment->ID; ?>"><img class="img-thumbnail" width="180" src="<?php echo wp_get_attachment_thumb_url($attachment->ID); ?>" alt="Edit" /></a>
+   </div>
+   
+<?php endforeach; 
+  } ?>
+    
+  <div class="col-sm-6 col-md-3">
+    <a href="#" title="Click to upload" class="click-upload" data-toggle="modal" data-target="#photoUploadModal"><span><i class="fa fa-camera"></i>click to upload</span><img class="img-thumbnail" src="../assets/img/transparent-placeholder.png" alt="Upload" /></a>
+  </div>
 </div>
- <?php /*    <div class="form-group">
-      <h4>Old Dropdowns</h4>
+
+  </div>
+</div>
+</article>
+<hr>
+<article>
+      <div class="form-group">
+        
+        <h4>Core Skills: Industries & Vendor Categories</h4>
       <?php
     //taxonomy is type category (so use ids for field value) 
     $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
@@ -232,11 +234,11 @@ $is_membership_active = ( $membership_type ) ? true : false;
             //Verfied category? (is it in the terms)
             if ( $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY] && in_array($selected_term, $post_terms) ) {
             ?>
-                          <span class="verified"><i class="fa fa-thumbs-up"></i> References verified, good job.</span>
+                          <span class="verified"><i class="fa fa-thumbs-up"></i> References Verified</span>
                      <?php
             } else {
             ?>
-                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">3 industry specific references are required to be found in search results for each industry listed!</a></span>
+                          <span class="un-verified"><i class="fa fa-thumbs-down"></i> <a class="open-ReferenceModal" href="#" data-select_cat_index="<?php echo $select_cat_index; ?>" data-select_id="<?php echo $select_id; ?>">Please provide 3 references to be listed in this category!</a></span>
             <?php
             } 
             ?>
@@ -249,77 +251,9 @@ $is_membership_active = ( $membership_type ) ? true : false;
     endif;
     ?>
       
-      </div> */ ?>
-</section>
-<hr>
-<section class="vendor-profile clearfix">
-<h3>Vendor Profile</h3>
-<div class="form-group">
-              <input placeholder="listing name" name="post_title" value="<?php echo $fields['post_title']; ?>"class="full-width">
-    </div>
-    <?php
-  /*
-    <div class="form-group">
-         <p><strong>Do you have prior facility experience in any of these fields?</strong></p>
-          <?php
-           //taxonomy is type category (so use ids for field value) 
-            $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-            foreach ( $types as $type ) : ?>
-            <div class="custom-checkbox">
-                  <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
-                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
-            </div>
-          <?php endforeach; ?>
-            
-    </div>
-  */
-  ?>
-    
-    <div class="col-lg-6">
-      <div class="form-group">
-          <input placeholder="Year Established?" name="_years_of_experience" value="<?php echo $fields['years_of_experience']; ?>"class="full-width">
-          </div>
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="contractor license & state" name="_contractor_license" value="<?php echo $fields['contractor_license']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="insurance name & account #" name="_insurance_account" value="<?php echo $fields['insurance_account']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-        
-    </div>
+      </div> 
+</article>
 
-    <div class="col-lg-6">
-      
-        <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="website url" name="_website" value="<?php echo $fields['website']; ?>" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-         <div class="form-group">
-          <input <?php echo ($is_membership_active) ? '' : 'disabled="disabled"'; ?> placeholder="better businees bureau profile" value="<?php echo $fields['bbb_url']; ?>" name="_bbb_url" class="full-width <?php echo ($is_membership_active) ? '' : 'disabled'; ?>">
-        </div>
-    </div>
-</section>
-<hr>
-<section class="nafva-account clearfix">
-<h3>NAFVA Account</h3>
-    <div class="col-lg-6">
-         <div class="form-group">
-        <input type="email" placeholder="email/username" name="user_email" value="<?php echo (isset($_POST['user_email'])) ? $_POST['user_email'] : $user_fields->user_email; ?>" class="full-width">
-        </div>
-        <div class="form-group">
-        <input type="password" name="password" placeholder="enter password" value="" class="full-width" autocomplete="off" readonly onfocus="$(this).removeAttr('readonly');">
-        </div>
-        <div class="form-group">
-        <input type="password" name="confirm-password" placeholder="confirm password" value="" class="full-width" autocomplete="off" readonly onfocus="$(this).removeAttr('readonly');">
-        </div>
-   
-        <div class="form-group">
-        <div class="custom-checkbox">
-                <input type="checkbox" value="None" name="_hide_profile" id="hide_profile" <?php echo ((bool)$fields['hide_profile']) ? 'checked="checked"' : ''; ?> />
-                <label for="hide_profile"></label><span class="field-meta">hide my profile</span>
-        </div>
-        </div>
-      </div>
-</section>
 </form>
 
 <!-- References Modal (NEW) -->
@@ -342,28 +276,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company[0]" placeholder="Contact Company Name">
+                  <input type="text" name="name_company[0]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="name_contact[0]" placeholder="Contact Person">
+                  <input type="text" name="phone[0]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address[0]" placeholder="Contact Email Address">
+                  <input type="text" name="email_address[0]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone[0]" placeholder="Contact Phone #">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="work_type[0]" placeholder="Type of Work">
-                </div>
-                </div>
-                <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="industry_type[0]" placeholder="Type of Industry">
+                  <input type="text" name="work_location[0]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
@@ -373,28 +297,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company[1]" placeholder="Contact Company Name">
+                  <input type="text" name="name_company[1]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="name_contact[1]" placeholder="Contact Person">
+                  <input type="text" name="phone[1]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address[1]" placeholder="Contact Email Address">
+                  <input type="text" name="email_address[1]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone[1]" placeholder="Contact Phone #">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="work_type[1]" placeholder="Type of Work">
-                </div>
-                </div>
-                <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="industry_type[1]" placeholder="Type of Industry">
+                  <input type="text" name="work_location[1]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
@@ -404,28 +318,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company[2]" placeholder="Contact Company Name">
+                  <input type="text" name="name_company[2]" placeholder="Name/Company">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="name_contact[2]" placeholder="Contact Person">
+                  <input type="text" name="phone[2]" placeholder="Phone">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address[2]" placeholder="Contact Email Address">
+                  <input type="text" name="email_address[2]" placeholder="Email Address">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone[2]" placeholder="Contact Phone #">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="work_type[2]" placeholder="Type of Work">
-                </div>
-                </div>
-                <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="industry_type[2]" placeholder="Type of Industry">
+                  <input type="text" name="work_location[2]" placeholder="Work Location/City">
                 </div>
               </div>
             </div>
@@ -471,28 +375,18 @@ $is_membership_active = ( $membership_type ) ? true : false;
             <div class="row">
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="name_company[<?php echo $ref_ii; ?>]" placeholder="Contact Company Name" value="<?php echo ($existing_ref[$ref_ii]['name_company']) ? $existing_ref[$ref_ii]['name_company'] : ''; ?>">
+                  <input type="text" name="name_company[<?php echo $ref_ii; ?>]" placeholder="Name/Company" value="<?php echo ($existing_ref[$ref_ii]['name_company']) ? $existing_ref[$ref_ii]['name_company'] : ''; ?>">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="name_contact[<?php echo $ref_ii; ?>]" placeholder="Contact Person" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['name_contact'] : ''; ?>">
+                  <input type="text" name="phone[<?php echo $ref_ii; ?>]" placeholder="Phone" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['phone'] : ''; ?>">
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="form-group">
-                  <input type="text" name="email_address[<?php echo $ref_ii; ?>]" placeholder="Contact Email Address" value="<?php echo ($existing_ref[$ref_ii]['email_address']) ? $existing_ref[$ref_ii]['email_address'] : ''; ?>">
+                  <input type="text" name="email_address[<?php echo $ref_ii; ?>]" placeholder="Email Address" value="<?php echo ($existing_ref[$ref_ii]['email_address']) ? $existing_ref[$ref_ii]['email_address'] : ''; ?>">
                 </div>
                 <div class="form-group">
-                  <input type="text" name="phone[<?php echo $ref_ii; ?>]" placeholder="Contact Phone #" value="<?php echo ($existing_ref[$ref_ii]['phone']) ? $existing_ref[$ref_ii]['phone'] : ''; ?>">
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="work_type[<?php echo $ref_ii; ?>]" placeholder="Type of Work" value="<?php echo ($existing_ref[$ref_ii]['work_type']) ? $existing_ref[$ref_ii]['work_type'] : ''; ?>">
-                </div>
-                </div>
-                <div class="col-lg-6">
-                <div class="form-group">
-                  <input type="text" name="industry_type[<?php echo $ref_ii; ?>]" placeholder="Type of Industry" value="<?php echo ($existing_ref[$ref_ii]['industry_type']) ? $existing_ref[$ref_ii]['industry_type'] : ''; ?>">
+                  <input type="text" name="work_location[<?php echo $ref_ii; ?>]" placeholder="Work Location/City" value="<?php echo ($existing_ref[$ref_ii]['work_location']) ? $existing_ref[$ref_ii]['work_location'] : ''; ?>">
                 </div>
               </div>
             </div>
@@ -519,28 +413,14 @@ $is_membership_active = ( $membership_type ) ? true : false;
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var max_cats_check = <?php echo (int)$categories_permitted; ?>;
-	$(document).on("change", "#accordion input[type=checkbox]", function (e) {
-		//if checking box
-		if ( $(this).is(':checked') ) {
-			if ( $('#accordion input:checked').length > max_cats_check ) {
-				alert('You have reached your maximum amount of categories permitted.'); 
-				$(this).attr('checked', false); //set unchecked
-				return false;
-			}
-		}
-	});
-	 
-	 
 	//Set the term_id on reference modal open
 	$(document).on("click", ".open-ReferenceModal", function (e) {
 		e.preventDefault();
 		
 		 var select_id = $(this).data('select_id');
 		 //Get selected
-		 var term_id = $('#collapse' + select_id +' :checked').val();
+		 var term_id = $('#' + select_id +' :selected').val();
 		 var category_data_index = $(this).data('select_cat_index');
-		 var term_title = $(this).data('label');
 		 //Get the modal to open
 		 var open_ref_modal = '#referenceModal-term' + term_id;
 		 if ( $(open_ref_modal).length > 0 ) {
@@ -550,7 +430,7 @@ $(document).ready(function(){
 			open_ref_modal =  '#referenceModal';
 		 }
 		 if ( term_id > 0 ) {
-			//var term_title = $('#collapse' + select_id +' :checked').data('label');
+			var term_title = $('#' + select_id +' :selected').text();
 			$(open_ref_modal + " .field_reference_term_id").val( term_id );
 			$(open_ref_modal + " .category_data_index").val( category_data_index );
 			//set the title for the modal
@@ -566,37 +446,26 @@ $(document).ready(function(){
 	var countref = 3;
 	$('.btn-add-more-references').on('click', function() {
 		countref++;
-		
 		var ref_html = '<div class="reference">'
 		+ '<strong>Reference ' + countref + ' </strong>'
 		+ '<div class="row">'
-        + '      <div class="col-lg-6">'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="name_company[' + countref + ']" placeholder="Contact Company Name">'
-        + '        </div>'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="name_contact[' + countref + ']" placeholder="Contact Person">'
-        + '        </div>'
-        + '      </div>'
-        + '      <div class="col-lg-6">'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="email_address[' + countref + ']" placeholder="Contact Email Address">'
-        + '        </div>'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="phone[' + countref + ']" placeholder="Contact Phone #">'
-        + '        </div>'
-        + '      </div>'
-        + '      <div class="col-lg-6">'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="work_type[' + countref + ']" placeholder="Type of Work">'
-        + '        </div>'
-        + '        </div>'
-        + '      <div class="col-lg-6">'
-        + '        <div class="form-group">'
-        + '          <input type="text" name="industry_type[' + countref + ']" placeholder="Type of Industry">'
-        + '        </div>'
-        + '      </div>'
-        + '    </div>'
+		+ '  <div class="col-lg-6">'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="name_company[' + countref + ']" id="name_company' + countref + '" placeholder="Name/Company">'
+		+ '	</div>'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="phone[' + countref + ']" id="phone' + countref + '" placeholder="Phone">'
+		+ '	</div>'
+		+ '  </div>'
+		+ '  <div class="col-lg-6">'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="email_address[' + countref + ']" id="email_address' + countref + '" placeholder="Email Address">'
+		+ '	</div>'
+		+ '	<div class="form-group">'
+		+ '	  <input type="text" name="work_location[' + countref + ']" id="work_location' + countref + '" placeholder="Work Location/City">'
+		+ '	</div>'
+		+ '  </div>'
+		+ '</div>'
 	  	+ '</div>';
 		$('.additional-references').append(ref_html);
 		
@@ -641,7 +510,7 @@ $(document).ready(function(){
      <form id="fv_profile_edit_upload_file" role="form" method="post" enctype="multipart/form-data">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="photoUploadModalFeaturedLabel">Upload Logo</h4>
+        <h4 class="modal-title" id="photoUploadModalFeaturedLabel">Upload Primary Photo</h4>
       </div>
       <div class="modal-body">
        <input type="hidden" name="fv_profile_edit_upload_file" value="contractor" />
@@ -669,7 +538,7 @@ $(document).ready(function(){
      <form class="fv_profile_edit_modify_file" role="form" method="post">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="photoEditModalLabelFeatured">Edit Logo</h4>
+        <h4 class="modal-title" id="photoEditModalLabelFeatured">Edit Primary Photo</h4>
       </div>
       <div class="modal-body">
        <input type="hidden" name="fv_profile_edit_modify_file" value="contractor" />

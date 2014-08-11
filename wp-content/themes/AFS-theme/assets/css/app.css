@@ -6327,15 +6327,12 @@ figure.alignnone {
 .hero .col-md-3 {
   margin-top: 40px;
 }
-<<<<<<< HEAD
 .hero .posting-tags {
   text-shadow: none;
 }
 .home .hero a.x-large {
   text-shadow: none;
 }
-=======
->>>>>>> FETCH_HEAD
 /* Hero Color Variations */
 .orange-hero {
   background: url('../img/orange-hex-pattern.jpg');
