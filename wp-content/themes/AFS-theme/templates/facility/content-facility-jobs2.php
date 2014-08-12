@@ -74,98 +74,14 @@ $is_membership_active = ( $membership_type ) ? true : false;
         <div class="form-group">
             <p><strong>Type of Job?</strong> (you may select <?php echo $categories_permitted; ?> based on your membership)</p>
             <?php
-    //taxonomy is type category (so use ids for field value) 
-    $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
-    
-    $validated_parent_terms = array();
-    $post_terms = wp_get_object_terms( $contractor_id, SF_Taxonomies::JOB_TYPE_TAXONOMY, array( 'fields' => 'ids' ) );
-    if ( !empty($post_terms) ) {
-        foreach ( $post_terms as $pt )  {
-            $ancestors = get_ancestors( $pt, SF_Taxonomies::JOB_TYPE_TAXONOMY );
-            $top_most_post_term = ( is_array($ancestors) && !empty($ancestors) ) ? array_pop($ancestors) : $reference_term_id;
-            $validated_parent_terms[] = $top_most_post_term;
-        }
-    }
-    
-      
-    //selected categories ( merge term categories with the selected category data )
-    $selected_categories = $fields['category_data']; //set category_data as first
-    //merge with post terms
-    if ( !empty( $post_terms ) ) {
-      foreach ( $post_terms as $catkey => $cat_term_id) {
-        if ( !in_array($cat_term_id, $fields['category_data']) ) {
-          $selected_categories[] = $cat_term_id;
-        }
-      }
-    } 
-    
-    //Create array 
-    $hierarchy_types = array();
-    foreach ($types as $t ) {
-        $type_parent = (int)$t->parent;
-        $hierarchy_types[$type_parent][$t->term_id] = $t;
-    }
-    
-    //Helper function walk
-    function fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_term_id, $level = 0, $parent_prefix_remove = '') {
-        $level++;
-        //taxonomy is type category (so use ids for field value) 
-        $child_types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all', 'parent'=> $parent_term_id ) );
-        foreach ( $child_types as $type ) : ?>
-        <div style="margin-left: <?php echo $level.'0px';  ?>">
-            <div class="custom-checkbox">
-                  <input type="checkbox" data-label="<?php echo esc_attr($type->name); ?>" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $selected_categories)) ? 'checked="checked"' : ''; ?> />
-                  <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo str_replace($parent_prefix_remove.': ', '', $type->name); ?></span>
-            </div>
-            <?php
-            if ( isset($hierarchy_types[$type->term_id]) ) {
-                fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $type->term_id, $level, $parent_prefix_remove);
-            }
-            ?>
-        </div>
-      <?php endforeach; ?>
-      
-      <?php
-    } //end fv_custom_walk_profile_terms
-    ?>
-    <div class="panel-group" id="accordion">
-    <?php
-    //For each with parent = 0 (top)
-    foreach ( $hierarchy_types[0] as $parent_type ) {
-    ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h4 class="panel-title">
-      <?php
-      /*
-         <div class="custom-checkbox">
-         <input type="checkbox" data-label="<?php echo esc_attr($parent_type->name); ?>" value="<?php echo $parent_type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$parent_type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($parent_type->term_id, $fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> /> <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta">&nbsp; <?php //echo $parent_type->name; ?></span>
-        </div>
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
-         <?php echo $parent_type->name; ?>
-        </a>
-    */
-    ?>
-         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $parent_type->term_id; ?>">
-            <?php echo $parent_type->name; ?>
-         </a>
-      </h4>
-    </div>
-    <div id="collapse<?php echo $parent_type->term_id; ?>" class="panel-collapse collapse">
-      <div class="panel-body">
-          <div class="form-group">
-          <?php
-           //taxonomy is type category (so use ids for field value) 
-           fv_custom_walk_profile_terms($hierarchy_types, $selected_categories, $parent_type->term_id, $level, $parent_type->name);
-           ?>
-          </div>
-      </div>
-    </div>
-  </div>
-  <?php
-    }
-    ?>
-</div>
+               //taxonomy is type category (so use ids for field value) 
+                $types = get_terms( array( SF_Taxonomies::JOB_TYPE_TAXONOMY ), array( 'hide_empty'=>FALSE, 'fields'=>'all' ) );
+                foreach ( $types as $type ) : ?>
+                <div class="custom-checkbox">
+                      <input type="checkbox" value="<?php echo $type->term_id; ?>" id="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>" name="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY; ?>[]" <?php echo (in_array($type->term_id, $project_fields[SF_Taxonomies::JOB_TYPE_TAXONOMY])) ? 'checked="checked"' : ''; ?> />
+                      <label for="<?php echo SF_Taxonomies::JOB_TYPE_TAXONOMY.'_'.$type->term_id; ?>"></label><span class="field-meta"><?php echo $type->name; ?></span>
+                </div>
+             <?php endforeach; ?>
         </div>
         <div class="form-group">
             <?php if ($_GET['job_edit'] == '' ) : ?>
