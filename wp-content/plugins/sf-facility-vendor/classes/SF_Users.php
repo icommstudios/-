@@ -1201,7 +1201,7 @@ class SF_Users extends SF_FV {
             <?php echo $button ; ?>
             <input type="hidden" name="a3" value="<?php echo number_format($amount, 2, '.', ''); ?>">
             <input type="hidden" name="p3" value="1">
-            <input type="hidden" name="t3" value="M">
+            <input type="hidden" name="t3" value="Y">
             <input type="hidden" name="src" value="1">
             <input type="hidden" name="sra" value="1">
         </form>
